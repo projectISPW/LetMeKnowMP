@@ -35,6 +35,9 @@ fun MainLayout(myModelScreen: MyModelScreen){
     val password = rememberSaveable() {
         mutableStateOf("")
     }
+    val passwordVisibility = rememberSaveable() {
+        mutableStateOf(false )
+    }
 
         Column(
             modifier = Modifier
@@ -72,11 +75,24 @@ fun MainLayout(myModelScreen: MyModelScreen){
             Spacer(modifier = Modifier.height(16.dp))
             TextField(value = password.value,
                 onValueChange = {
-                   password.value=it
-                }, textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
+                    password.value=it
+                },
+                textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
                 label = {
                     Text("Password:", fontSize = 24.sp)
-                }
+                },
+                trailingIcon={
+                    IconButton(onClick={passwordVisibility.value=!passwordVisibility.value}){
+                        Icon(
+                            imageVector = Icons.Default.Lock,
+                            contentDescription = "Visibility Icon"
+
+                        )
+                    }
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                visualTransformation = if(passwordVisibility.value)VisualTransformation.None
+                else PasswordVisualTransformation()
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = {
@@ -89,6 +105,35 @@ fun MainLayout(myModelScreen: MyModelScreen){
                 Text("Verify",color = Color.White,fontSize = 24.sp)
             }
             }
+    Column(
+        modifier = Modifier
+            //.padding(16.dp)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(20.dp)
+    ) {
+        TextField(value = password.value,
+            onValueChange = {
+                password.value=it
+            },
+            textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
+            label = {
+                Text("Password:", fontSize = 24.sp)
+            },
+            trailingIcon={
+                IconButton(onClick={passwordVisibility.value=!passwordVisibility.value}){
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "Visibility Icon"
+
+                    )
+                }
+            },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = if(passwordVisibility.value)VisualTransformation.None
+            else PasswordVisualTransformation()
+        )
+    }
 
     }
 
