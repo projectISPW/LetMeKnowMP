@@ -10,8 +10,8 @@ import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 enum class LetMeKnowScreen(@StringRes val title: Int) {
     Login(title= R.string.login),
     HomeUsr(title=R.string.home),// insert 1,
-    Signup(title=R.string.signup)
-
+    Signup(title=R.string.signup),
+    SearchUser(title=R.string.searchusr)
 
     //TODO //
 
@@ -40,6 +40,7 @@ fun TheLayout() {
         LetMeKnowScreen.Login->MainLayout(myModel)
         LetMeKnowScreen.HomeUsr->HomeUsr(myModel)// insert 2
         LetMeKnowScreen.Signup->Signup(myModel)
+        LetMeKnowScreen.SearchUser->SearchUser(myModel)
 
 
 
