@@ -17,7 +17,7 @@ import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 import com.francesco.damata.letmeknowv1.ui.theme.myBlue
 
 @Composable
-fun HomeUsr(userId : String){
+fun HomeUsr(myModelScreen: MyModelScreen){
     val emphathy = rememberSaveable() {
         mutableStateOf("")
     }
@@ -31,22 +31,15 @@ fun HomeUsr(userId : String){
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(20.dp)
+        verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
         TopAppBar(backgroundColor = MaterialTheme.colors.myBlue)
             {
                 Text(stringResource(R.string.topBarHome),color = Color.White,fontSize = 24.sp)
             }
         Text(text = stringResource(R.string.profile),color = Color.Black,fontSize = 40.sp)
-        Row(modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center) {
-                Text(text = "User #$userId",                //Errore da rivedere non usare text
-                color = MaterialTheme.colors.myBlue,
-                fontsize = 20.sp)
-        }
+        Text(text = "User #00000",color = MaterialTheme.colors.myBlue,fontSize = 20.sp)         //Al posto degli 00000 ci va l'userid
+
     }
 
 }
