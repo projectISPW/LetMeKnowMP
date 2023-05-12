@@ -13,7 +13,8 @@ enum class LetMeKnowScreen(@StringRes val title: Int) {
     Signup(title=R.string.signup),
     RecentChat(title=R.string.recentChat),
     Chat(title=R.string.chat),
-    SearchUser(title=R.string.searchusr)
+    SearchUser(title=R.string.searchusr),
+    EditProfile(title = R.string.editprof)
     //TODO //
 
 
@@ -46,7 +47,7 @@ fun TheLayout() {
         LetMeKnowScreen.Chat->Chat(myModel)
 
         LetMeKnowScreen.SearchUser->SearchUser(myModel)
-
+        LetMeKnowScreen.EditProfile->EditProfile(myModel)
         //TODO
 
 

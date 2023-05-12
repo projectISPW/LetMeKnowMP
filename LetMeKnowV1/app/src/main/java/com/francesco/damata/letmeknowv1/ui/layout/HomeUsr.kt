@@ -1,21 +1,26 @@
 package com.francesco.damata.letmeknowv1.ui.layout
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.francesco.damata.letmeknowv1.R
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
+import com.francesco.damata.letmeknowv1.ui.theme.button
 import com.francesco.damata.letmeknowv1.ui.theme.myBlue
 import kotlin.math.roundToInt
 
@@ -32,13 +37,31 @@ fun profColumn(){
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
-        TopAppBar(backgroundColor = MaterialTheme.colors.myBlue)
-        {
-            Text(stringResource(R.string.topBarHome),color = Color.White,fontSize = 24.sp)
-        }
+        TopAppBar(
+            {
+                IconButton(onClick = {
+                    ScreenRouter.navigateTo(LetMeKnowScreen.Login)
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Logout,
+                        contentDescription = stringResource(R.string.user)
+                    )
+                }
+                Text(stringResource(R.string.topBarHome),color = Color.White,fontSize = 24.sp)
+            })
         Text(text = stringResource(R.string.profile),color = Color.Black,fontSize = 40.sp)
-        Text(text = "User #00000",color = MaterialTheme.colors.myBlue,fontSize = 20.sp)         //Al posto degli 00000 ci va l'userid
+        Text(text = "User #00000",color = MaterialTheme.colors.myBlue,fontSize = 30.sp)         //Al posto degli 00000 ci va $uid
         HomeTraits()
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(50.dp),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically){
+            EditButton()
+            Spacer(modifier = Modifier.width(45.dp))
+            RecentChatButton()
+        }
+        myImage()
     }
 }
 
@@ -47,7 +70,7 @@ fun HomeTraits() {
     val emphaty : Float = 1f
     val humor : Float = 1f
     val optimism : Float = 1f           //Questi valori saranno poi da caricare dal db
-    Column() {
+    Column {
         NotMutableTraits("emotional",emphaty)
         NotMutableTraits("lively",humor)
         NotMutableTraits("optimism",optimism)
@@ -55,7 +78,7 @@ fun HomeTraits() {
 }
 @Composable
 fun NotMutableTraits(wich:String,trait : Float){
-    Row() {
+    Row{
         Text(
             fontWeight = FontWeight.SemiBold,
             fontSize = 24.sp,
@@ -72,6 +95,40 @@ fun NotMutableTraits(wich:String,trait : Float){
                 .padding( start = 40.dp,end=5.dp),
         )
     }
+}
+
+@Composable
+fun EditButton(){
+    Button(onClick = {
+            ScreenRouter.navigateTo(LetMeKnowScreen.EditProfile)
+    }, colors = ButtonDefaults.textButtonColors(
+        backgroundColor = MaterialTheme.colors.button
+    )){
+        Text("Edit Profile",color = Color.White,fontSize = 20.sp)
+    }
+}
+
+@Composable
+fun RecentChatButton(){
+    Button(onClick = {
+        ScreenRouter.navigateTo(LetMeKnowScreen.RecentChat)
+    }, colors = ButtonDefaults.textButtonColors(
+        backgroundColor = MaterialTheme.colors.button
+    )){
+        Text("Chat",color = Color.White,fontSize = 20.sp)
+    }
+}
+
+@Composable
+fun myImage(){
+    Image(
+        painter = painterResource(id = R.drawable.brain),
+        contentDescription ="",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .size(200.dp)
+    )
+
 }
 
 

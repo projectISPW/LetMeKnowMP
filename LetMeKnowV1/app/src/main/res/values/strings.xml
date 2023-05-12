@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">LetMeKnow</string>
     <string name="login">Login</string>
+    <string name="editprof">EditProfile</string>
     <string name="back_button">back</string>
     <string name="home">Home</string>
     <string name="signup">Signup</string>
@@ -13,4 +14,6 @@
     <string name="topBarHome">Home</string>
     <string name="profile">Profile</string>
     <string name="user">user</string>
+    <string name="backbutton">BackButton</string>
+    <string name="edprof">Edit Profile</string>
 </resources>
