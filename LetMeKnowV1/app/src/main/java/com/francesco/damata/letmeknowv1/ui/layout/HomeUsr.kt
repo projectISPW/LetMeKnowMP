@@ -122,11 +122,11 @@ fun RecentChatButton(){
 @Composable
 fun myImage(){
     Image(
-        painter = painterResource(id = R.drawable.brain),
+        painter = painterResource(id = R.drawable.sleep_home),
         contentDescription ="",
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .size(200.dp)
+            .size(500.dp)
     )
 
 }
