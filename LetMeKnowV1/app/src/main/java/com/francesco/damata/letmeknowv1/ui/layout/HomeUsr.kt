@@ -40,8 +40,9 @@ fun profColumn(){
         TopAppBar(
             {
                 IconButton(onClick = {
-                    ScreenRouter.navigateTo(LetMeKnowScreen.Login)
-                }) {
+                    ScreenRouter.navigateTo(LetMeKnowScreen.SearchUser)         //Ricambia poi con login
+                }
+                ) {
                     Icon(
                         imageVector = Icons.Default.Logout,
                         contentDescription = stringResource(R.string.user)

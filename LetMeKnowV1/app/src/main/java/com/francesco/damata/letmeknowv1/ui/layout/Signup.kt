@@ -74,9 +74,6 @@ fun Signup(myModelScreen: MyModelScreen) {
     }
 }
 
-
-
-
     @Composable
     fun InputData(){
         val email = rememberSaveable() {
