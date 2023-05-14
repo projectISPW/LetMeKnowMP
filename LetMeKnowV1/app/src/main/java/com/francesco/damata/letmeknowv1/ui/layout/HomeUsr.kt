@@ -40,7 +40,7 @@ fun profColumn(){
         TopAppBar(
             {
                 IconButton(onClick = {
-                    ScreenRouter.navigateTo(LetMeKnowScreen.SearchUser)         //Ricambia poi con login
+                    ScreenRouter.navigateTo(LetMeKnowScreen.Login)
                 }
                 ) {
                     Icon(
@@ -56,7 +56,7 @@ fun profColumn(){
         Row(modifier = Modifier
             .fillMaxWidth()
             .padding(50.dp),
-        horizontalArrangement = Arrangement.Start,
+        horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically){
             EditButton()
             Spacer(modifier = Modifier.width(45.dp))
