@@ -52,7 +52,7 @@ fun profColumn(){
             })
         Text(text = stringResource(R.string.profile),color = Color.Black,fontSize = 40.sp)
         Text(text = "User #00000",color = MaterialTheme.colors.myBlue,fontSize = 30.sp)         //Al posto degli 00000 ci va $uid
-        HomeTraits()
+        InputTraits(true)
         Row(modifier = Modifier
             .fillMaxWidth()
             .padding(50.dp),
@@ -65,6 +65,7 @@ fun profColumn(){
         myImage()
     }
 }
+/*REUSE OF THE CODE
 
 @Composable
 fun HomeTraits() {
@@ -77,6 +78,7 @@ fun HomeTraits() {
         NotMutableTraits("optimism",optimism)
     }
 }
+
 @Composable
 fun NotMutableTraits(wich:String,trait : Float){
     Row{
@@ -97,7 +99,7 @@ fun NotMutableTraits(wich:String,trait : Float){
         )
     }
 }
-
+*/
 @Composable
 fun EditButton(){
     Button(onClick = {

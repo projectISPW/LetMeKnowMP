@@ -45,7 +45,7 @@ fun EditProfile(myModelScreen: MyModelScreen){      //Passo come parametro i tra
                 Text(stringResource(R.string.edprof), color = Color.White, fontSize = 24.sp)
             })
         Text(text = "Select your profile parameters ", color =  MaterialTheme.colors.myBlue, fontSize = 25.sp)
-        EditTraits()
+        InputTraits(false)
         Button(onClick = {
             //Manca parte di controllo che scrive i traits su db
             ScreenRouter.navigateTo(LetMeKnowScreen.HomeUsr)
@@ -55,44 +55,6 @@ fun EditProfile(myModelScreen: MyModelScreen){      //Passo come parametro i tra
             Text("Confirm",color = Color.White,fontSize = 20.sp)
         }
         myImageEditProf()
-    }
-}
-
-@Composable
-fun EditTraits() {          //tratti del profilo vengono salvati in queste variabili
-    val empSlider = rememberSaveable {
-        mutableStateOf(1f)
-    }
-    val humSlider = rememberSaveable {
-        mutableStateOf(1f)
-    }
-    val optSlider = rememberSaveable{
-        mutableStateOf(1f)
-    }
-    Column {
-        EditedTraits("emotional",empSlider)
-        EditedTraits("lively",humSlider)
-        EditedTraits("optimism",optSlider)
-    }
-}
-@Composable
-fun EditedTraits(wich:String,trait : MutableState<Float>){
-    Row {
-        Text(
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 24.sp,
-            modifier = Modifier
-                .padding(top = 13.dp, start = 20.dp)
-                .width(170.dp),
-
-            text = wich+" :    "+trait.value.roundToInt().toString())
-        Slider(value = trait.value,
-            onValueChange = { trait.value = it },
-            valueRange = 1f..5f,
-            colors= SliderDefaults.colors(Color.Blue),
-            modifier = Modifier
-                .padding( start = 40.dp,end=5.dp),
-        )
     }
 }
 

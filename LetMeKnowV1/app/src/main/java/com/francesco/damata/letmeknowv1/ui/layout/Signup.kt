@@ -1,10 +1,10 @@
 package com.francesco.damata.letmeknowv1.ui.layout
 
-import android.provider.Settings.Global.getString
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Visibility
@@ -36,7 +36,8 @@ fun Signup(myModelScreen: MyModelScreen) {
     Column(
         modifier = Modifier
             //.padding(16.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
@@ -65,7 +66,7 @@ fun Signup(myModelScreen: MyModelScreen) {
             color = MaterialTheme.colors.letMeKnowColor
         )
         InputData()
-        InputTraits()
+        InputTraits(false)
         Button(onClick = { }, colors = ButtonDefaults.textButtonColors(
             backgroundColor = MaterialTheme.colors.button
         )) {
@@ -151,42 +152,8 @@ fun Signup(myModelScreen: MyModelScreen) {
 
        }
     }
-    @Composable
-    fun InputTraits() {
-        val empSlider = rememberSaveable() {
-            mutableStateOf(1f)
-        }
-        val humSlider = rememberSaveable() {
-            mutableStateOf(1f)
-        }
-        val optSlider = rememberSaveable() {
-            mutableStateOf(1f)
-        }
-        Column() {
-            Traits("emotional",empSlider)
-            Traits("lively",humSlider)
-            Traits("optimism",optSlider)
-        }
-    }
-    @Composable
-    fun Traits(wich:String,trait :MutableState<Float>){
-        Row() {
-            Text(
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 24.sp,
-                modifier = Modifier
-                    .padding( top = 13.dp,start=20.dp)
-                    .width(170.dp),
 
-                text = wich+" :    "+trait.value.roundToInt().toString())
-            Slider(value = trait.value,
-                onValueChange = { trait.value = it },
-                valueRange = 1f..5f,
-                colors= SliderDefaults.colors(Color.Blue),
-                modifier = Modifier
-                        .padding( start = 40.dp,end=5.dp),
-            )
-        }
-    }
+
+
 
 
