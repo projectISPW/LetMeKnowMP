@@ -1,5 +1,6 @@
 package com.francesco.damata.letmeknowv1.ui.layout
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,12 +18,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstraintLayout
 import com.francesco.damata.letmeknowv1.R
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 import com.francesco.damata.letmeknowv1.ui.theme.recived
@@ -33,102 +36,134 @@ fun Chat(myModelScreen: MyModelScreen) {
     val MessageListObs=rememberSaveable() {
         mutableStateOf(MessageListChat)
     }
-    Column (modifier=Modifier
-        .verticalScroll(rememberScrollState())
-    ){
+    Column(modifier=Modifier.fillMaxHeight()) {
+            TopAppBar(
+                {
+                    IconButton({
+                        ScreenRouter.navigateTo(LetMeKnowScreen.RecentChat)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back_button),
+                            modifier = Modifier.padding(start = 5.dp)
+                        )
+                    }
+                    IconButton({
+                        ScreenRouter.navigateTo(LetMeKnowScreen.RecentChat)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = stringResource(R.string.back_button)
+                        )
+                    }
 
-        TopAppBar(
-            {
-                IconButton({
-                    ScreenRouter.navigateTo(LetMeKnowScreen.RecentChat)
-                }) {
-                    Icon(
-                        imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back_button),
-                        modifier=Modifier .padding(start = 5.dp)
+                    Text(
+                        text = stringResource(R.string.user) + "#123456",
+                        color = Color.White,
+                        fontSize = 24.sp,
+                        modifier = Modifier
+                            .align(Alignment.Start)
+                            .padding(start = 20.dp, top = 10.dp)
                     )
                 }
-                IconButton({
-                    ScreenRouter.navigateTo(LetMeKnowScreen.RecentChat)
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Person,
-                        contentDescription = stringResource(R.string.back_button)
-                    )
-                }
-
-                Text(
-                    text = stringResource(R.string.user) +"#123456", color = Color.White, fontSize = 24.sp,
-                    modifier = Modifier
-                        .align(Alignment.Start)
-                        .padding(start = 20.dp, top = 10.dp)
-                )
-            }
-        )
-        Conversation(MessageListObs.value)
+            )
+        Column(
+            modifier = Modifier.fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+        ) {
+            Conversation(MessageListObs.value)
+        }
         ChatBar(MessageListObs)
     }
 }
 @Composable
 fun Conversation(messages: List<Message>) {
-    LazyColumn(
-        modifier=Modifier.height(600.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        items(items=messages){
-                message->
-            MessageChat(message,"Francesco","Jessie")
+    val configuration = LocalConfiguration.current
+    when (configuration.orientation) {
+        Configuration.ORIENTATION_LANDSCAPE -> {
+            LazyColumn(
+                modifier=Modifier.height(200.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                items(items=messages){
+                        message->
+                    MessageChat(message,"Francesco","Jessie")
+                }
+            }
+        }
+
+        // Other wise
+        else -> {
+            LazyColumn(
+                modifier=Modifier.height(600.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                items(items=messages){
+                        message->
+                    MessageChat(message,"Francesco","Jessie")
+                }
+            }
         }
     }
+
 }
 @Composable
 fun MessageChat(message:Message, user:String, sender:String){
     var msgExpanded= rememberSaveable() {
         mutableStateOf(false)
     }
-    ConstraintLayout() {
-        val (row,Surface)=createRefs()
-        Row{
-            if (message.sender==user) {
-                Spacer(modifier = Modifier.width(100.dp))
-                Surface(shape = MaterialTheme.shapes.medium, elevation = 1.dp) {
-                    Spacer(modifier = Modifier.width(40.dp))
-                    Text(
-                        message.reciver,
-                        style = MaterialTheme.typography.body1,
-                        fontSize = 24.sp,
-                        maxLines = if (msgExpanded.value) Int.MAX_VALUE else 5,
-                        textAlign = TextAlign.End,
-                        color = Color.White,
-                        modifier = Modifier
-                            .background(MaterialTheme.colors.sended)
-                            .width(300.dp)
+    if (message.sender==user) {
+        Column(
+        modifier=Modifier
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.End
+    ) {
+            Surface(
+                shape = MaterialTheme.shapes.medium,
+                elevation = 1.dp,
+                modifier = Modifier
+                    .layoutId("surface")
+            ) {
+                Text(
+                    message.reciver,
+                    style = MaterialTheme.typography.body1,
+                    fontSize = 24.sp,
+                    maxLines = if (msgExpanded.value) Int.MAX_VALUE else 5,
+                    textAlign = TextAlign.End,
+                    color = Color.White,
+                    modifier = Modifier
+                        .background(MaterialTheme.colors.sended)
+                        .width(300.dp)
 
-
-                    )
-                }
-            }
-            else{
-
-                Surface(shape=MaterialTheme.shapes.medium,elevation =1.dp){
-                    Text(message.reciver,
-                        style=MaterialTheme.typography.body1,
-                        color = Color.White,
-                        fontSize = 24.sp,
-                        maxLines=if(msgExpanded.value)Int.MAX_VALUE else 5,
-                        modifier= Modifier
-                            .padding(start = 10.dp)
-                            .background(MaterialTheme.colors.recived)
-                            .widthIn(100.dp, 300.dp)
-                    )
-                }
-
+                )
             }
 
         }
-    }
 
+    }
+    else{
+        Column(
+            modifier=Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Surface(shape=MaterialTheme.shapes.medium,elevation =1.dp){
+                Text(message.reciver,
+                    style=MaterialTheme.typography.body1,
+                    color = Color.White,
+                    fontSize = 24.sp,
+                    maxLines=if(msgExpanded.value)Int.MAX_VALUE else 5,
+                    modifier= Modifier
+                        .padding(start = 10.dp)
+                        .background(MaterialTheme.colors.recived)
+                        .widthIn(100.dp, 300.dp)
+                )
+            }
+        }
+    }
 }
+
+
 @Composable
 fun ChatBar(MessageListObs: MutableState<MutableList<Message>>) {
     val inputMsg = rememberSaveable() {
