@@ -96,7 +96,7 @@ fun Signup(myModelScreen: MyModelScreen) {
                },
                textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
                label = {
-                   Text("Email:", fontSize = 24.sp)
+                   Text(stringResource(R.string.email), fontSize = 24.sp)
                },
                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                modifier=Modifier.width(300.dp)
@@ -111,7 +111,7 @@ fun Signup(myModelScreen: MyModelScreen) {
                textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
                modifier=Modifier.width(300.dp),
                label = {
-                   Text("Password:", fontSize = 24.sp)
+                   Text(stringResource(R.string.pswd), fontSize = 24.sp)
                },
                trailingIcon={
                    IconButton(onClick={passwordVisibility.value=!passwordVisibility.value}){
@@ -144,7 +144,7 @@ fun Signup(myModelScreen: MyModelScreen) {
                modifier=Modifier.width(300.dp),
                textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
                label = {
-                   Text("Confirm Password:", fontSize = 24.sp)
+                   Text(stringResource(R.string.confirm_pswd), fontSize = 24.sp)
                },
                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                visualTransformation = if(passwordVisibility.value)VisualTransformation.None

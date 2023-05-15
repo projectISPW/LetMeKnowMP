@@ -100,15 +100,6 @@ fun signupText(){
                 detectTapGestures(
                     onPress = {
                         ScreenRouter.navigateTo(LetMeKnowScreen.Signup)
-                    },
-                    onTap = {
-                        println("on tap")
-                    },
-                    onDoubleTap = {
-                        println("on double tap")
-                    },
-                    onLongPress = {
-                        println("on long press")
                     }
                 )
             }
@@ -139,7 +130,7 @@ fun InputUsr(){
             }, textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
             modifier=Modifier.width(300.dp),
             label = {
-                Text("User:", fontSize = 24.sp)
+                Text(stringResource(R.string.user), fontSize = 24.sp)
             }
         )
 
@@ -151,7 +142,7 @@ fun InputUsr(){
             },
             textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
             label = {
-                Text("Password:", fontSize = 24.sp)
+                Text(stringResource(R.string.pswd), fontSize = 24.sp)
             },
             modifier=Modifier.width(300.dp),
             trailingIcon={
@@ -185,7 +176,7 @@ fun InputUsr(){
             backgroundColor = MaterialTheme.colors.button
 
         )) {
-            Text("Verify",color = Color.White,fontSize = 24.sp)
+            Text(stringResource(R.string.confirm),color = Color.White,fontSize = 24.sp)
         }
     }
 

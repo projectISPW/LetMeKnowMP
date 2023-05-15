@@ -13,9 +13,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.francesco.damata.letmeknowv1.R
 import kotlin.math.roundToInt
 @Composable
 fun InputTraits(locked:Boolean) {
@@ -29,9 +31,9 @@ fun InputTraits(locked:Boolean) {
         mutableStateOf(1f)
     }
     Column() {
-        Traits("emotional",empSlider,locked)
-        Traits("lively", humSlider, locked)
-        Traits("optimistic", optSlider, locked)
+        Traits(stringResource(R.string.emotional),empSlider,locked)
+        Traits(stringResource(R.string.lively), humSlider, locked)
+        Traits(stringResource(R.string.optimism), optSlider, locked)
     }
 }
 @Composable
@@ -42,7 +44,7 @@ fun Traits(wich: String, trait: MutableState<Float>, locked: Boolean){
             fontSize = 24.sp,
             modifier = Modifier
                 .padding( top = 13.dp,start=20.dp)
-                .width(250.dp),
+                .width(180.dp),
 
             text = wich+" :    "+trait.value.roundToInt().toString())
         if(locked){
@@ -51,7 +53,7 @@ fun Traits(wich: String, trait: MutableState<Float>, locked: Boolean){
                 valueRange = 1f..5f,
                 colors= SliderDefaults.colors(Color.Blue),
                 modifier = Modifier
-                    .padding( start = 40.dp,end=200.dp),
+                    .padding( start = 40.dp,end=5.dp),
             )
         }else{
             Slider(value = trait.value,
@@ -59,7 +61,7 @@ fun Traits(wich: String, trait: MutableState<Float>, locked: Boolean){
                 valueRange = 1f..5f,
                 colors= SliderDefaults.colors(Color.Blue),
                 modifier = Modifier
-                    .padding( start = 40.dp,end=200.dp),
+                    .padding( start = 40.dp,end=5.dp),
             )
         }
 

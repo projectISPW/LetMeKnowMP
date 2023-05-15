@@ -7,8 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -50,12 +49,37 @@ fun RecentChat(myModelScreen: MyModelScreen) {
                         .align(Alignment.Start)
                         .padding(start = 20.dp, top = 10.dp))
             })
-       Conversations(MessageList)
+        SearchBar()
+        Conversations(MessageList)
+        Button(LetMeKnowScreen.SearchUser,"search for new Users")
     }
 }
 @Composable
+fun SearchBar(){
+    val search = rememberSaveable() {
+        mutableStateOf("")
+    }
+    TextField(value = search.value,
+        onValueChange = {
+           search.value=it
+        },
+        textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
+        modifier=Modifier.fillMaxWidth(),
+        label = {
+            Text(stringResource(R.string.searchMsg), fontSize = 24.sp)
+        },
+        trailingIcon={
+            IconButton(onClick={}){
+                Icon(
+                    imageVector = Icons.Default.ManageSearch,//https://fonts.google.com/icons
+                    contentDescription =stringResource(R.string.searchMsg)//in there you can find into your messages
+                )
+            }
+        })
+}
+@Composable
 fun Conversations(messages: List<Message>) {
-    LazyColumn(modifier=Modifier.height(500.dp)) {
+    LazyColumn(modifier=Modifier.height(450.dp)) {
        items(items=messages){
            message->MessageBox(message)
        }
