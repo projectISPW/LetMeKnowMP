@@ -23,4 +23,5 @@
     <string name="pswd">Password :</string>
     <string name="email">Email :</string>
     <string name="searchMsg">Search into messages</string>
+    <string name="sendMessage">Send Message</string>
 </resources>
