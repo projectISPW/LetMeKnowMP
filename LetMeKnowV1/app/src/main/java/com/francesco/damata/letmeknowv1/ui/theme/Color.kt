@@ -2,7 +2,6 @@ package com.francesco.damata.letmeknowv1.ui.theme
 
 import androidx.compose.material.Colors
 import androidx.compose.ui.graphics.Color
-import com.francesco.damata.letmeknowv1.ui.layout.color
 
 val Purple200 = Color(0xFFBB86FC)
 val Purple500 = Color(0xFF6200EE)
@@ -18,3 +17,11 @@ val Colors.recived
     get()="#D6D6D6".color
 val Colors.sended
     get()="#377DFF".color
+val Colors.icon
+    get()="#8290f1".color
+
+
+
+
+val String.color
+    get()=Color(android.graphics.Color.parseColor(this))

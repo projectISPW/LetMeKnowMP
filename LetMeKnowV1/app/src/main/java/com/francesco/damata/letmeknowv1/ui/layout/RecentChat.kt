@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.francesco.damata.letmeknowv1.R
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
+import com.francesco.damata.letmeknowv1.ui.theme.icon
 import com.francesco.damata.letmeknowv1.ui.theme.letMeKnowColor
 
 
@@ -103,16 +104,13 @@ fun MessageBox(message:Message){
             IconButton(onClick = {
                 ScreenRouter.navigateTo(LetMeKnowScreen.Chat)
 
-            },
-                modifier = Modifier
-                    .then(Modifier.size(70.dp))
-                    .border(5.dp, MaterialTheme.colors.letMeKnowColor, shape = CircleShape)
+            }
             ) {
-                Icon(Icons.Default.Person,
+                Icon(Icons.Default.Message,
                     contentDescription = "content description",
-                    tint = "#8290f1".color,
+                    tint = MaterialTheme.colors.icon,
                     modifier=Modifier
-                        .size(100.dp)
+                        .size(70.dp)
                 )
             }
             Spacer(modifier = Modifier.width(8.dp))

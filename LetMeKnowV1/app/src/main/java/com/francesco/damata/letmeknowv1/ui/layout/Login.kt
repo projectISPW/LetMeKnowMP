@@ -27,10 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.francesco.damata.letmeknowv1.R
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
-import com.francesco.damata.letmeknowv1.ui.theme.button
-import com.francesco.damata.letmeknowv1.ui.theme.letMeKnowColor
-import com.francesco.damata.letmeknowv1.ui.theme.myBlue
-
+import com.francesco.damata.letmeknowv1.ui.theme.*
 
 
 @Composable
@@ -84,7 +81,7 @@ fun ColUnderTheTop(){
             modifier = Modifier
                 .size(size = 150.dp),
             //.border(10.dp, Color.Blue, shape = CircleShape),
-            tint = "#8290f1".color,
+            tint = MaterialTheme.colors.icon,
             )
 
     }
@@ -182,5 +179,3 @@ fun InputUsr(){
 
 
 }
-val String.color
-    get()=Color(parseColor(this))

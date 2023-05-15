@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.francesco.damata.letmeknowv1.R
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
+import com.francesco.damata.letmeknowv1.ui.theme.color
+import com.francesco.damata.letmeknowv1.ui.theme.icon
 import com.francesco.damata.letmeknowv1.ui.theme.letMeKnowColor
 import kotlin.math.roundToInt
 
@@ -128,7 +130,7 @@ fun ShowPar(user : User){
             Icon(
                 Icons.Default.Message,
                 contentDescription = "content description",
-                tint = "#8290f1".color,
+                tint = MaterialTheme.colors.icon,
                 modifier = Modifier
                     .size(45.dp)
                     .border(0.dp, color = Color.White)
