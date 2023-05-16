@@ -87,7 +87,7 @@ fun Conversations(messages: List<Message>) {
     when (configuration.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> {
             LazyColumn(
-                modifier=Modifier.height(height().dp-200.dp),
+                modifier=Modifier.height(height().dp-250.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(items=messages){

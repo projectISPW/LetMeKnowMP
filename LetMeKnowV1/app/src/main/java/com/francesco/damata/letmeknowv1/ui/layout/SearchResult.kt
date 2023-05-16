@@ -1,5 +1,6 @@
 package com.francesco.damata.letmeknowv1.ui.layout
 
+import UserParV1
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -60,14 +61,20 @@ fun SearchResult(myModelScreen: MyModelScreen){
 fun FoundUser(users: List<User>) {
     LazyColumn(modifier = Modifier.height(500.dp)) {
         items(items = users) { user ->
-            UserPar(user)
+            UserParV1(user)
         }
     }
 }
 
 @Composable
 fun UserPar(user: User) {
-    Row{
+    Row(
+        modifier=Modifier.fillMaxWidth()
+            .border(5.dp, Color.Red)
+
+
+
+    ){
             Icon(
                 Icons.Default.Person,
                 contentDescription = "content description",
