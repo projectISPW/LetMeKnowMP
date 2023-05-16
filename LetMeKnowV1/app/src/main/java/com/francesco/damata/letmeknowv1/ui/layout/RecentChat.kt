@@ -1,5 +1,6 @@
 package com.francesco.damata.letmeknowv1.ui.layout
 
+import android.content.res.Configuration
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,6 +15,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -80,10 +82,31 @@ fun SearchBar(){
 }
 @Composable
 fun Conversations(messages: List<Message>) {
-    LazyColumn(modifier=Modifier.height(450.dp)) {
-       items(items=messages){
-           message->MessageBox(message)
-       }
+    val configuration = LocalConfiguration.current
+
+    when (configuration.orientation) {
+        Configuration.ORIENTATION_LANDSCAPE -> {
+            LazyColumn(
+                modifier=Modifier.height(height().dp-200.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                items(items=messages){
+                        message->MessageBox(message)
+                }
+            }
+        }
+
+        // Other wise
+        else -> {
+            LazyColumn(
+                modifier=Modifier.height(height().dp-300.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                items(items=messages){
+                        message->MessageBox(message)
+                }
+            }
+        }
     }
 }
 data class Message(val sender:String,val reciver:String,val from:String)

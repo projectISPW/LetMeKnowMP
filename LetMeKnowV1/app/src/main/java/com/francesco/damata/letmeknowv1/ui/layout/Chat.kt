@@ -77,12 +77,23 @@ fun Chat(myModelScreen: MyModelScreen) {
     }
 }
 @Composable
+fun height(): Int {
+    val configuration = LocalConfiguration.current
+    return configuration.screenHeightDp
+}
+@Composable
+fun width(): Int {
+    val configuration = LocalConfiguration.current
+    return configuration.screenWidthDp
+}
+@Composable
 fun Conversation(messages: List<Message>) {
     val configuration = LocalConfiguration.current
+
     when (configuration.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> {
             LazyColumn(
-                modifier=Modifier.height(200.dp),
+                modifier=Modifier.height(height().dp-100.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(items=messages){
@@ -95,7 +106,7 @@ fun Conversation(messages: List<Message>) {
         // Other wise
         else -> {
             LazyColumn(
-                modifier=Modifier.height(600.dp),
+                modifier=Modifier.height(height().dp-100.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(items=messages){
