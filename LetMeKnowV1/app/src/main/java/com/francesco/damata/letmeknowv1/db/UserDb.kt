@@ -10,19 +10,20 @@ import androidx.room.RoomDatabase
     version = 1
 )
 abstract class UserDb : RoomDatabase() {
+    abstract fun DaoUser():DaoUser
+    abstract fun DaoMessage():DaoMessage
     companion object {
         private var db: UserDb? = null
-
-
         fun getInstance(context: Context): UserDb {
-            if (db == null) {
+            if(db==null) {
                 db = databaseBuilder(
                     context,
-                    UserDb::class.java, "letMeKnowdbv1.db"
-                ).createFromAsset("letMeKnowdbv1.db")
+                    UserDb::class.java, "letMeKnowdbv5.db"
+                ).createFromAsset("letMeKnowdbv5.db")
                     .build()
             }
-            return db as UserDb
+
+            return db as UserDb //Oggetto statico tornato dalla singleton
         }
     }
 }

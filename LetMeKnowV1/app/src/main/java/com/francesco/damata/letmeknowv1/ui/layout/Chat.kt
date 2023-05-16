@@ -1,5 +1,6 @@
 package com.francesco.damata.letmeknowv1.ui.layout
 
+import android.content.Context
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -22,19 +23,45 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.francesco.damata.letmeknowv1.R
+import com.francesco.damata.letmeknowv1.db.Message
+import com.francesco.damata.letmeknowv1.db.RepositoryMsg
+import com.francesco.damata.letmeknowv1.db.UserDb
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 import com.francesco.damata.letmeknowv1.ui.theme.recived
 import com.francesco.damata.letmeknowv1.ui.theme.sended
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
+
+var messageList= listOf<com.francesco.damata.letmeknowv1.db.Message>()
+fun getMsg(context: Context){
+    val db=UserDb.getInstance(context)
+    val repositoryMsg=RepositoryMsg(db.DaoMessage())
+    var messages: List<com.francesco.damata.letmeknowv1.db.Message>
+    CoroutineScope(Dispatchers.IO).launch {
+        messages=repositoryMsg.readNext("0000000","0123456")
+        if(messages!=null){
+            messageList=messages
+        }else{
+
+        }
+    }
+}
 @Composable
 fun Chat(myModelScreen: MyModelScreen) {
+    val context=LocalContext.current
+    getMsg(context)
     val MessageListObs=rememberSaveable() {
-        mutableStateOf(MessageListChat)
+        mutableStateOf(messageList)
     }
     Column(modifier=Modifier.fillMaxHeight()) {
             TopAppBar(
@@ -73,7 +100,7 @@ fun Chat(myModelScreen: MyModelScreen) {
         ) {
             Conversation(MessageListObs.value)
         }
-        ChatBar(MessageListObs)
+        ChatBar(context)
     }
 }
 @Composable
@@ -87,7 +114,7 @@ fun width(): Int {
     return configuration.screenWidthDp
 }
 @Composable
-fun Conversation(messages: List<Message>) {
+fun Conversation(messages: List<com.francesco.damata.letmeknowv1.db.Message>) {
     val configuration = LocalConfiguration.current
 
     when (configuration.orientation) {
@@ -119,7 +146,7 @@ fun Conversation(messages: List<Message>) {
 
 }
 @Composable
-fun MessageChat(message:Message, user:String, sender:String){
+fun MessageChat(message:com.francesco.damata.letmeknowv1.db.Message, user:String, sender:String){
     var msgExpanded= rememberSaveable() {
         mutableStateOf(false)
     }
@@ -176,7 +203,10 @@ fun MessageChat(message:Message, user:String, sender:String){
 
 
 @Composable
-fun ChatBar(MessageListObs: MutableState<MutableList<Message>>) {
+fun ChatBar(context:Context) {
+    val db=UserDb.getInstance(context)
+    val repositoryMsg=RepositoryMsg(db.DaoMessage())
+    var messages: List<com.francesco.damata.letmeknowv1.db.Message>
     val inputMsg = rememberSaveable() {
         mutableStateOf("")
     }
@@ -189,9 +219,8 @@ fun ChatBar(MessageListObs: MutableState<MutableList<Message>>) {
         modifier=Modifier.fillMaxWidth(),
         trailingIcon={
             IconButton(onClick={
-                var msg:Message
-                msg=Message ("Francesco" , inputMsg.value,"Jessie")
-                MessageListObs.value.add(msg)
+                repositoryMsg.newMsg("0000000","0123456",inputMsg.value)
+
             }){
                 Icon(
                     imageVector = Icons.Default.Send,//https://fonts.google.com/icons
@@ -201,12 +230,4 @@ fun ChatBar(MessageListObs: MutableState<MutableList<Message>>) {
         })
 
 }
-val MessageListChat= mutableListOf<Message>(
-    Message("Francesco","Really exited","Jessie"),
-    Message("Jessie","Really exitedQ4VAEWFGWSFGVGW4STRWHTRSGHWT4ASEFVTG5QAERVTQR3EAVGQAEGQAEFGQAGRQACEQAERCQAEFGQAEFCGQAERGRQEAF","Francesco"),
-    Message("Jessie","Really exited","Francesco"),
-    Message("Francesco","Really exited","Jessie"),
-    Message("Jessie","Really exited  GRRAWdfsCQWAGRZFE CGWAESZFDVGWVERASFVQAEGGWSF","Francesco"),
-    Message("Jessie","Really exitedQ4VAEWFGWSFGVGW4STRWHTRSGHWT4ASEFVTG5QAERVTQR3EAVGQAEGQAEFGQAGRQACEQAERCQAEFGQAEFCGQAERGRQEAF","Francesco"),
-    Message("Francesco","EFQxCAEFZVHTWGRSVTBW4TSEREY5HREY5HDSTRYEYDTBEYTGD3E5TRW54TRS3V5TERTW3REVTWGRHETGJHYJEBWSTRVZWESAEAECREWZS","Jessie"),
-)
+

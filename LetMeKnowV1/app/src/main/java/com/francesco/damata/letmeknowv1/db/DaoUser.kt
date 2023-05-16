@@ -8,11 +8,10 @@ import androidx.room.Query
 @Dao
 interface DaoUser{
     @Insert
-    suspend fun insert(proverb: User)
+    suspend fun insert(user: User)
     @Insert
-    suspend fun update(proverb: User)
-    @Query("SELECT * FROM Proverb WHERE userid")
-    fun getUsr(): LiveData<MutableList<User>>
+    suspend fun update(user: User)
+
 
 
 
