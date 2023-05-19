@@ -1,7 +1,10 @@
 package com.francesco.damata.letmeknowv1.ui.layout
 
+import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,6 +18,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -28,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.francesco.damata.letmeknowv1.R
 import com.francesco.damata.letmeknowv1.db.Message
 import com.francesco.damata.letmeknowv1.db.RepositoryMsg
@@ -35,34 +40,22 @@ import com.francesco.damata.letmeknowv1.db.UserDb
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 import com.francesco.damata.letmeknowv1.ui.theme.recived
 import com.francesco.damata.letmeknowv1.ui.theme.sended
+import com.francesco.damata.letmeknowv1.viewModel.MessageViewModel
+import com.francesco.damata.letmeknowv1.viewModel.MessageViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-
-var messageList= listOf<com.francesco.damata.letmeknowv1.db.Message>()
-fun getMsg(context: Context){
-    val db=UserDb.getInstance(context)
-    val repositoryMsg=RepositoryMsg(db.DaoMessage())
-    var messages: List<com.francesco.damata.letmeknowv1.db.Message>
-    CoroutineScope(Dispatchers.IO).launch {
-        messages=repositoryMsg.readNext("0000000","0123456")
-        if(messages!=null){
-            messageList=messages
-        }else{
-
-        }
-    }
-}
 @Composable
 fun Chat(myModelScreen: MyModelScreen) {
     val context=LocalContext.current
-    getMsg(context)
-    val MessageListObs=rememberSaveable() {
-        mutableStateOf(messageList)
-    }
+    val viewModel: MessageViewModel = viewModel(
+        factory = MessageViewModelFactory(context.applicationContext as Application)
+    )
+    val items =viewModel.getChat("0000000","0123456").observeAsState(listOf()).value
+
     Column(modifier=Modifier.fillMaxHeight()) {
             TopAppBar(
                 {
@@ -98,9 +91,9 @@ fun Chat(myModelScreen: MyModelScreen) {
             modifier = Modifier.fillMaxWidth()
                 .verticalScroll(rememberScrollState())
         ) {
-            Conversation(MessageListObs.value)
+            Conversation(items)
         }
-        ChatBar(context)
+        ChatBar(viewModel)
     }
 }
 @Composable
@@ -114,9 +107,11 @@ fun width(): Int {
     return configuration.screenWidthDp
 }
 @Composable
-fun Conversation(messages: List<com.francesco.damata.letmeknowv1.db.Message>) {
+fun Conversation(messages: List<Message>) {
     val configuration = LocalConfiguration.current
-
+    for(i in messages){
+        println("\n\n\n\n text message.:"+i.text+"\n\n\n\n")
+    }
     when (configuration.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> {
             LazyColumn(
@@ -125,7 +120,7 @@ fun Conversation(messages: List<com.francesco.damata.letmeknowv1.db.Message>) {
             ) {
                 items(items=messages){
                         message->
-                    MessageChat(message,"Francesco","Jessie")
+                    MessageChat(message,"0000000","0123456")
                 }
             }
         }
@@ -133,12 +128,12 @@ fun Conversation(messages: List<com.francesco.damata.letmeknowv1.db.Message>) {
         // Other wise
         else -> {
             LazyColumn(
-                modifier=Modifier.height(height().dp-100.dp),
+                modifier=Modifier.height(height().dp-130.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(items=messages){
                         message->
-                    MessageChat(message,"Francesco","Jessie")
+                    MessageChat(message,"0000000","0123456")
                 }
             }
         }
@@ -146,7 +141,7 @@ fun Conversation(messages: List<com.francesco.damata.letmeknowv1.db.Message>) {
 
 }
 @Composable
-fun MessageChat(message:com.francesco.damata.letmeknowv1.db.Message, user:String, sender:String){
+fun MessageChat(message:Message, user:String, sender:String){
     var msgExpanded= rememberSaveable() {
         mutableStateOf(false)
     }
@@ -163,7 +158,7 @@ fun MessageChat(message:com.francesco.damata.letmeknowv1.db.Message, user:String
                     .layoutId("surface")
             ) {
                 Text(
-                    message.reciver,
+                    message.text,
                     style = MaterialTheme.typography.body1,
                     fontSize = 24.sp,
                     maxLines = if (msgExpanded.value) Int.MAX_VALUE else 5,
@@ -186,7 +181,8 @@ fun MessageChat(message:com.francesco.damata.letmeknowv1.db.Message, user:String
             horizontalAlignment = Alignment.Start
         ) {
             Surface(shape=MaterialTheme.shapes.medium,elevation =1.dp){
-                Text(message.reciver,
+                Text(
+                    message.text,
                     style=MaterialTheme.typography.body1,
                     color = Color.White,
                     fontSize = 24.sp,
@@ -202,12 +198,10 @@ fun MessageChat(message:com.francesco.damata.letmeknowv1.db.Message, user:String
 }
 
 
+
 @Composable
-fun ChatBar(context:Context) {
-    val db=UserDb.getInstance(context)
-    val repositoryMsg=RepositoryMsg(db.DaoMessage())
-    var messages: List<com.francesco.damata.letmeknowv1.db.Message>
-    val inputMsg = rememberSaveable() {
+fun ChatBar(viewModel: MessageViewModel) {
+    var inputMsg = rememberSaveable() {
         mutableStateOf("")
     }
     TextField(value = inputMsg.value,
@@ -219,8 +213,8 @@ fun ChatBar(context:Context) {
         modifier=Modifier.fillMaxWidth(),
         trailingIcon={
             IconButton(onClick={
-                repositoryMsg.newMsg("0000000","0123456",inputMsg.value)
-
+                viewModel.writeMessage("0000000","0123456",inputMsg.value)
+                inputMsg.value=""
             }){
                 Icon(
                     imageVector = Icons.Default.Send,//https://fonts.google.com/icons

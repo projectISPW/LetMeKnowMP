@@ -2,6 +2,7 @@ package com.francesco.damata.letmeknowv1.db
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,7 +13,7 @@ class RepositoryMsg(private val msgDao:DaoMessage) {
     fun readNext(userid:String){
 
     }
-    fun readNext(sender:String,reciver:String):List<Message>{
+    fun getChat(sender:String,reciver:String): LiveData<MutableList<Message>> {
         return msgDao.getChat(sender,reciver)
     }
     fun update(msg:Message){
@@ -21,13 +22,7 @@ class RepositoryMsg(private val msgDao:DaoMessage) {
         }
     }
     @RequiresApi(Build.VERSION_CODES.O)
-    fun newMsg(sender:String, reciver:String, text:String){
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-        val current = LocalDateTime.now().format(formatter)
-        println("i am here")
-        CoroutineScope(Dispatchers.IO).launch{
-            msgDao.insert(Message(current,sender,reciver,text))
-        }
-
+    suspend fun writeMsg(message:Message){
+        msgDao.insert(message)
     }
 }

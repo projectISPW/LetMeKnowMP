@@ -15,9 +15,9 @@ interface DaoMessage {
     //fun insertMessage(sender:String,reciver:String,text:String)
 
     @Query("SELECT * FROM Message WHERE sender= :usr OR reciver= :usr")
-    fun getChats(usr:String): List<Message>
+    fun getChats(usr:String): MutableList<Message>
 
     @Query("SELECT * FROM Message WHERE (Sender= :sender AND Reciver= :reciver) OR (Sender= :reciver AND Reciver= :sender) ")
-    fun getChat(reciver:String,sender:String): List<Message>
+    fun getChat(reciver:String,sender:String):  LiveData<MutableList<Message>>
 
 }
