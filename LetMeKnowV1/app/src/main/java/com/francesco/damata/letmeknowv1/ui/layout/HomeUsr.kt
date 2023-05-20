@@ -21,11 +21,11 @@ import com.francesco.damata.letmeknowv1.ui.theme.myBlue
 
 @Composable
 fun HomeUsr(myModelScreen: MyModelScreen){
-    profColumn(myModelScreen.user)
+    profColumn(myModelScreen)
 }
 
 @Composable
-fun profColumn(userid:String){
+fun profColumn(myModelScreen: MyModelScreen){
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -41,14 +41,14 @@ fun profColumn(userid:String){
                 ) {
                     Icon(
                         imageVector = Icons.Default.Logout,
-                        contentDescription = stringResource(R.string.user)+userid
+                        contentDescription = stringResource(R.string.user)+myModelScreen.user
                     )
                 }
                 Text(stringResource(R.string.topBarHome),color = Color.White,fontSize = 24.sp)
             })
         Text(text = stringResource(R.string.profile),color = Color.Black,fontSize = 40.sp)
-        Text(text = stringResource(R.string.user) +userid,color = MaterialTheme.colors.myBlue,fontSize = 30.sp)         //Al posto degli 00000 ci va $uid
-        InputTraits(true)
+        Text(text = stringResource(R.string.user) +myModelScreen.user,color = MaterialTheme.colors.myBlue,fontSize = 30.sp)         //Al posto degli 00000 ci va $uid
+        InputTraits(true,myModelScreen)
         Row(modifier = Modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,

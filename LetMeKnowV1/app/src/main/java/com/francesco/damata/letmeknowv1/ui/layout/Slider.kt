@@ -18,17 +18,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.francesco.damata.letmeknowv1.R
+import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 import kotlin.math.roundToInt
 @Composable
-fun InputTraits(locked:Boolean) {
+fun InputTraits(locked:Boolean,myModelScreen :MyModelScreen) {
     val empSlider = rememberSaveable() {
-        mutableStateOf(1f)
+        mutableStateOf(myModelScreen.userClass.emotional.toFloat())
     }
     val humSlider = rememberSaveable() {
-        mutableStateOf(1f)
+        mutableStateOf(myModelScreen.userClass.lively.toFloat())
     }
     val optSlider = rememberSaveable() {
-        mutableStateOf(1f)
+        mutableStateOf(myModelScreen.userClass.optimistic.toFloat())
     }
     Column() {
         Traits(stringResource(R.string.emotional),empSlider,locked)

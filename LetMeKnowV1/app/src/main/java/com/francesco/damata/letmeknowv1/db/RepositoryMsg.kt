@@ -10,9 +10,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class RepositoryMsg(private val msgDao:DaoMessage) {
-    fun readNext(userid:String){
-
-    }
     fun getChat(sender:String,reciver:String): LiveData<MutableList<Message>> {
         return msgDao.getChat(sender,reciver)
     }

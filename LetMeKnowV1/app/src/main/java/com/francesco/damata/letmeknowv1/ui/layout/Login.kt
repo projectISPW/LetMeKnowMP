@@ -1,6 +1,7 @@
 package com.francesco.damata.letmeknowv1.ui.layout
 
-import android.graphics.Color.parseColor
+import android.app.Application
+import android.content.Context
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -10,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -17,17 +19,22 @@ import androidx.compose.ui.Modifier
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.francesco.damata.letmeknowv1.R
+import com.francesco.damata.letmeknowv1.db.User
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 import com.francesco.damata.letmeknowv1.ui.theme.*
+import com.francesco.damata.letmeknowv1.viewModel.MessageViewModelFactory
+import com.francesco.damata.letmeknowv1.viewModel.UserViewModel
+import com.francesco.damata.letmeknowv1.viewModel.UserViewModelFactory
 
 
 @Composable
@@ -53,11 +60,12 @@ fun MainLayout(myModelScreen: MyModelScreen) {
                 Text("Signup",color = Color.White,fontSize = 24.sp,
                     modifier = Modifier
                         .align(Alignment.Start)
-                        .padding(start = 20.dp,top=10.dp))
+                        .padding(start = 20.dp, top = 10.dp))
             })
         ColUnderTheTop()
+        InputUsr(myModelScreen =myModelScreen , context = LocalContext.current )
         signupText()
-        InputUsr()
+
     }
 }
 @Composable
@@ -103,16 +111,16 @@ fun signupText(){
     )
 }
 @Composable
-fun InputUsr(){
-    val user = rememberSaveable() {
-        mutableStateOf("")
-    }
+fun InputUsr(myModelScreen: MyModelScreen,context: Context){
     val password = rememberSaveable() {
         mutableStateOf("")
     }
     val passwordVisibility = rememberSaveable() {
         mutableStateOf(false)
     }
+    val viewModel: UserViewModel = viewModel(
+        factory = UserViewModelFactory(context.applicationContext as Application)
+    )
     Column(
         modifier = Modifier
             //.padding(16.dp)
@@ -121,9 +129,9 @@ fun InputUsr(){
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         TextField(
-            value = user.value,
+            value = myModelScreen.user,
             onValueChange = {
-                user.value = it
+                myModelScreen.user = it
             }, textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
             modifier=Modifier.width(300.dp),
             label = {
@@ -165,9 +173,12 @@ fun InputUsr(){
             else PasswordVisualTransformation()
         )
         Spacer(modifier = Modifier.height(16.dp))
+        var user =viewModel.getLogin(myModelScreen.user,password.value).observeAsState().value
         Button(onClick = {
-            if (user.value=="123456" && password.value=="password"){
+            if (user!=null){
                 ScreenRouter.navigateTo(LetMeKnowScreen.HomeUsr)
+                myModelScreen.user=user.userid
+                myModelScreen.userClass=user
             }
         }, colors = ButtonDefaults.textButtonColors(
             backgroundColor = MaterialTheme.colors.button

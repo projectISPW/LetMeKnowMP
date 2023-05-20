@@ -9,21 +9,21 @@ import androidx.room.RoomDatabase
     entities = [User::class,Message::class],
     version = 1
 )
-abstract class UserDb : RoomDatabase() {
+abstract class LetMeKnowDB : RoomDatabase() {
     abstract fun DaoUser():DaoUser
     abstract fun DaoMessage():DaoMessage
     companion object {
-        private var db: UserDb? = null
-        fun getInstance(context: Context): UserDb {
+        private var db: LetMeKnowDB? = null
+        fun getInstance(context: Context): LetMeKnowDB {
             if(db==null) {
                 db = databaseBuilder(
                     context,
-                    UserDb::class.java, "letMeKnowdbv6.db"
-                ).createFromAsset("letMeKnowdbv6.db")
+                    LetMeKnowDB::class.java, "letMeKnowdbv7.db"
+                ).createFromAsset("letMeKnowdbv7.db")
                     .build()
             }
 
-            return db as UserDb //Oggetto statico tornato dalla singleton
+            return db as LetMeKnowDB //Oggetto statico tornato dalla singleton
         }
     }
 }

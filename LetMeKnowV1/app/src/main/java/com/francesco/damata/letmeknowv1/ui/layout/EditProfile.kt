@@ -40,7 +40,7 @@ fun EditProfile(myModelScreen: MyModelScreen){      //Passo come parametro i tra
             })
         Text(text = stringResource(R.string.edit_profile),color = Color.Black,fontSize = 40.sp)
         Text(text = stringResource(R.string.selectTraits), color =  MaterialTheme.colors.myBlue, fontSize = 25.sp)
-        InputTraits(false)
+        InputTraits(false,myModelScreen)
         Button(where = LetMeKnowScreen.HomeUsr , content =stringResource(R.string.confirm))
         myImage(R.drawable.edit_profile)
     }

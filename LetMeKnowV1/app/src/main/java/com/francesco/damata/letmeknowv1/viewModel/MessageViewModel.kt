@@ -4,8 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.francesco.damata.letmeknowv1.db.Message
 import com.francesco.damata.letmeknowv1.db.RepositoryMsg
-import com.francesco.damata.letmeknowv1.db.UserDb
-import kotlinx.coroutines.CoroutineScope
+import com.francesco.damata.letmeknowv1.db.LetMeKnowDB
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -15,16 +14,12 @@ import java.time.format.DateTimeFormatter
 
 
 import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 class MessageViewModel (application:Application) : AndroidViewModel(application){
     private var repository: RepositoryMsg
     init{
-        val messageDao=UserDb.getInstance(application).DaoMessage()
+        val messageDao=LetMeKnowDB.getInstance(application).DaoMessage()
         repository=RepositoryMsg(messageDao)
     }
 

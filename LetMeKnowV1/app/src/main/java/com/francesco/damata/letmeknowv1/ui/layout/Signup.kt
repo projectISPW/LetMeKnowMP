@@ -66,7 +66,7 @@ fun Signup(myModelScreen: MyModelScreen) {
             color = MaterialTheme.colors.letMeKnowColor
         )
         InputData()
-        InputTraits(false)
+        InputTraits(false,myModelScreen)
         Button(onClick = { }, colors = ButtonDefaults.textButtonColors(
             backgroundColor = MaterialTheme.colors.button
         )) {
