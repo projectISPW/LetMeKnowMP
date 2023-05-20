@@ -16,21 +16,24 @@ import java.time.format.DateTimeFormatter
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+
 class MessageViewModel (application:Application) : AndroidViewModel(application){
     private var repository: RepositoryMsg
-
     init{
         val messageDao=UserDb.getInstance(application).DaoMessage()
         repository=RepositoryMsg(messageDao)
     }
+
     fun getChat(sender:String,reciver:String): LiveData<MutableList<Message>> {
         return repository.getChat(sender,reciver)
     }
     fun getChats(user:String): LiveData<MutableList<Message>>{
         return repository.getChats(user)
     }
-
 
     fun writeMessage(sender:String, reciver:String, text:String){
         val formatter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

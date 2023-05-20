@@ -65,32 +65,55 @@ fun RecentChat(myModelScreen: MyModelScreen) {
                         .align(Alignment.Start)
                         .padding(start = 20.dp, top = 10.dp))
             })
-        SearchBar()
-        Conversations(getLastMessages(items,myModelScreen),myModelScreen.user)
+        SearchBar(items,myModelScreen)
+        if(!myModelScreen.onSearch)Conversations(getLastMessages(items,myModelScreen),myModelScreen.user)
+        else Conversations(SearchConversations(items,myModelScreen),myModelScreen.user)
         Button(LetMeKnowScreen.SearchUser,stringResource(R.string.contBtnSearch))
     }
 }
+
+
+
+
 @Composable
-fun SearchBar(){
-    val search = rememberSaveable() {
-        mutableStateOf("")
-    }
-    TextField(value = search.value,
+fun SearchBar(messages:List<Message>,myModelScreen: MyModelScreen){
+
+    TextField(value = myModelScreen.txtSrc,
         onValueChange = {
-           search.value=it
+           myModelScreen.txtSrc=it
+            if(myModelScreen.onSearch){
+                SearchConversations(messages,myModelScreen)
+            }
+
         },
         textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
-        modifier=Modifier.fillMaxWidth(),
+        modifier=Modifier
+            .fillMaxWidth(),
         label = {
             Text(stringResource(R.string.searchMsg), fontSize = 24.sp)
         },
         trailingIcon={
-            IconButton(onClick={}){
-                Icon(
-                    imageVector = Icons.Default.ManageSearch,//https://fonts.google.com/icons
-                    contentDescription =stringResource(R.string.searchMsg)//in there you can find into your messages
-                )
-            }
+            IconButton(onClick={
+                myModelScreen.txtSrc=myModelScreen.txtSrc
+                myModelScreen.onSearch=false//non ha importanza il valore corr
+                }
+            ){
+                    if(myModelScreen.onSearch){
+                        Icon(
+                            imageVector = Icons.Default.SearchOff,//https://fonts.google.com/icons
+                            contentDescription = "Close Search"
+
+                        )
+                    }else{
+                        Icon(
+                            imageVector = Icons.Default.ManageSearch,//https://fonts.google.com/icons
+                            contentDescription = "New Search"
+
+                        )
+                    }
+
+                }
+
         })
 }
 @Composable
@@ -163,17 +186,11 @@ fun MessageBox(message:Message,curUsr:String){
         }
 
     }
-
-
 fun getLastMessages(messages: List<Message>,myModelScreen: MyModelScreen):List<Message>{
-    var lastMessages: MutableList<Message> = mutableListOf()
-        //MutableLiveData<MutableList<Message>>()//deve contenere l'ultimo messagio per ogni chat
+    var lastMessages: MutableList<Message> = mutableListOf()  //deve contenere l'ultimo messagio per ogni chat
     var listUsers:MutableList<String> =mutableListOf(myModelScreen.user)// deve cont
     if(messages!=null && messages!!.isNotEmpty()){
-
         for(i in messages!!){
-            println("_____")
-            println(i.text)
             if (!(listUsers.contains(i.sender))){
                 //message that user has recived
                 listUsers.add(i.sender)
@@ -184,9 +201,16 @@ fun getLastMessages(messages: List<Message>,myModelScreen: MyModelScreen):List<M
                 listUsers.add(i.reciver)
                 lastMessages.add(i)
             }
-            for(j in listUsers)println("utente .:"+j)
         }
     }
     return lastMessages
 }
-
+fun SearchConversations(messages:List<Message>,myModelScreen: MyModelScreen):List<Message>{
+    var searchMessages: MutableList<Message> = mutableListOf()  //deve contenere l'ultimo messagio per ogni chat
+    if(messages!=null && messages!!.isNotEmpty()){
+        for(i in messages!!){
+            if(i.text.contains(myModelScreen.txtSrc))searchMessages.add(i)
+        }
+    }
+    return searchMessages
+}

@@ -28,4 +28,25 @@ class MyModelScreen :Parcelable{
         _chatWith.value=User(userid,"0","0",0,0,0)
     }
 
+    @IgnoredOnParcel
+    private var _onSearch=mutableStateOf(false)
+    var onSearch:Boolean
+    get(){
+        return _onSearch.value
+    }
+    set(noSense){
+        _onSearch.value=!_onSearch.value
+    }
+
+
+    @IgnoredOnParcel
+    private var _txtSrc=mutableStateOf("")
+    var txtSrc:String
+    get(){
+        return _txtSrc.value
+    }
+    set(edit){
+        _txtSrc.value=edit
+    }
+
 }
