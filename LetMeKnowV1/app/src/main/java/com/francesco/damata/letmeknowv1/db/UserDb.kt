@@ -18,8 +18,8 @@ abstract class UserDb : RoomDatabase() {
             if(db==null) {
                 db = databaseBuilder(
                     context,
-                    UserDb::class.java, "letMeKnowdbv5.db"
-                ).createFromAsset("letMeKnowdbv5.db")
+                    UserDb::class.java, "letMeKnowdbv6.db"
+                ).createFromAsset("letMeKnowdbv6.db")
                     .build()
             }
 

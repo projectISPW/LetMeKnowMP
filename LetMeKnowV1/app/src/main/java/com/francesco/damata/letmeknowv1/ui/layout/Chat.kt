@@ -54,7 +54,7 @@ fun Chat(myModelScreen: MyModelScreen) {
     val viewModel: MessageViewModel = viewModel(
         factory = MessageViewModelFactory(context.applicationContext as Application)
     )
-    val items =viewModel.getChat("0000000","0123456").observeAsState(listOf()).value
+    val items =viewModel.getChat(myModelScreen.user,myModelScreen.chatWith).observeAsState(listOf()).value
 
     Column(modifier=Modifier.fillMaxHeight()) {
             TopAppBar(
@@ -78,7 +78,7 @@ fun Chat(myModelScreen: MyModelScreen) {
                     }
 
                     Text(
-                        text = stringResource(R.string.user) + "#123456",
+                        text = stringResource(R.string.user) + myModelScreen.chatWith,
                         color = Color.White,
                         fontSize = 24.sp,
                         modifier = Modifier
