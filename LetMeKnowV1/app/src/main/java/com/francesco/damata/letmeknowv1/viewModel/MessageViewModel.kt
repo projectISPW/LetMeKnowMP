@@ -27,6 +27,9 @@ class MessageViewModel (application:Application) : AndroidViewModel(application)
     fun getChat(sender:String,reciver:String): LiveData<MutableList<Message>> {
         return repository.getChat(sender,reciver)
     }
+    fun getChats(user:String): LiveData<MutableList<Message>>{
+        return repository.getChats(user)
+    }
 
 
     fun writeMessage(sender:String, reciver:String, text:String){

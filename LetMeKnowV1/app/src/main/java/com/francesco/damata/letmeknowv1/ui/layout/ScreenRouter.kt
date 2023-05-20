@@ -26,7 +26,7 @@ enum class LetMeKnowScreen(@StringRes val title: Int) {
 
 }
 object ScreenRouter {
-        var currentScreen: MutableState<LetMeKnowScreen> = mutableStateOf(LetMeKnowScreen.SearchResult)
+        var currentScreen: MutableState<LetMeKnowScreen> = mutableStateOf(LetMeKnowScreen.RecentChat)
 
     fun navigateTo(destination: LetMeKnowScreen) {
         currentScreen.value = destination

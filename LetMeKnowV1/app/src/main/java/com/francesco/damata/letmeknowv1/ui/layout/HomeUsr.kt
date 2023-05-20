@@ -22,7 +22,6 @@ import com.francesco.damata.letmeknowv1.ui.theme.myBlue
 @Composable
 fun HomeUsr(myModelScreen: MyModelScreen){
     profColumn(myModelScreen.user)
-    myModelScreen.chatWith="0123456"
 }
 
 @Composable

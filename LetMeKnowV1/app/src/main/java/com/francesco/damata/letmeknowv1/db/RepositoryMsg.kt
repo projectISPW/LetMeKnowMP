@@ -16,6 +16,9 @@ class RepositoryMsg(private val msgDao:DaoMessage) {
     fun getChat(sender:String,reciver:String): LiveData<MutableList<Message>> {
         return msgDao.getChat(sender,reciver)
     }
+    fun getChats(user:String): LiveData<MutableList<Message>>{
+        return msgDao.getChats(user)
+    }
     fun update(msg:Message){
         CoroutineScope(Dispatchers.IO).launch{
             msgDao.update(msg)

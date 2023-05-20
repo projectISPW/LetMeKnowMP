@@ -51,6 +51,8 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun Chat(myModelScreen: MyModelScreen) {
     val context=LocalContext.current
+    myModelScreen.chatWith="0123456"
+
     val viewModel: MessageViewModel = viewModel(
         factory = MessageViewModelFactory(context.applicationContext as Application)
     )
@@ -91,7 +93,7 @@ fun Chat(myModelScreen: MyModelScreen) {
             modifier = Modifier.fillMaxWidth()
                 .verticalScroll(rememberScrollState())
         ) {
-            Conversation(items)
+            Conversation(items,myModelScreen)
         }
         ChatBar(viewModel)
     }
@@ -107,7 +109,7 @@ fun width(): Int {
     return configuration.screenWidthDp
 }
 @Composable
-fun Conversation(messages: List<Message>) {
+fun Conversation(messages: List<Message>,myModelScreen: MyModelScreen) {
     val configuration = LocalConfiguration.current
     for(i in messages){
         println("\n\n\n\n text message.:"+i.text+"\n\n\n\n")
@@ -120,7 +122,7 @@ fun Conversation(messages: List<Message>) {
             ) {
                 items(items=messages){
                         message->
-                    MessageChat(message,"0000000","0123456")
+                    MessageChat(message,myModelScreen)
                 }
             }
         }
@@ -133,7 +135,7 @@ fun Conversation(messages: List<Message>) {
             ) {
                 items(items=messages){
                         message->
-                    MessageChat(message,"0000000","0123456")
+                    MessageChat(message,myModelScreen)
                 }
             }
         }
@@ -141,21 +143,20 @@ fun Conversation(messages: List<Message>) {
 
 }
 @Composable
-fun MessageChat(message:Message, user:String, sender:String){
+fun MessageChat(message:Message,myModelScreen: MyModelScreen){
     var msgExpanded= rememberSaveable() {
         mutableStateOf(false)
     }
-    if (message.sender==user) {
+    if (message.sender==myModelScreen.user) {
         Column(
         modifier=Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(10.dp),
         horizontalAlignment = Alignment.End
     ) {
             Surface(
                 shape = MaterialTheme.shapes.medium,
-                elevation = 1.dp,
-                modifier = Modifier
-                    .layoutId("surface")
+                elevation = 1.dp
             ) {
                 Text(
                     message.text,
@@ -177,7 +178,8 @@ fun MessageChat(message:Message, user:String, sender:String){
     else{
         Column(
             modifier=Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(10.dp),
             horizontalAlignment = Alignment.Start
         ) {
             Surface(shape=MaterialTheme.shapes.medium,elevation =1.dp){
@@ -188,7 +190,6 @@ fun MessageChat(message:Message, user:String, sender:String){
                     fontSize = 24.sp,
                     maxLines=if(msgExpanded.value)Int.MAX_VALUE else 5,
                     modifier= Modifier
-                        .padding(start = 10.dp)
                         .background(MaterialTheme.colors.recived)
                         .widthIn(100.dp, 300.dp)
                 )

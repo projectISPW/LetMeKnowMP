@@ -25,4 +25,5 @@
     <string name="searchrst">SearchResult</string>
     <string name="searchMsg">Search into messages</string>
     <string name="sendMessage">Send Message</string>
+    <string name="contBtnSearch">search for new users</string>
 </resources>
