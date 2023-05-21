@@ -129,9 +129,9 @@ fun InputUsr(myModelScreen: MyModelScreen,context: Context){
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         TextField(
-            value = myModelScreen.user,
+            value = myModelScreen.usr,
             onValueChange = {
-                myModelScreen.user = it
+                myModelScreen.usr= it
             }, textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
             modifier=Modifier.width(300.dp),
             label = {
@@ -173,12 +173,12 @@ fun InputUsr(myModelScreen: MyModelScreen,context: Context){
             else PasswordVisualTransformation()
         )
         Spacer(modifier = Modifier.height(16.dp))
-        var user =viewModel.getLogin(myModelScreen.user,password.value).observeAsState().value
+        var user =viewModel.getLogin( myModelScreen.usr,password.value).observeAsState().value
         Button(onClick = {
             if (user!=null){
                 ScreenRouter.navigateTo(LetMeKnowScreen.HomeUsr)
-                myModelScreen.user=user.userid
                 myModelScreen.userClass=user
+                myModelScreen.usr=user.userid
             }
         }, colors = ButtonDefaults.textButtonColors(
             backgroundColor = MaterialTheme.colors.button

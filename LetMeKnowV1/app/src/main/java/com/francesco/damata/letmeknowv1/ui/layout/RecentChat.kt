@@ -35,13 +35,12 @@ import com.francesco.damata.letmeknowv1.viewModel.MessageViewModelFactory
 
 @Composable
 fun RecentChat(myModelScreen: MyModelScreen) {
-    myModelScreen.chatWith="0123456"
     val scrollState= rememberScrollState()
     val context= LocalContext.current
     val viewModel: MessageViewModel = viewModel(
         factory = MessageViewModelFactory(context.applicationContext as Application)
     )
-    val items =viewModel.getChats("0000000").observeAsState(listOf()).value
+    val items =viewModel.getChats(myModelScreen.userClass.userid).observeAsState(listOf()).value
     Column(
         modifier = Modifier
             //.padding(16.dp)
@@ -66,8 +65,8 @@ fun RecentChat(myModelScreen: MyModelScreen) {
                         .padding(start = 20.dp, top = 10.dp))
             })
         SearchBar(items,myModelScreen)
-        if(!myModelScreen.onSearch)Conversations(getLastMessages(items,myModelScreen),myModelScreen.user)
-        else Conversations(SearchConversations(items,myModelScreen),myModelScreen.user)
+        if(!myModelScreen.onSearch)Conversations(getLastMessages(items,myModelScreen),myModelScreen.userClass.userid)
+        else Conversations(SearchConversations(items,myModelScreen),myModelScreen.userClass.userid)
         Button(LetMeKnowScreen.SearchUser,stringResource(R.string.contBtnSearch))
     }
 }
@@ -188,7 +187,7 @@ fun MessageBox(message:Message,curUsr:String){
     }
 fun getLastMessages(messages: List<Message>,myModelScreen: MyModelScreen):List<Message>{
     var lastMessages: MutableList<Message> = mutableListOf()  //deve contenere l'ultimo messagio per ogni chat
-    var listUsers:MutableList<String> =mutableListOf(myModelScreen.user)// deve cont
+    var listUsers:MutableList<String> =mutableListOf(myModelScreen.userClass.userid)// deve cont
     if(messages!=null && messages!!.isNotEmpty()){
         for(i in messages!!){
             if (!(listUsers.contains(i.sender))){
@@ -196,7 +195,7 @@ fun getLastMessages(messages: List<Message>,myModelScreen: MyModelScreen):List<M
                 listUsers.add(i.sender)
                 lastMessages.add(i)
             }
-            else if (i.sender == myModelScreen.user && !(listUsers.contains(i.reciver))){
+            else if (i.sender == myModelScreen.userClass.userid && !(listUsers.contains(i.reciver))){
                 //message that user has sended
                 listUsers.add(i.reciver)
                 lastMessages.add(i)

@@ -67,11 +67,7 @@ fun Signup(myModelScreen: MyModelScreen) {
         )
         InputData()
         InputTraits(false,myModelScreen)
-        Button(onClick = { }, colors = ButtonDefaults.textButtonColors(
-            backgroundColor = MaterialTheme.colors.button
-        )) {
-            Text("Confirm",color = Color.White,fontSize = 24.sp)
-        }
+
     }
 }
 

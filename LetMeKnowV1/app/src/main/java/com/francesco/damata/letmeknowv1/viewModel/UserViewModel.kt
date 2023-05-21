@@ -1,13 +1,12 @@
 package com.francesco.damata.letmeknowv1.viewModel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.francesco.damata.letmeknowv1.db.LetMeKnowDB
 import com.francesco.damata.letmeknowv1.db.RepositoryUsr
 import com.francesco.damata.letmeknowv1.db.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class UserViewModel (application: Application) : AndroidViewModel(application){
     private var repository: RepositoryUsr
@@ -17,6 +16,11 @@ class UserViewModel (application: Application) : AndroidViewModel(application){
     }
   fun getLogin(id:String, pswd:String): LiveData<User> {
         return repository.getLogin(id,pswd)
+    }
+    fun update(usr:User){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.update(usr)
+        }
     }
 }
 @Suppress("UNCHECKED_CAST")

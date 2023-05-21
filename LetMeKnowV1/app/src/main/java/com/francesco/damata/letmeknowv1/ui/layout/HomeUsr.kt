@@ -41,13 +41,13 @@ fun profColumn(myModelScreen: MyModelScreen){
                 ) {
                     Icon(
                         imageVector = Icons.Default.Logout,
-                        contentDescription = stringResource(R.string.user)+myModelScreen.user
+                        contentDescription = stringResource(R.string.user)+myModelScreen.userClass.userid
                     )
                 }
                 Text(stringResource(R.string.topBarHome),color = Color.White,fontSize = 24.sp)
             })
         Text(text = stringResource(R.string.profile),color = Color.Black,fontSize = 40.sp)
-        Text(text = stringResource(R.string.user) +myModelScreen.user,color = MaterialTheme.colors.myBlue,fontSize = 30.sp)         //Al posto degli 00000 ci va $uid
+        Text(text = stringResource(R.string.user) +myModelScreen.userClass.userid,color = MaterialTheme.colors.myBlue,fontSize = 30.sp)         //Al posto degli 00000 ci va $uid
         InputTraits(true,myModelScreen)
         Row(modifier = Modifier
             .fillMaxWidth(),

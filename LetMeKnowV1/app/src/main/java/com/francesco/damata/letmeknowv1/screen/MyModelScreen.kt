@@ -8,13 +8,13 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class MyModelScreen :Parcelable{
     @IgnoredOnParcel
-    private var _user=mutableStateOf("")
-    var user:String
+    private var _usr=mutableStateOf("")
+    var usr:String
     get(){
-        return _user.value
+        return _usr.value
     }
     set(edit){
-        _user.value=edit
+        _usr.value=edit
     }
 
     @IgnoredOnParcel
