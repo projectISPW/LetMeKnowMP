@@ -65,6 +65,7 @@ fun SearchUser(myModelScreen: MyModelScreen) {
         )){
             Text("Confirm",color = Color.White,fontSize = 20.sp)
         }
+        myImage(R.drawable.search)
     }
 }
 

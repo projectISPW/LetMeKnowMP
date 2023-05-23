@@ -56,6 +56,7 @@ fun SearchResult(myModelScreen: MyModelScreen){
                 )
             })
         FoundUser(users = UserList)
+
     }
 }
 
