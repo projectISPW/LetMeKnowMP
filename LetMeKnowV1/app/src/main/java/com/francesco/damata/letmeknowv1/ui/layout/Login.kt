@@ -63,7 +63,7 @@ fun MainLayout(myModelScreen: MyModelScreen) {
                         .padding(start = 20.dp, top = 10.dp))
             })
         ColUnderTheTop()
-        InputUsr(myModelScreen =myModelScreen , context = LocalContext.current )
+        InputUsr(myModelScreen =myModelScreen )
         signupText()
 
     }
@@ -111,13 +111,14 @@ fun signupText(){
     )
 }
 @Composable
-fun InputUsr(myModelScreen: MyModelScreen,context: Context){
+fun InputUsr(myModelScreen: MyModelScreen){
     val password = rememberSaveable() {
         mutableStateOf("")
     }
     val passwordVisibility = rememberSaveable() {
         mutableStateOf(false)
     }
+    var context:Context= LocalContext.current
     val viewModel: UserViewModel = viewModel(
         factory = UserViewModelFactory(context.applicationContext as Application)
     )

@@ -44,7 +44,7 @@ fun Chat(myModelScreen: MyModelScreen) {
     val viewModel: MessageViewModel = viewModel(
         factory = MessageViewModelFactory(context.applicationContext as Application)
     )
-    val items =viewModel.getChat(myModelScreen.user,myModelScreen.chatWith).observeAsState(listOf()).value
+    val items =viewModel.getChat(myModelScreen.userClass.userid,myModelScreen.chatWith).observeAsState(listOf()).value
 
     Column(modifier=Modifier.fillMaxHeight()) {
             TopAppBar(
@@ -135,7 +135,7 @@ fun MessageChat(message:Message,myModelScreen: MyModelScreen){
     var msgExpanded= rememberSaveable() {
         mutableStateOf(false)
     }
-    if (message.sender==myModelScreen.user) {
+    if (message.sender==myModelScreen.userClass.userid) {
         Column(
         modifier=Modifier
             .fillMaxWidth()
