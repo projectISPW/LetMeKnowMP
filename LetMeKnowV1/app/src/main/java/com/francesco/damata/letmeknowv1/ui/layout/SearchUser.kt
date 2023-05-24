@@ -12,6 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -24,6 +25,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun SearchUser(myModelScreen: MyModelScreen) {
+
     Column(
         modifier = Modifier
             .fillMaxWidth(),
@@ -55,22 +57,22 @@ fun SearchUser(myModelScreen: MyModelScreen) {
                     fontSize = 24.sp
                 )
             })
-        Text(text = "Search by profile parameters ", color =  MaterialTheme.colors.myBlue, fontSize = 25.sp)
-        SearchSlider()
+        Text(text = stringResource(R.string.SrcByUsr), color =  MaterialTheme.colors.myBlue, fontSize = 25.sp)
+        SearchSlider(myModelScreen)
         Button(onClick = {
-            //Manca parte di controllo che scrive i traits su db
             ScreenRouter.navigateTo(LetMeKnowScreen.SearchResult)
         }, colors = ButtonDefaults.textButtonColors(
             backgroundColor = MaterialTheme.colors.button
         )){
-            Text("Confirm",color = Color.White,fontSize = 20.sp)
+            Text(stringResource(R.string.Confirm),color = Color.White,fontSize = 20.sp)
         }
         myImage(R.drawable.search)
     }
 }
 
 @Composable
-fun SearchSlider(){
+fun SearchSlider(myModelScreen: MyModelScreen){
+    val context= LocalContext.current
         val empSlider = rememberSaveable() {
             mutableStateOf(1f)
         }
@@ -81,15 +83,16 @@ fun SearchSlider(){
             mutableStateOf(1f)
         }
         Column() {
-            SearchTraits("emotional",empSlider)
-            SearchTraits("lively",humSlider)
-            SearchTraits("optimism",optSlider)
+            SearchTraits(context.getString(R.string.emotional),empSlider,myModelScreen)
+            SearchTraits(context.getString(R.string.lively),humSlider,myModelScreen)
+            SearchTraits( context.getString(R.string.optimism),optSlider,myModelScreen)
         }
     }
 
 @Composable
-fun SearchTraits(wich:String,trait : MutableState<Float>){
+fun SearchTraits(wich:String,trait : MutableState<Float>,myModelScreen: MyModelScreen){
     Row() {
+        val context= LocalContext.current
         Text(
             fontWeight = FontWeight.SemiBold,
             fontSize = 24.sp,
@@ -103,7 +106,12 @@ fun SearchTraits(wich:String,trait : MutableState<Float>){
             valueRange = 1f..5f,
             colors= SliderDefaults.colors(Color.Blue),
             modifier = Modifier
-                .padding( start = 40.dp,end=5.dp),
+                .padding( start = 40.dp,end=5.dp)
         )
+        when(wich) {             ///Non scrive su myModelScreen
+            context.getString(R.string.emotional) -> myModelScreen.onSearchEmo = trait.value.roundToInt()
+            context.getString(R.string.lively) -> myModelScreen.onSearchLv = trait.value.roundToInt()
+            context.getString(R.string.optimism) -> myModelScreen.onSearchOpt = trait.value.roundToInt()
+        }
     }
 }

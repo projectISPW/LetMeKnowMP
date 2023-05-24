@@ -7,7 +7,7 @@ class RepositoryUsr(private val usrDao:DaoUser ){
         return usrDao.getLogin(id,pswd)
     }
      fun updateUsr(user: User) {
-        usrDao.update(user.userid,user.emotional,user.lively,user.optimistic)
+        usrDao.update1(user.userid,user.emotional,user.lively,user.optimistic)
     }
     suspend fun newUsr(user:User){
         //assign the id to the usr
@@ -20,4 +20,7 @@ class RepositoryUsr(private val usrDao:DaoUser ){
 
     }
 
+    fun searchUsr(uid : String,emo : Int, lv: Int,opt : Int): LiveData<MutableList<User>>{
+        return usrDao.getSearch(uid,emo,lv,opt)
+    }
 }

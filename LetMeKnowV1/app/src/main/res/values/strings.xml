@@ -26,4 +26,9 @@
     <string name="searchMsg">Search into messages</string>
     <string name="sendMessage">Send Message</string>
     <string name="contBtnSearch">search for new users</string>
+    <string name="SearchResult">Search Result</string>
+    <string name="Signup">Signup</string>
+    <string name="SignUpFree">signup for free</string>
+    <string name="Confirm">Confirm</string>
+    <string name="SrcByUsr">\"Search by profile parameters \"</string>
 </resources>

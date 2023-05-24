@@ -1,5 +1,6 @@
 package com.francesco.damata.letmeknowv1.screen
 import android.os.Parcelable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import com.francesco.damata.letmeknowv1.db.User
@@ -38,13 +39,35 @@ class MyModelScreen :Parcelable{
         _log.value=!_log.value
     }
 
+    @IgnoredOnParcel
+    private var _onSearchEmo= mutableStateOf(1)
+    var onSearchEmo: Int
+        get(){
+            return _onSearchEmo.value
+        }
+        set(emo){
+            _onSearchEmo.value=emo
+        }
 
+    @IgnoredOnParcel
+    private var _onSearchLv = mutableStateOf(1)
+    var onSearchLv: Int
+        get(){
+            return _onSearchLv.value
+        }
+        set(lv){
+            _onSearchLv.value=lv
+        }
 
-
-
-
-
-
+    @IgnoredOnParcel
+    private var _onSearchOpt = mutableStateOf(1)
+    var onSearchOpt: Int
+        get(){
+            return _onSearchOpt.value
+        }
+        set(opt){
+            _onSearchOpt.value=opt
+        }
 
 
     @IgnoredOnParcel
