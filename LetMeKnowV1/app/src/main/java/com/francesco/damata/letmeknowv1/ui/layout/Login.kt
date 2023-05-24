@@ -57,7 +57,7 @@ fun MainLayout(myModelScreen: MyModelScreen) {
                         contentDescription = stringResource(R.string.user)
                     )
                 }
-                Text("Signup",color = Color.White,fontSize = 24.sp,
+                Text(stringResource(R.string.Signup),color = Color.White,fontSize = 24.sp,
                     modifier = Modifier
                         .align(Alignment.Start)
                         .padding(start = 20.dp, top = 10.dp))
@@ -77,7 +77,7 @@ fun ColUnderTheTop(){
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "Let me know",
+            text = stringResource(R.string.app_name),
             fontSize = 50.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.letMeKnowColor
@@ -97,7 +97,7 @@ fun ColUnderTheTop(){
 @Composable
 fun signupText(){
     Text(
-        text = "signup for free",
+        text = stringResource(R.string.SignUpFree),
         fontSize = 24.sp,
         color = "#377dff".color,
         modifier = Modifier

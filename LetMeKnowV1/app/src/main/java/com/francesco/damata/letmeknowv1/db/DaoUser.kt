@@ -16,10 +16,16 @@ interface DaoUser{
     @Query("SELECT * FROM User WHERE (userid= '0000000' AND password= 'password') OR (email= 'francescodamata@gmail.com' AND password= 'password')")
     fun getLogin():LiveData<User>
 
-    @Query ("Select * from User where (:emotional<=5 AND :lively<=5 AND :optimistic<=5 AND userid!=:usr)")
+    @Query ("Select * from User where (emotional<=:emotional AND lively<=:lively AND optimistic<=:optimistic AND userid!=:usr)")
     fun getSearch(usr:String,emotional:Int,lively:Int,optimistic:Int):LiveData<MutableList<User>>
+
+
+
+
+
+
     @Query("UPDATE   User SET emotional = :emotional,lively = :lively,optimistic = :opt WHERE userid=:usr")
-    fun update(usr:String,emotional:Int,lively:Int,opt:Int)
+    fun update1(usr:String,emotional:Int,lively:Int,opt:Int)
 
 
 

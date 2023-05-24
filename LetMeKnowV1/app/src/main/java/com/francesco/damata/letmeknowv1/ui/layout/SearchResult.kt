@@ -1,4 +1,5 @@
 package com.francesco.damata.letmeknowv1.ui.layout
+import android.app.Application
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -11,25 +12,33 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.francesco.damata.letmeknowv1.R
+import com.francesco.damata.letmeknowv1.db.User
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
-import com.francesco.damata.letmeknowv1.ui.theme.color
 import com.francesco.damata.letmeknowv1.ui.theme.icon
-import com.francesco.damata.letmeknowv1.ui.theme.letMeKnowColor
-import kotlin.math.roundToInt
+import com.francesco.damata.letmeknowv1.viewModel.UserViewModel
+import com.francesco.damata.letmeknowv1.viewModel.UserViewModelFactory
 
 @Composable
 fun SearchResult(myModelScreen: MyModelScreen){
+    val context= LocalContext.current
+
+    val viewModel: UserViewModel = viewModel(
+        factory = UserViewModelFactory(context.applicationContext as Application)
+    )
     Column(
         modifier = Modifier
             //.padding(16.dp)
@@ -49,13 +58,14 @@ fun SearchResult(myModelScreen: MyModelScreen){
                     )
                 }
                 Text(
-                    "Search Result", color = Color.White, fontSize = 24.sp,
+                    stringResource(R.string.SearchResult), color = Color.White, fontSize = 24.sp,
                     modifier = Modifier
                         .align(Alignment.Start)
                         .padding(start = 20.dp, top = 10.dp)
                 )
             })
-        FoundUser(users = UserList)
+        val searchResult = viewModel.getSearchResult(myModelScreen.usr,myModelScreen.onSearchEmo,myModelScreen.onSearchLv,myModelScreen.onSearchOpt).observeAsState(listOf()).value
+        FoundUser(users = searchResult)
 
     }
 }
@@ -72,24 +82,24 @@ fun FoundUser(users: List<User>) {
 @Composable
 fun UserPar(user: User) {
     val constraints = ConstraintSet {
-        val user = createRefFor("user")
+        val userC = createRefFor("user")
         val textUser = createRefFor("textUser")
         val emot = createRefFor("emotional")
         val liv = createRefFor("lively")
         val opt = createRefFor("optimistic")
         val chat=createRefFor("chat")
-        constrain(user) {
+        constrain(userC) {
             top.linkTo(parent.top,margin=10.dp)
             start.linkTo(parent.start)
         }
         constrain(textUser) {
             top.linkTo(parent.top)
-            start.linkTo(user.end,margin=15.dp)
+            start.linkTo(userC.end,margin=15.dp)
         }
 
         constrain(emot) {
             top.linkTo(parent.top, margin = 25.dp)
-            start.linkTo(user.end, margin=25.dp)
+            start.linkTo(userC.end, margin=25.dp)
         }
         constrain(liv) {
             top.linkTo(parent.top, margin = 25.dp)
@@ -118,7 +128,7 @@ fun UserPar(user: User) {
                 .background(MaterialTheme.colors.icon, CircleShape)
         )
         Text(
-            user.uid,
+            user.userid,
             style = MaterialTheme.typography.body1,
             fontSize = 24.sp,
             modifier = Modifier.layoutId("textUser")
@@ -134,7 +144,7 @@ fun UserPar(user: User) {
                 fontSize = 24.sp,
             )
             Text(
-                user.emotional.roundToInt().toString(),
+                user.emotional.toString(),
                 style = MaterialTheme.typography.subtitle2,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
@@ -151,7 +161,7 @@ fun UserPar(user: User) {
                 fontSize = 24.sp
             )
             Text(
-                user.lively.roundToInt().toString(),
+                user.lively.toString(),
                 style = MaterialTheme.typography.subtitle2,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
@@ -168,7 +178,7 @@ fun UserPar(user: User) {
                 fontSize = 24.sp
             )
             Text(
-                user.optimism.roundToInt().toString(),
+                user.optimistic.toString(),
                 style = MaterialTheme.typography.subtitle2,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
@@ -190,12 +200,6 @@ fun UserPar(user: User) {
         }
     }
 }
-data class User(val uid:String,val emotional: Float,val lively: Float,val optimism: Float)
-val UserList=listOf(
-    User("#000000",1f,1f,1f),
-    User("#000001",3f,2f,4f),
-)
-
 
 
 
