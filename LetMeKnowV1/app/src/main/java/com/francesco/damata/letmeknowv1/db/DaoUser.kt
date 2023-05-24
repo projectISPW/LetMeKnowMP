@@ -17,14 +17,8 @@ interface DaoUser{
 
     @Query ("Select * from User where (:emotional<=5 AND :lively<=5 AND :optimistic<=5 AND userid!=:usr)")
     fun getSearch(usr:String,emotional:Int,lively:Int,optimistic:Int):LiveData<MutableList<User>>
-
-
-
-
-
-
     @Query("UPDATE   User SET emotional = :emotional,lively = :lively,optimistic = :opt WHERE userid=:usr")
-    fun update1(usr:String,emotional:Int,lively:Int,opt:Int)
+    fun update(usr:String,emotional:Int,lively:Int,opt:Int)
 
 
 

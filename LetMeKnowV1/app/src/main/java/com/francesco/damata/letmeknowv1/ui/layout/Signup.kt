@@ -24,15 +24,15 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.francesco.damata.letmeknowv1.R
+import com.francesco.damata.letmeknowv1.db.User
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
-import com.francesco.damata.letmeknowv1.ui.theme.button
 import com.francesco.damata.letmeknowv1.ui.theme.letMeKnowColor
-import kotlin.math.roundToInt
 
 @Composable
 fun Signup(myModelScreen: MyModelScreen) {
-
-
+    val showParam = rememberSaveable() {
+        mutableStateOf(false)
+    }
     Column(
         modifier = Modifier
             //.padding(16.dp)
@@ -52,7 +52,7 @@ fun Signup(myModelScreen: MyModelScreen) {
                     )
                 }
                 Text(
-                    "Signup", color = Color.White, fontSize = 24.sp,
+                    stringResource(R.string.signup), color = Color.White, fontSize = 24.sp,
                     modifier = Modifier
                         .align(Alignment.Start)
                         .padding(start = 20.dp, top = 10.dp)
@@ -60,19 +60,19 @@ fun Signup(myModelScreen: MyModelScreen) {
             }
         )
         Text(
-            text = "Let me know",
+            text =stringResource(R.string.app_name),
             fontSize = 50.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.letMeKnowColor
         )
-        InputData()
-        InputTraits(false,myModelScreen)
+        InputData(myModelScreen,showParam)
+        if(showParam.value)InputTraits(false,myModelScreen)
 
     }
 }
 
     @Composable
-    fun InputData(){
+    fun InputData(myModelScreen: MyModelScreen, showParam: MutableState<Boolean>) {
         val email = rememberSaveable() {
             mutableStateOf("")
         }
@@ -98,8 +98,6 @@ fun Signup(myModelScreen: MyModelScreen) {
                modifier=Modifier.width(300.dp)
            )
            Spacer(modifier = Modifier.height(16.dp))
-
-
            TextField(value = pswd.value,
                onValueChange = {
                    pswd.value=it
@@ -131,8 +129,6 @@ fun Signup(myModelScreen: MyModelScreen) {
                visualTransformation = if(passwordVisibility.value)VisualTransformation.None
                else PasswordVisualTransformation())
 
-
-
            TextField(value = confirmPswd.value,
                onValueChange = {
                    confirmPswd.value=it
@@ -146,7 +142,32 @@ fun Signup(myModelScreen: MyModelScreen) {
                visualTransformation = if(passwordVisibility.value)VisualTransformation.None
                else PasswordVisualTransformation())
 
+
+
+
+
+
+
+           if(email.value!="" && pswd.value!="" && confirmPswd.value==pswd.value ){
+               var user : com.francesco.damata.letmeknowv1.db.User= User("",pswd.value,email.value,0,0,0)
+
+               showParam.value=!showParam.value
+
+
+
+
+
+
+           }
+
        }
+
+
+
+
+
+
+
     }
 
 

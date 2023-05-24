@@ -19,8 +19,13 @@ class UserViewModel (application: Application) : AndroidViewModel(application){
     }
     fun update(usr:User){
         viewModelScope.launch(Dispatchers.IO) {
-            println("i am here")
-            repository.update1(usr)
+            repository.updateUsr(usr)
+        }
+    }
+    @Suppress("unused")
+    fun newUser(usr:User){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.newUsr(usr)
         }
     }
 }
