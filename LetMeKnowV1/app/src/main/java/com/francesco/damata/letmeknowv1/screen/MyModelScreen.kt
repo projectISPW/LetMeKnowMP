@@ -102,4 +102,23 @@ class MyModelScreen :Parcelable{
         _txtSrc.value=edit
     }
 
+    @IgnoredOnParcel
+    private var _onVisitUserClass=mutableStateOf(false)
+    var onVisitUserClass:Boolean
+        get(){
+            return _onVisitUserClass.value
+        }
+        set(edit){
+            _onVisitUserClass.value=edit
+        }
+
+    @IgnoredOnParcel
+    private var _usrVisit=mutableStateOf(User("0000000","0","0",0,0,0))
+    var usrVisit:User
+        get(){
+            return _usrVisit.value
+        }
+        set(edit){
+            _usrVisit.value=edit
+        }
 }

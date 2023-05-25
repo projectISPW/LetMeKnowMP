@@ -7,6 +7,9 @@ class RepositoryUsr(private val usrDao:DaoUser ){
     fun getLogin(id:String, pswd:String):LiveData<User>{
         return usrDao.getLogin(id,pswd)
     }
+    fun getVisitUser(uid : String) : LiveData<User>{
+        return usrDao.getVisitUser(uid)
+    }
     fun getLogin(email:String):LiveData<String>{
         return usrDao.getUid(email)
     }

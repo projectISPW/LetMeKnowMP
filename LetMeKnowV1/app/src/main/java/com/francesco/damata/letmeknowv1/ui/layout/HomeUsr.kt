@@ -6,6 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -33,13 +34,14 @@ fun HomeUsr(myModelScreen: MyModelScreen){
 }
 
 @Composable
-fun profColumn(myModelScreen: MyModelScreen){
-    if(myModelScreen.userClass.userid==""){
-        val context= LocalContext.current
+fun profColumn(myModelScreen: MyModelScreen) {
+    if (myModelScreen.userClass.userid == "") {
+        val context = LocalContext.current
         val viewModel: UserViewModel = viewModel(
             factory = UserViewModelFactory(context.applicationContext as Application)
         )
-        myModelScreen.userClass.userid= viewModel.getLogin(myModelScreen.userClass.email).observeAsState().value!!
+        myModelScreen.userClass.userid =
+            viewModel.getLogin(myModelScreen.userClass.email).observeAsState().value!!
     }
     Column(
         modifier = Modifier
@@ -50,27 +52,62 @@ fun profColumn(myModelScreen: MyModelScreen){
     ) {
         TopAppBar(
             {
-                IconButton(onClick = {
-                    ScreenRouter.navigateTo(LetMeKnowScreen.Login)
+                if (!myModelScreen.onVisitUserClass) {
+                    IconButton(onClick = {
+                        ScreenRouter.navigateTo(LetMeKnowScreen.Login)
+                    }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Logout,
+                            contentDescription = stringResource(R.string.user) + myModelScreen.userClass.userid
+                        )
+                    }
+                    Text(stringResource(R.string.topBarHome), color = Color.White, fontSize = 24.sp)
+                } else {
+                    IconButton(onClick = {
+                        ScreenRouter.navigateTo(LetMeKnowScreen.Chat)
+                    }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = stringResource(R.string.user) + myModelScreen.userClass.userid
+                        )
+                    }
+                    Text(stringResource(R.string.visitUser), color = Color.White, fontSize = 24.sp)
                 }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Logout,
-                        contentDescription = stringResource(R.string.user)+myModelScreen.userClass.userid
-                    )
-                }
-                Text(stringResource(R.string.topBarHome),color = Color.White,fontSize = 24.sp)
             })
-        Text(text = stringResource(R.string.profile),color = Color.Black,fontSize = 40.sp)
-        Text(text = stringResource(R.string.user) +myModelScreen.userClass.userid,color = MaterialTheme.colors.myBlue,fontSize = 30.sp)         //Al posto degli 00000 ci va $uid
-        InputTraits(true,myModelScreen)
-        Row(modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically){
-            Button(where = LetMeKnowScreen.EditProfile, content =stringResource(R.string.edit_profile) )
-            Spacer(modifier = Modifier.width(10.dp))
-            Button(where = LetMeKnowScreen.RecentChat, content =stringResource(R.string.recentChat) )
+        Text(text = stringResource(R.string.profile), color = Color.Black, fontSize = 40.sp)
+        if (myModelScreen.onVisitUserClass) {
+            Text(
+                text = stringResource(R.string.user) + myModelScreen.usrVisit.userid,
+                color = MaterialTheme.colors.myBlue,
+                fontSize = 30.sp
+            )
+        } else {
+            Text(
+                text = stringResource(R.string.user) + myModelScreen.userClass.userid,
+                color = MaterialTheme.colors.myBlue,
+                fontSize = 30.sp
+            )         //Al posto degli 00000 ci va $uid
+        }
+        InputTraits(true, myModelScreen)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if(!myModelScreen.onVisitUserClass) {
+                Button(
+                    where = LetMeKnowScreen.EditProfile,
+                    content = stringResource(R.string.edit_profile)
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Button(
+                    where = LetMeKnowScreen.RecentChat,
+                    content = stringResource(R.string.recentChat)
+                )
+            }
         }
         myImage(R.drawable.sleep_home)
     }

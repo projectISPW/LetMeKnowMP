@@ -31,4 +31,5 @@
     <string name="SignUpFree">signup for free</string>
     <string name="Confirm">Confirm</string>
     <string name="SrcByUsr">\"Search by profile parameters \"</string>
+    <string name="visitUser">Visit User</string>
 </resources>

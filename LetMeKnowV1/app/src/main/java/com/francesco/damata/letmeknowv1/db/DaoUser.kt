@@ -25,7 +25,8 @@ interface DaoUser{
     @Query ("Select * from User where (emotional<=:emotional AND lively<=:lively AND optimistic<=:optimistic AND userid!=:usr)")
     fun getSearch(usr:String,emotional:Int,lively:Int,optimistic:Int):LiveData<MutableList<User>>
 
-
+    @Query ("SELECT * FROM User WHERE userid = :uid")
+    fun getVisitUser(uid : String): LiveData<User>
 
 
 

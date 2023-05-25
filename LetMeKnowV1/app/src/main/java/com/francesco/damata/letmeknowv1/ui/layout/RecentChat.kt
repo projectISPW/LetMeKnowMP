@@ -51,6 +51,7 @@ fun RecentChat(myModelScreen: MyModelScreen) {
         TopAppBar(
             {
                 IconButton(onClick = {
+                    myModelScreen.onVisitUserClass= false
                     ScreenRouter.navigateTo(LetMeKnowScreen.HomeUsr)
 
                 }) {

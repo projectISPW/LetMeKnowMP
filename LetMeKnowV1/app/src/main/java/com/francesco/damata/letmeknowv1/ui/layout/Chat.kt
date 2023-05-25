@@ -35,6 +35,8 @@ import com.francesco.damata.letmeknowv1.ui.theme.recived
 import com.francesco.damata.letmeknowv1.ui.theme.sended
 import com.francesco.damata.letmeknowv1.viewModel.MessageViewModel
 import com.francesco.damata.letmeknowv1.viewModel.MessageViewModelFactory
+import com.francesco.damata.letmeknowv1.viewModel.UserViewModel
+import com.francesco.damata.letmeknowv1.viewModel.UserViewModelFactory
 
 @Composable
 fun Chat(myModelScreen: MyModelScreen) {
@@ -42,6 +44,9 @@ fun Chat(myModelScreen: MyModelScreen) {
 
     val viewModel: MessageViewModel = viewModel(
         factory = MessageViewModelFactory(context.applicationContext as Application)
+    )
+    val userViewModel: UserViewModel = viewModel(
+        factory = UserViewModelFactory(context.applicationContext as Application)
     )
     val items =viewModel.getChat(myModelScreen.userClass.userid,myModelScreen.chatWith).observeAsState(listOf()).value
 
@@ -57,8 +62,13 @@ fun Chat(myModelScreen: MyModelScreen) {
                             modifier = Modifier.padding(start = 5.dp)
                         )
                     }
+                    var userVisit = userViewModel.getUserVisited(myModelScreen.chatWith).observeAsState().value
                     IconButton({
-                        ScreenRouter.navigateTo(LetMeKnowScreen.RecentChat)
+                        if(userVisit!=null) {
+                            myModelScreen.onVisitUserClass = true
+                            myModelScreen.usrVisit = userVisit
+                            ScreenRouter.navigateTo(LetMeKnowScreen.HomeUsr)
+                        }
                     }) {
                         Icon(
                             imageVector = Icons.Default.Person,
