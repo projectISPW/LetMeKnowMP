@@ -7,7 +7,7 @@ class RepositoryUsr(private val usrDao:DaoUser ){
     fun getLogin(id:String, pswd:String):LiveData<User>{
         return usrDao.getLogin(id,pswd)
     }
-    fun getLogin(email:String):String?{
+    fun getLogin(email:String):LiveData<String>{
         return usrDao.getUid(email)
     }
      fun updateUsr(user: User) {

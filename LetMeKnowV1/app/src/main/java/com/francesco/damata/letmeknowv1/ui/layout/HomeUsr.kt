@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
@@ -38,7 +39,7 @@ fun profColumn(myModelScreen: MyModelScreen){
         val viewModel: UserViewModel = viewModel(
             factory = UserViewModelFactory(context.applicationContext as Application)
         )
-        myModelScreen.userClass.userid= viewModel.getLogin(myModelScreen.userClass.email)!!
+        myModelScreen.userClass.userid= viewModel.getLogin(myModelScreen.userClass.email).observeAsState().value!!
     }
     Column(
         modifier = Modifier

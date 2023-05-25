@@ -18,8 +18,8 @@ abstract class LetMeKnowDB : RoomDatabase() {
             if(db==null) {
                 db = databaseBuilder(
                     context,
-                    LetMeKnowDB::class.java, "letMeKnowdbv8.db"
-                ).createFromAsset("letMeKnowdbv8.db")
+                    LetMeKnowDB::class.java, "letMeKnowdbv9.db"
+                ).createFromAsset("letMeKnowdbv9.db")
                     .build()
             }
 

@@ -15,7 +15,7 @@ interface DaoUser{
     fun getUids():List<String>?
 
     @Query("SELECT userid FROM User where email= :email")
-    fun getUid(email:String):String?
+    fun getUid(email:String):LiveData<String>
 
     @Query("SELECT email FROM User")
     fun getEmails():List<String>?

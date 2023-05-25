@@ -82,7 +82,7 @@ fun Chat(myModelScreen: MyModelScreen) {
         ) {
             Conversation(items,myModelScreen)
         }
-        ChatBar(viewModel)
+        ChatBar(viewModel,myModelScreen)
     }
 }
 @Composable
@@ -188,7 +188,7 @@ fun MessageChat(message:Message,myModelScreen: MyModelScreen){
 
 
 @Composable
-fun ChatBar(viewModel: MessageViewModel) {
+fun ChatBar(viewModel: MessageViewModel,myModelScreen:MyModelScreen) {
     var inputMsg = rememberSaveable() {
         mutableStateOf("")
     }
@@ -201,7 +201,7 @@ fun ChatBar(viewModel: MessageViewModel) {
         modifier=Modifier.fillMaxWidth(),
         trailingIcon={
             IconButton(onClick={
-                viewModel.writeMessage("0000000","0123456",inputMsg.value)
+                viewModel.writeMessage(myModelScreen.userClass.userid,myModelScreen.chatWith,inputMsg.value)
                 inputMsg.value=""
             }){
                 Icon(
