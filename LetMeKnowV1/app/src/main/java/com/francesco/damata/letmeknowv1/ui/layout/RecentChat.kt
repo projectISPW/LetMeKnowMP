@@ -59,7 +59,7 @@ fun RecentChat(myModelScreen: MyModelScreen) {
                         contentDescription = stringResource(R.string.user)
                     )
                 }
-                Text(stringResource(R.string.Signup),color = Color.White,fontSize = 24.sp,
+                Text(stringResource(R.string.recentChat),color = Color.White,fontSize = 24.sp,
                     modifier = Modifier
                         .align(Alignment.Start)
                         .padding(start = 20.dp, top = 10.dp))
