@@ -65,8 +65,8 @@ fun RecentChat(myModelScreen: MyModelScreen) {
                         .padding(start = 20.dp, top = 10.dp))
             })
         SearchBar(items,myModelScreen)
-        if(!myModelScreen.onSearch)Conversations(getLastMessages(items,myModelScreen),myModelScreen.userClass.userid)
-        else Conversations(SearchConversations(items,myModelScreen),myModelScreen.userClass.userid)
+        if(!myModelScreen.onSearch)Conversations(getLastMessages(items,myModelScreen),myModelScreen.userClass.userid,myModelScreen)
+        else Conversations(SearchConversations(items,myModelScreen),myModelScreen.userClass.userid,myModelScreen)
         Button(LetMeKnowScreen.SearchUser,stringResource(R.string.contBtnSearch))
     }
 }
@@ -116,7 +116,7 @@ fun SearchBar(messages:List<Message>,myModelScreen: MyModelScreen){
         })
 }
 @Composable
-fun Conversations(messages: List<Message>,curUsr:String) {
+fun Conversations(messages: List<Message>,curUsr:String,myModelScreen: MyModelScreen) {
     val configuration = LocalConfiguration.current
     when (configuration.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> {
@@ -125,7 +125,7 @@ fun Conversations(messages: List<Message>,curUsr:String) {
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(items=messages){
-                        message->MessageBox(message,curUsr)
+                        message->MessageBox(message,curUsr,myModelScreen)
                 }
             }
         }
@@ -137,14 +137,14 @@ fun Conversations(messages: List<Message>,curUsr:String) {
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(items=messages){
-                        message->MessageBox(message,curUsr)
+                        message->MessageBox(message,curUsr, myModelScreen = myModelScreen)
                 }
             }
         }
     }
 }
 @Composable
-fun MessageBox(message:Message,curUsr:String){
+fun MessageBox(message:Message,curUsr:String,myModelScreen: MyModelScreen){
         var msgExpanded= rememberSaveable() {
             mutableStateOf(false)
         }
@@ -157,7 +157,9 @@ fun MessageBox(message:Message,curUsr:String){
 
         Row{
             IconButton(onClick = {
+                myModelScreen.chatWith=textUsr
                 ScreenRouter.navigateTo(LetMeKnowScreen.Chat)
+
             }
             ) {
                 Icon(Icons.Default.Message,

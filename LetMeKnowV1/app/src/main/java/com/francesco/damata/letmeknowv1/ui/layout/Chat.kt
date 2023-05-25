@@ -39,7 +39,6 @@ import com.francesco.damata.letmeknowv1.viewModel.MessageViewModelFactory
 @Composable
 fun Chat(myModelScreen: MyModelScreen) {
     val context=LocalContext.current
-    myModelScreen.chatWith="0123456"
 
     val viewModel: MessageViewModel = viewModel(
         factory = MessageViewModelFactory(context.applicationContext as Application)

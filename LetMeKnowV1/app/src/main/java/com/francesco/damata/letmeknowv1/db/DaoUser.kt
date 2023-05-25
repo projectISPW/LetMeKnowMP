@@ -9,12 +9,18 @@ import androidx.room.Query
 interface DaoUser{
     @Insert
     suspend fun insert(user: User)
+
+
     @Query("SELECT userid FROM User")
     fun getUids():List<String>?
+
+    @Query("SELECT userid FROM User where email= :email")
+    fun getUid(email:String):String?
+
+    @Query("SELECT email FROM User")
+    fun getEmails():List<String>?
     @Query("SELECT * FROM User WHERE (userid= :id AND password= :password) OR (email= :id AND password= :password)")
     fun getLogin(id:String,password:String):LiveData<User>
-    @Query("SELECT * FROM User WHERE (userid= '0000000' AND password= 'password') OR (email= 'francescodamata@gmail.com' AND password= 'password')")
-    fun getLogin():LiveData<User>
 
     @Query ("Select * from User where (emotional<=:emotional AND lively<=:lively AND optimistic<=:optimistic AND userid!=:usr)")
     fun getSearch(usr:String,emotional:Int,lively:Int,optimistic:Int):LiveData<MutableList<User>>
@@ -25,7 +31,7 @@ interface DaoUser{
 
 
     @Query("UPDATE   User SET emotional = :emotional,lively = :lively,optimistic = :opt WHERE userid=:usr")
-    fun update1(usr:String,emotional:Int,lively:Int,opt:Int)
+    fun update(usr:String,emotional:Int,lively:Int,opt:Int)
 
 
 

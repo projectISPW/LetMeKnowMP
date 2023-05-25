@@ -17,6 +17,9 @@ class UserViewModel (application: Application) : AndroidViewModel(application){
   fun getLogin(id:String, pswd:String): LiveData<User> {
         return repository.getLogin(id,pswd)
     }
+    fun getLogin(email:String):String?{
+        return repository.getLogin(email)
+    }
 
     fun getSearchResult(uid : String,emo : Int,lv : Int,opt : Int): LiveData<MutableList<User>>{
         return repository.searchUsr(uid,emo,lv,opt)

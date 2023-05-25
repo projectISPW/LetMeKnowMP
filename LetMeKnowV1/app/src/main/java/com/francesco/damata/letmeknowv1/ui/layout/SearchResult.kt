@@ -65,22 +65,22 @@ fun SearchResult(myModelScreen: MyModelScreen){
                 )
             })
         val searchResult = viewModel.getSearchResult(myModelScreen.usr,myModelScreen.onSearchEmo,myModelScreen.onSearchLv,myModelScreen.onSearchOpt).observeAsState(listOf()).value
-        FoundUser(users = searchResult)
+        FoundUser(users = searchResult,myModelScreen)
 
     }
 }
 
 @Composable
-fun FoundUser(users: List<User>) {
+fun FoundUser(users: List<User>,myModelScreen: MyModelScreen) {
     LazyColumn(modifier = Modifier.height(500.dp)) {
         items(items = users) { user ->
-            UserPar(user = user)
+            UserPar(user = user, myModelScreen )
         }
     }
 }
 
 @Composable
-fun UserPar(user: User) {
+fun UserPar(user: User,myModelScreen: MyModelScreen) {
     val constraints = ConstraintSet {
         val userC = createRefFor("user")
         val textUser = createRefFor("textUser")
@@ -186,7 +186,9 @@ fun UserPar(user: User) {
 
         }
         IconButton(onClick = {
+            myModelScreen.chatWith=user.userid
             ScreenRouter.navigateTo(LetMeKnowScreen.Chat)           //Chat con l'id del profilo cliccato
+
         },
             modifier = Modifier.layoutId("chat")) {
             Icon(

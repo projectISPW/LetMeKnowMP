@@ -1,5 +1,6 @@
 package com.francesco.damata.letmeknowv1.ui.layout
 
+import android.app.Application
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -11,13 +12,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.francesco.damata.letmeknowv1.R
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 import com.francesco.damata.letmeknowv1.ui.theme.button
 import com.francesco.damata.letmeknowv1.ui.theme.myBlue
+import com.francesco.damata.letmeknowv1.viewModel.MessageViewModel
+import com.francesco.damata.letmeknowv1.viewModel.MessageViewModelFactory
+import com.francesco.damata.letmeknowv1.viewModel.UserViewModel
+import com.francesco.damata.letmeknowv1.viewModel.UserViewModelFactory
 
 @Composable
 fun HomeUsr(myModelScreen: MyModelScreen){
@@ -26,6 +33,13 @@ fun HomeUsr(myModelScreen: MyModelScreen){
 
 @Composable
 fun profColumn(myModelScreen: MyModelScreen){
+    if(myModelScreen.userClass.userid==""){
+        val context= LocalContext.current
+        val viewModel: UserViewModel = viewModel(
+            factory = UserViewModelFactory(context.applicationContext as Application)
+        )
+        myModelScreen.userClass.userid= viewModel.getLogin(myModelScreen.userClass.email)!!
+    }
     Column(
         modifier = Modifier
             .fillMaxWidth()
