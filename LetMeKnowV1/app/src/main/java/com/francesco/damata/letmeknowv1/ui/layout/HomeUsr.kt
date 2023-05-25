@@ -21,20 +21,17 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.francesco.damata.letmeknowv1.R
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
-import com.francesco.damata.letmeknowv1.ui.theme.button
 import com.francesco.damata.letmeknowv1.ui.theme.myBlue
-import com.francesco.damata.letmeknowv1.viewModel.MessageViewModel
-import com.francesco.damata.letmeknowv1.viewModel.MessageViewModelFactory
 import com.francesco.damata.letmeknowv1.viewModel.UserViewModel
 import com.francesco.damata.letmeknowv1.viewModel.UserViewModelFactory
 
 @Composable
 fun HomeUsr(myModelScreen: MyModelScreen){
-    profColumn(myModelScreen)
+    ProfColumn(myModelScreen)
 }
 
 @Composable
-fun profColumn(myModelScreen: MyModelScreen) {
+fun ProfColumn(myModelScreen: MyModelScreen) {
     if (myModelScreen.userClass.userid == "") {
         val context = LocalContext.current
         val viewModel: UserViewModel = viewModel(

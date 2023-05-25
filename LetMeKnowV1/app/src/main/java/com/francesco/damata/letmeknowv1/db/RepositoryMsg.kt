@@ -6,8 +6,6 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 class RepositoryMsg(private val msgDao:DaoMessage) {
     fun getChat(sender:String,reciver:String): LiveData<MutableList<Message>> {
@@ -21,6 +19,7 @@ class RepositoryMsg(private val msgDao:DaoMessage) {
             msgDao.update(msg)
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun writeMsg(message:Message){
         msgDao.insert(message)
