@@ -158,7 +158,6 @@ fun Signup(myModelScreen: MyModelScreen) {
                    if(email.value!="" && pswd.value!="" && confirmPswd.value==pswd.value ){
                        var user : User= User("",pswd.value,email.value,1,1,1)
                        showParam.value=!showParam.value
-                       println("\n\n\n in the signup "+showParam.value+"\n\n\n ")
                        myModelScreen.userClass=user
                        viewModel.newUser(user)
 

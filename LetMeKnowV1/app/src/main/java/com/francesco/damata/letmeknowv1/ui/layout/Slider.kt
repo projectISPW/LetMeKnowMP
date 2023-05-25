@@ -1,10 +1,7 @@
 package com.francesco.damata.letmeknowv1.ui.layout
 
 import android.app.Application
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -65,6 +62,7 @@ fun InputTraits(locked:Boolean,myModelScreen :MyModelScreen) {
             Traits(stringResource(R.string.optimism), optVisitSlider, myModelScreen, locked)
         }
         if(!locked){
+            Spacer(modifier = Modifier.height(16.dp))
             Button(
                 modifier=Modifier.align(Alignment.CenterHorizontally),
                 onClick = {
@@ -93,7 +91,7 @@ fun Traits(wich: String, trait: MutableState<Float>,myModelScreen: MyModelScreen
                 .padding(top = 13.dp, start = 20.dp)
                 .width(180.dp),
 
-            text = wich+" .:    "+trait.value.roundToInt().toString())
+            text = wich+"  :    "+trait.value.roundToInt().toString())
         if(locked){
             Slider(value = trait.value,
                 onValueChange = {},

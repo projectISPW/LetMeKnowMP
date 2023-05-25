@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -72,7 +73,7 @@ fun SearchResult(myModelScreen: MyModelScreen){
 
 @Composable
 fun FoundUser(users: List<User>,myModelScreen: MyModelScreen) {
-    LazyColumn(modifier = Modifier.height(500.dp)) {
+    LazyColumn(modifier = Modifier.height(height().dp)) {
         items(items = users) { user ->
             UserPar(user = user, myModelScreen )
         }
