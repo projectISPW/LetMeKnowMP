@@ -25,24 +25,34 @@ import com.francesco.damata.letmeknowv1.viewModel.UserViewModelFactory
 import kotlin.math.roundToInt
 @Composable
 fun InputTraits(locked:Boolean,myModelScreen :MyModelScreen) {
-        val empSlider = rememberSaveable() {
+
+    val empSlider:MutableState<Float>
+    val humSlider:MutableState<Float>
+    val optSlider:MutableState<Float>
+    if(myModelScreen.onSearch || myModelScreen.fromChat && locked){
+        empSlider = rememberSaveable() {
+            mutableStateOf(myModelScreen.usrVisit.emotional.toFloat())
+        }
+        humSlider = rememberSaveable() {
+            mutableStateOf(myModelScreen.usrVisit.lively.toFloat())
+        }
+        optSlider = rememberSaveable() {
+            mutableStateOf(myModelScreen.usrVisit.optimistic.toFloat())
+        }
+    }
+    else{
+        empSlider = rememberSaveable() {
             mutableStateOf(myModelScreen.userClass.emotional.toFloat())
         }
-        val humSlider = rememberSaveable() {
+        humSlider = rememberSaveable() {
             mutableStateOf(myModelScreen.userClass.lively.toFloat())
         }
-        val optSlider = rememberSaveable() {
+        optSlider = rememberSaveable() {
             mutableStateOf(myModelScreen.userClass.optimistic.toFloat())
         }
-    val empVisitSlider = rememberSaveable() {
-        mutableStateOf(myModelScreen.usrVisit.emotional.toFloat())
     }
-    val humVisitSlider = rememberSaveable() {
-        mutableStateOf(myModelScreen.usrVisit.lively.toFloat())
-    }
-    val optVisitSlider = rememberSaveable() {
-        mutableStateOf(myModelScreen.usrVisit.optimistic.toFloat())
-    }
+
+
     Column() {
         val context= LocalContext.current
         val viewModel: UserViewModel = viewModel(
@@ -52,15 +62,9 @@ fun InputTraits(locked:Boolean,myModelScreen :MyModelScreen) {
         if (user != null) {
             myModelScreen.userClass=user
         }
-        if(!myModelScreen.onVisitUserClass) {
-            Traits(stringResource(R.string.emotional), empSlider, myModelScreen, locked)
-            Traits(stringResource(R.string.lively), humSlider, myModelScreen, locked)
-            Traits(stringResource(R.string.optimism), optSlider, myModelScreen, locked)
-        }else {
-            Traits(stringResource(R.string.emotional), empVisitSlider, myModelScreen, locked)
-            Traits(stringResource(R.string.lively), humVisitSlider, myModelScreen, locked)
-            Traits(stringResource(R.string.optimism), optVisitSlider, myModelScreen, locked)
-        }
+        Traits(stringResource(R.string.emotional), empSlider, myModelScreen, locked)
+        Traits(stringResource(R.string.lively), humSlider, myModelScreen, locked)
+        Traits(stringResource(R.string.optimistic), optSlider, myModelScreen, locked)
         if(!locked){
             Spacer(modifier = Modifier.height(16.dp))
             Button(
@@ -112,7 +116,7 @@ fun Traits(wich: String, trait: MutableState<Float>,myModelScreen: MyModelScreen
                 when(wich){
                     context.getString(R.string.emotional)->myModelScreen!!.userClass.emotional=trait.value.roundToInt()
                     context.getString(R.string.lively)->myModelScreen!!.userClass.lively=trait.value.roundToInt()
-                    context.getString(R.string.optimism)->myModelScreen!!.userClass.optimistic=trait.value.roundToInt()
+                    context.getString(R.string.optimistic)->myModelScreen!!.userClass.optimistic=trait.value.roundToInt()
                 }
             }
         }

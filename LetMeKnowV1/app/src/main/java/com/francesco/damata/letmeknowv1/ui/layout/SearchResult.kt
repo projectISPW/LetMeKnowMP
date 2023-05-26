@@ -36,7 +36,6 @@ import com.francesco.damata.letmeknowv1.viewModel.UserViewModelFactory
 @Composable
 fun SearchResult(myModelScreen: MyModelScreen){
     val context= LocalContext.current
-
     val viewModel: UserViewModel = viewModel(
         factory = UserViewModelFactory(context.applicationContext as Application)
     )
@@ -65,7 +64,7 @@ fun SearchResult(myModelScreen: MyModelScreen){
                         .padding(start = 20.dp, top = 10.dp)
                 )
             })
-        val searchResult = viewModel.getSearchResult(myModelScreen.usr,myModelScreen.onSearchEmo,myModelScreen.onSearchLv,myModelScreen.onSearchOpt).observeAsState(listOf()).value
+        val searchResult = viewModel.getSearchResult(myModelScreen.onSearchUsr).observeAsState(listOf()).value
         FoundUser(users = searchResult,myModelScreen)
 
     }
@@ -82,7 +81,7 @@ fun FoundUser(users: List<User>,myModelScreen: MyModelScreen) {
 
 @Composable
 fun UserPar(user: User,myModelScreen: MyModelScreen) {
-    val constraints = ConstraintSet {
+       val constraints = ConstraintSet {
         val userC = createRefFor("user")
         val textUser = createRefFor("textUser")
         val emot = createRefFor("emotional")
@@ -117,17 +116,26 @@ fun UserPar(user: User,myModelScreen: MyModelScreen) {
     }
     ConstraintLayout(constraints,
         modifier = Modifier.fillMaxSize()) {
-        Icon(
-            Icons.Default.Person,
-            contentDescription = "content description",
-            tint = Color.White,
-            modifier = Modifier
-                .size(75.dp)
-                //.then(Modifier.size(50.dp))
-                //.border(5.dp, MaterialTheme.colors.letMeKnowColor, shape = CircleShape)
-                .layoutId("user")
-                .background(MaterialTheme.colors.icon, CircleShape)
-        )
+        IconButton(
+            modifier=Modifier .layoutId("user"),
+            onClick = {
+                myModelScreen.onSearch=true
+                myModelScreen.usrVisit=user
+                ScreenRouter.navigateTo(LetMeKnowScreen.HomeUsr)
+            }) {
+            Icon(
+                Icons.Default.Person,
+                contentDescription = "content description",
+                tint = Color.White,
+                modifier = Modifier
+                    .size(75.dp)
+                    //.then(Modifier.size(50.dp))
+                    //.border(5.dp, MaterialTheme.colors.letMeKnowColor, shape = CircleShape)
+
+                    .background(MaterialTheme.colors.icon, CircleShape)
+            )
+        }
+
         Text(
             user.userid,
             style = MaterialTheme.typography.body1,

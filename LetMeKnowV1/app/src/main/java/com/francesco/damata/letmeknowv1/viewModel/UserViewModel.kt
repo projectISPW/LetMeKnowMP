@@ -23,8 +23,8 @@ class UserViewModel (application: Application) : AndroidViewModel(application){
     fun getUserVisited(uid : String) : LiveData<User>{
         return repository.getVisitUser(uid )
     }
-    fun getSearchResult(uid : String,emo : Int,lv : Int,opt : Int): LiveData<MutableList<User>>{
-        return repository.searchUsr(uid,emo,lv,opt)
+    fun getSearchResult(usr:User): LiveData<MutableList<User>>{
+        return repository.searchUsr(usr)
     }
     fun update(usr:User){
         viewModelScope.launch(Dispatchers.IO) {

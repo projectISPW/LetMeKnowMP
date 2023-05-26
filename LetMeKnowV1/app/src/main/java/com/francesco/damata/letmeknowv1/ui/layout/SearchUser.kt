@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.francesco.damata.letmeknowv1.R
+import com.francesco.damata.letmeknowv1.db.User
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 import com.francesco.damata.letmeknowv1.ui.theme.button
 import com.francesco.damata.letmeknowv1.ui.theme.myBlue
@@ -85,13 +86,14 @@ fun SearchSlider(myModelScreen: MyModelScreen){
         Column() {
             SearchTraits(context.getString(R.string.emotional),empSlider,myModelScreen)
             SearchTraits(context.getString(R.string.lively),humSlider,myModelScreen)
-            SearchTraits( context.getString(R.string.optimism),optSlider,myModelScreen)
+            SearchTraits( context.getString(R.string.optimistic),optSlider,myModelScreen)
         }
     }
 
 @Composable
 fun SearchTraits(wich:String,trait : MutableState<Float>,myModelScreen: MyModelScreen){
     Row() {
+        myModelScreen.onSearchUsr= User(myModelScreen.userClass.userid,myModelScreen.chatWith,myModelScreen.userClass.email,1,1,1)
         val context= LocalContext.current
         Text(
             fontWeight = FontWeight.SemiBold,
@@ -109,9 +111,9 @@ fun SearchTraits(wich:String,trait : MutableState<Float>,myModelScreen: MyModelS
                 .padding( start = 40.dp,end=5.dp)
         )
         when(wich) {             ///Non scrive su myModelScreen
-            context.getString(R.string.emotional) -> myModelScreen.onSearchEmo = trait.value.roundToInt()
-            context.getString(R.string.lively) -> myModelScreen.onSearchLv = trait.value.roundToInt()
-            context.getString(R.string.optimism) -> myModelScreen.onSearchOpt = trait.value.roundToInt()
+            context.getString(R.string.emotional) -> myModelScreen.onSearchUsr.emotional = trait.value.roundToInt()
+            context.getString(R.string.lively) -> myModelScreen.onSearchUsr.lively= trait.value.roundToInt()
+            context.getString(R.string.optimistic) -> myModelScreen.onSearchUsr.optimistic = trait.value.roundToInt()
         }
     }
 }

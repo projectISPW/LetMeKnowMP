@@ -48,10 +48,10 @@ fun RecentChat(myModelScreen: MyModelScreen) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
+
         TopAppBar(
             {
                 IconButton(onClick = {
-                    myModelScreen.onVisitUserClass= false
                     ScreenRouter.navigateTo(LetMeKnowScreen.HomeUsr)
 
                 }) {
@@ -101,13 +101,14 @@ fun SearchBar(messages:List<Message>,myModelScreen: MyModelScreen){
                     if(myModelScreen.onSearch){
                         Icon(
                             imageVector = Icons.Default.SearchOff,//https://fonts.google.com/icons
-                            contentDescription = "Close Search"
+                            contentDescription =  stringResource(R.string.close_search)
+
 
                         )
                     }else{
                         Icon(
                             imageVector = Icons.Default.ManageSearch,//https://fonts.google.com/icons
-                            contentDescription = "New Search"
+                            contentDescription =stringResource(R.string.new_search)
 
                         )
                     }
@@ -164,7 +165,7 @@ fun MessageBox(message:Message,curUsr:String,myModelScreen: MyModelScreen){
             }
             ) {
                 Icon(Icons.Default.Message,
-                    contentDescription = "content description",
+                    contentDescription =stringResource(R.string.sendMessage),
                     tint = MaterialTheme.colors.icon,
                     modifier=Modifier
                         .size(70.dp)

@@ -5,7 +5,7 @@
     <string name="signup">Signup</string>
     <string name="emotional">Emotional</string>
     <string name="lively">Lively</string>
-    <string name="optimism">Optimism</string>
+    <string name="optimistic">Optimistic</string>
     <string name="recentChat">Recent chat</string>
     <string name="chat">Chat</string>
     <string name="searchusr">SearchUser</string>
@@ -32,4 +32,6 @@
     <string name="Confirm">Confirm</string>
     <string name="SrcByUsr">\"Search by profile parameters \"</string>
     <string name="visitUser">Visit User</string>
+    <string name="close_search">Close Search</string>
+    <string name="new_search">New Search</string>
 </resources>

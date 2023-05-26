@@ -54,6 +54,7 @@ fun Chat(myModelScreen: MyModelScreen) {
             TopAppBar(
                 {
                     IconButton({
+                        myModelScreen.onSearch=false
                         ScreenRouter.navigateTo(LetMeKnowScreen.RecentChat)
                     }) {
                         Icon(
@@ -65,7 +66,7 @@ fun Chat(myModelScreen: MyModelScreen) {
                     var userVisit = userViewModel.getUserVisited(myModelScreen.chatWith).observeAsState().value
                     IconButton({
                         if(userVisit!=null) {
-                            myModelScreen.onVisitUserClass = true
+                            myModelScreen.fromChat = true
                             myModelScreen.usrVisit = userVisit
                             ScreenRouter.navigateTo(LetMeKnowScreen.HomeUsr)
                         }

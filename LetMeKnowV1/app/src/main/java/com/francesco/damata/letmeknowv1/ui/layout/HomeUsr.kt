@@ -32,7 +32,7 @@ fun HomeUsr(myModelScreen: MyModelScreen){
 
 @Composable
 fun ProfColumn(myModelScreen: MyModelScreen) {
-    if (myModelScreen.userClass.userid == "") {
+    if (myModelScreen.userClass.userid == "" && !myModelScreen.fromChat && !myModelScreen.onSearch) {
         val context = LocalContext.current
         val viewModel: UserViewModel = viewModel(
             factory = UserViewModelFactory(context.applicationContext as Application)
@@ -49,7 +49,7 @@ fun ProfColumn(myModelScreen: MyModelScreen) {
     ) {
         TopAppBar(
             {
-                if (!myModelScreen.onVisitUserClass) {
+                if (!myModelScreen.onSearch && !myModelScreen.fromChat) {
                     IconButton(onClick = {
                         ScreenRouter.navigateTo(LetMeKnowScreen.Login)
                     }
@@ -60,9 +60,14 @@ fun ProfColumn(myModelScreen: MyModelScreen) {
                         )
                     }
                     Text(stringResource(R.string.topBarHome), color = Color.White, fontSize = 24.sp)
-                } else {
+                }
+
+
+                else if(myModelScreen.fromChat){
                     IconButton(onClick = {
                         ScreenRouter.navigateTo(LetMeKnowScreen.Chat)
+                        myModelScreen.fromChat=false
+                        myModelScreen.onSearch=false
                     }
                     ) {
                         Icon(
@@ -72,9 +77,28 @@ fun ProfColumn(myModelScreen: MyModelScreen) {
                     }
                     Text(stringResource(R.string.visitUser), color = Color.White, fontSize = 24.sp)
                 }
+
+
+                else {
+                    IconButton(onClick = {
+                        ScreenRouter.navigateTo(LetMeKnowScreen.SearchResult)
+                        myModelScreen.fromChat=false
+                        myModelScreen.onSearch=false
+                    }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = stringResource(R.string.user) + myModelScreen.userClass.userid
+                        )
+                    }
+                    Text(stringResource(R.string.visitUser), color = Color.White, fontSize = 24.sp)
+
+
+                }
+
             })
         Text(text = stringResource(R.string.profile), color = Color.Black, fontSize = 40.sp)
-        if (myModelScreen.onVisitUserClass) {
+        if (myModelScreen.onSearch || myModelScreen.fromChat) {
             Text(
                 text = stringResource(R.string.user) + myModelScreen.usrVisit.userid,
                 color = MaterialTheme.colors.myBlue,
@@ -94,7 +118,7 @@ fun ProfColumn(myModelScreen: MyModelScreen) {
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if(!myModelScreen.onVisitUserClass) {
+            if(!myModelScreen.onSearch && !myModelScreen.fromChat) {
                 Button(
                     where = LetMeKnowScreen.EditProfile,
                     content = stringResource(R.string.edit_profile)

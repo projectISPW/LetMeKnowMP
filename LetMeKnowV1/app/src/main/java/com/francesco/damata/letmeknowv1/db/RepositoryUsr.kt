@@ -46,8 +46,8 @@ class RepositoryUsr(private val usrDao:DaoUser ){
         }
 
     }
-    fun searchUsr(uid : String,emo : Int, lv: Int,opt : Int): LiveData<MutableList<User>>{
-        return usrDao.getSearch(uid,emo,lv,opt)
+    fun searchUsr(usr:User): LiveData<MutableList<User>>{
+        return usrDao.getSearch(usr.userid,usr.emotional,usr.lively,usr.optimistic)
     }
 
 

@@ -9,6 +9,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class MyModelScreen :Parcelable{
     @IgnoredOnParcel
+
+    //could be cancelled by the using of the only userClass?
     private var _usr=mutableStateOf("")
     var usr:String
     get(){
@@ -18,8 +20,10 @@ class MyModelScreen :Parcelable{
         _usr.value=edit
     }
 
+
+    //used fot get the parameter of the logged user
     @IgnoredOnParcel
-    private var _userClass=mutableStateOf(User("","","",0,0,0))
+    private var _userClass=mutableStateOf(User("","","",1,1,1))
     var userClass:User
     get(){
         return _userClass.value
@@ -29,67 +33,80 @@ class MyModelScreen :Parcelable{
     }
 
 
-    @IgnoredOnParcel
-    private var _log=mutableStateOf(false)
-    var log:Boolean
-    get(){
-        return _log.value
-    }
-    set(noSense){
-        _log.value=!_log.value
-    }
 
+    //it is used for go back to the search statement
     @IgnoredOnParcel
-    private var _onSearchEmo= mutableStateOf(1)
-    var onSearchEmo: Int
+    private var _onSearchUsr=mutableStateOf(User("","","",1,1,1))
+    var onSearchUsr:User
         get(){
-            return _onSearchEmo.value
+            return _userClass.value
         }
-        set(emo){
-            _onSearchEmo.value=emo
+        set(edit){
+            _userClass.value=edit
         }
 
     @IgnoredOnParcel
-    private var _onSearchLv = mutableStateOf(1)
-    var onSearchLv: Int
+    private var _usrVisit=mutableStateOf(User("","","",1,1,1))
+    var usrVisit:User
         get(){
-            return _onSearchLv.value
+            return _usrVisit.value
         }
-        set(lv){
-            _onSearchLv.value=lv
+        set(edit){
+            _usrVisit.value=edit
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //for the user that i chat with i only use his userid
     @IgnoredOnParcel
-    private var _onSearchOpt = mutableStateOf(1)
-    var onSearchOpt: Int
-        get(){
-            return _onSearchOpt.value
-        }
-        set(opt){
-            _onSearchOpt.value=opt
-        }
-
-
-    @IgnoredOnParcel
-    private var _chatWith=mutableStateOf(User("0000000","0","0",0,0,0))
+    private var _chatWith :String=""
     var chatWith:String
     get() {
-        return _chatWith.value.userid
+        return _chatWith
     }
     set(userid) {
-        //leggo da db in fase di login dopo aver verificato che password e userid coincidono
-        _chatWith.value=User(userid,"0","0",0,0,0)
+        _chatWith=userid
     }
 
+
+
+
+    //________________SEARCH LAYOUT________________//
+    //it is used for know if there was a result search
     @IgnoredOnParcel
     private var _onSearch=mutableStateOf(false)
     var onSearch:Boolean
     get(){
         return _onSearch.value
     }
-    set(noSense){
-        _onSearch.value=!_onSearch.value
+    set(value){
+        _onSearch.value=value
     }
+
+    private var _fromChat=mutableStateOf(false)
+    var fromChat:Boolean
+        get(){
+            return _fromChat.value
+        }
+        set(value){
+            _fromChat.value=value
+        }
+
+
+
+
+
 
 
     @IgnoredOnParcel
@@ -102,23 +119,5 @@ class MyModelScreen :Parcelable{
         _txtSrc.value=edit
     }
 
-    @IgnoredOnParcel
-    private var _onVisitUserClass=mutableStateOf(false)
-    var onVisitUserClass:Boolean
-        get(){
-            return _onVisitUserClass.value
-        }
-        set(edit){
-            _onVisitUserClass.value=edit
-        }
 
-    @IgnoredOnParcel
-    private var _usrVisit=mutableStateOf(User("0000000","0","0",0,0,0))
-    var usrVisit:User
-        get(){
-            return _usrVisit.value
-        }
-        set(edit){
-            _usrVisit.value=edit
-        }
 }
