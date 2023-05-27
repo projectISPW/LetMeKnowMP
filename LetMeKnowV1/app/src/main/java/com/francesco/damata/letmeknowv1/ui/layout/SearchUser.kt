@@ -60,13 +60,6 @@ fun SearchUser(myModelScreen: MyModelScreen) {
             })
         Text(text = stringResource(R.string.SrcByUsr), color =  MaterialTheme.colors.myBlue, fontSize = 25.sp)
         SearchSlider(myModelScreen)
-        Button(onClick = {
-            ScreenRouter.navigateTo(LetMeKnowScreen.SearchResult)
-        }, colors = ButtonDefaults.textButtonColors(
-            backgroundColor = MaterialTheme.colors.button
-        )){
-            Text(stringResource(R.string.Confirm),color = Color.White,fontSize = 20.sp)
-        }
         myImage(R.drawable.search)
     }
 }
@@ -83,17 +76,30 @@ fun SearchSlider(myModelScreen: MyModelScreen){
         val optSlider = rememberSaveable() {
             mutableStateOf(1f)
         }
+
         Column() {
+            val context= LocalContext.current
             SearchTraits(context.getString(R.string.emotional),empSlider,myModelScreen)
             SearchTraits(context.getString(R.string.lively),humSlider,myModelScreen)
             SearchTraits( context.getString(R.string.optimistic),optSlider,myModelScreen)
+            Button(onClick = {
+                val user = User(myModelScreen.userClass.userid,"",myModelScreen.userClass.email,empSlider.value.roundToInt(),humSlider.value.roundToInt(),optSlider.value.roundToInt())
+                ScreenRouter.navigateTo(LetMeKnowScreen.SearchResult)
+                println("\n\n\n before search"+user.toString())
+                myModelScreen.onSearchUsr=user
+            },
+                modifier=Modifier.align(Alignment.CenterHorizontally),
+                colors = ButtonDefaults.textButtonColors(
+                backgroundColor = MaterialTheme.colors.button
+            )){
+                Text(stringResource(R.string.Confirm),color = Color.White,fontSize = 20.sp)
+            }
         }
     }
 
 @Composable
 fun SearchTraits(wich:String,trait : MutableState<Float>,myModelScreen: MyModelScreen){
     Row() {
-        myModelScreen.onSearchUsr= User(myModelScreen.userClass.userid,myModelScreen.chatWith,myModelScreen.userClass.email,1,1,1)
         val context= LocalContext.current
         Text(
             fontWeight = FontWeight.SemiBold,
@@ -110,10 +116,7 @@ fun SearchTraits(wich:String,trait : MutableState<Float>,myModelScreen: MyModelS
             modifier = Modifier
                 .padding( start = 40.dp,end=5.dp)
         )
-        when(wich) {             ///Non scrive su myModelScreen
-            context.getString(R.string.emotional) -> myModelScreen.onSearchUsr.emotional = trait.value.roundToInt()
-            context.getString(R.string.lively) -> myModelScreen.onSearchUsr.lively= trait.value.roundToInt()
-            context.getString(R.string.optimistic) -> myModelScreen.onSearchUsr.optimistic = trait.value.roundToInt()
-        }
+
+
     }
 }

@@ -65,6 +65,7 @@ fun SearchResult(myModelScreen: MyModelScreen){
                 )
             })
         val searchResult = viewModel.getSearchResult(myModelScreen.onSearchUsr).observeAsState(listOf()).value
+        println("\n\n\n user in search result "+searchResult.toString())
         FoundUser(users = searchResult,myModelScreen)
 
     }
