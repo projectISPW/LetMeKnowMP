@@ -8,7 +8,7 @@ import com.francesco.damata.letmeknowv1.db.RepositoryUsr
 import com.francesco.damata.letmeknowv1.db.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.apache.commons.validator.routines.EmailValidator
+//import org.apache.commons.validator.routines.EmailValidator
 class UserViewModel (application: Application) : AndroidViewModel(application){
     private var repository: RepositoryUsr
     init{
@@ -36,6 +36,7 @@ class UserViewModel (application: Application) : AndroidViewModel(application){
     fun newUser(usr:User){
         var bool:Boolean
         viewModelScope.launch(Dispatchers.IO) {
+            /*
                bool=EmailValidator.getInstance().isValid(usr.email)
                if(bool) {
                    repository.newUsr(usr)
@@ -44,6 +45,9 @@ class UserViewModel (application: Application) : AndroidViewModel(application){
                }else{
                    println("error on the mail occurred ")
                }
+
+             */
+            repository.newUsr(usr)
         }
     }
 }
