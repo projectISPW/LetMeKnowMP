@@ -1,13 +1,14 @@
 package com.francesco.damata.letmeknowv1.viewModel
 
 import android.app.Application
+import android.text.TextUtils
 import androidx.lifecycle.*
 import com.francesco.damata.letmeknowv1.db.LetMeKnowDB
 import com.francesco.damata.letmeknowv1.db.RepositoryUsr
 import com.francesco.damata.letmeknowv1.db.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
+import org.apache.commons.validator.routines.EmailValidator
 class UserViewModel (application: Application) : AndroidViewModel(application){
     private var repository: RepositoryUsr
     init{
@@ -33,8 +34,16 @@ class UserViewModel (application: Application) : AndroidViewModel(application){
     }
     @Suppress("unused")
     fun newUser(usr:User){
+        var bool:Boolean
         viewModelScope.launch(Dispatchers.IO) {
-            repository.newUsr(usr)
+               bool=EmailValidator.getInstance().isValid(usr.email)
+               if(bool) {
+                   repository.newUsr(usr)
+                   println("la tua mail è inserita correttamente ")
+
+               }else{
+                   println("error on the mail occurred ")
+               }
         }
     }
 }
