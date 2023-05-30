@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.francesco.damata.letmeknowv1.R
+import com.francesco.damata.letmeknowv1.db.User
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 import com.francesco.damata.letmeknowv1.ui.theme.myBlue
 import com.francesco.damata.letmeknowv1.viewModel.UserViewModel
@@ -49,7 +50,7 @@ fun ProfColumn(myModelScreen: MyModelScreen) {
     ) {
         TopAppBar(
             {
-                if (!myModelScreen.onSearch && !myModelScreen.fromChat) {
+                if ((!myModelScreen.onSearch && !myModelScreen.fromChat) || myModelScreen.usrVisit.userid==""){
                     IconButton(onClick = {
                         ScreenRouter.navigateTo(LetMeKnowScreen.Login)
                     }
@@ -68,6 +69,7 @@ fun ProfColumn(myModelScreen: MyModelScreen) {
                         ScreenRouter.navigateTo(LetMeKnowScreen.Chat)
                         myModelScreen.fromChat=false
                         myModelScreen.onSearch=false
+                        myModelScreen.usrVisit= User("","","",1,1,1)
                     }
                     ) {
                         Icon(
@@ -84,6 +86,7 @@ fun ProfColumn(myModelScreen: MyModelScreen) {
                         ScreenRouter.navigateTo(LetMeKnowScreen.SearchResult)
                         myModelScreen.fromChat=false
                         myModelScreen.onSearch=false
+                        myModelScreen.usrVisit= User("","","",1,1,1)
                     }
                     ) {
                         Icon(

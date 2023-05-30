@@ -28,6 +28,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.francesco.damata.letmeknowv1.R
 import com.francesco.damata.letmeknowv1.db.Message
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
+import com.francesco.damata.letmeknowv1.ui.theme.button
 import com.francesco.damata.letmeknowv1.ui.theme.icon
 import com.francesco.damata.letmeknowv1.viewModel.MessageViewModel
 import com.francesco.damata.letmeknowv1.viewModel.MessageViewModelFactory
@@ -53,7 +54,7 @@ fun RecentChat(myModelScreen: MyModelScreen) {
             {
                 IconButton(onClick = {
                     ScreenRouter.navigateTo(LetMeKnowScreen.HomeUsr)
-
+                    myModelScreen.onSearch=false
                 }) {
                     Icon(
                         imageVector = Icons.Default.Home,
@@ -68,7 +69,14 @@ fun RecentChat(myModelScreen: MyModelScreen) {
         SearchBar(items,myModelScreen)
         if(!myModelScreen.onSearch)Conversations(getLastMessages(items,myModelScreen),myModelScreen.userClass.userid,myModelScreen)
         else Conversations(SearchConversations(items,myModelScreen),myModelScreen.userClass.userid,myModelScreen)
-        Button(LetMeKnowScreen.SearchUser,stringResource(R.string.contBtnSearch))
+        Button(onClick = {
+            myModelScreen.onSearch=false
+            ScreenRouter.navigateTo(LetMeKnowScreen.SearchUser)
+        }, colors = ButtonDefaults.textButtonColors(
+            backgroundColor = MaterialTheme.colors.button
+        )){
+            Text(stringResource(R.string.contBtnSearch),color = Color.White,fontSize = 20.sp)
+        }
     }
 }
 
@@ -95,7 +103,7 @@ fun SearchBar(messages:List<Message>,myModelScreen: MyModelScreen){
         trailingIcon={
             IconButton(onClick={
                 myModelScreen.txtSrc=myModelScreen.txtSrc
-                myModelScreen.onSearch=false//non ha importanza il valore corr
+                myModelScreen.onSearch=true//non ha importanza il valore corr
                 }
             ){
                     if(myModelScreen.onSearch){

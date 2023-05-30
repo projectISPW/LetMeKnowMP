@@ -135,6 +135,7 @@ fun Conversation(messages: List<Message>,myModelScreen: MyModelScreen) {
                         message->
                     MessageChat(message,myModelScreen)
                 }
+                
             }
         }
     }

@@ -30,9 +30,11 @@ fun EditProfile(myModelScreen: MyModelScreen){      //Passo come parametro i tra
             {
                 IconButton(onClick = {
                     ScreenRouter.navigateTo(LetMeKnowScreen.HomeUsr)
+
                 }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
+
                         contentDescription = stringResource(R.string.backbutton)
                     )
                 }

@@ -39,10 +39,10 @@ class MyModelScreen :Parcelable{
     private var _onSearchUsr=mutableStateOf(User("","","",1,1,1))
     var onSearchUsr:User
         get(){
-            return _userClass.value
+            return _onSearchUsr.value
         }
         set(edit){
-            _userClass.value=edit
+            _onSearchUsr.value=edit
         }
 
     @IgnoredOnParcel
