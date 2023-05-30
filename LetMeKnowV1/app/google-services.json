@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "324690473870",
+    "project_id": "letmeknow-32987",
+    "storage_bucket": "letmeknow-32987.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324690473870:android:5ab43dbd5b447ee6ae2adf",
+        "android_client_info": {
+          "package_name": "com.francesco.damata.letmeknowv1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ62DWv4e7EcVHYb8Z8GoaW_Fa6q8iat8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
