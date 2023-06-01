@@ -36,7 +36,6 @@ import com.francesco.damata.letmeknowv1.viewModel.MessageViewModelFactory
 
 @Composable
 fun RecentChat(myModelScreen: MyModelScreen) {
-    val scrollState= rememberScrollState()
     val context= LocalContext.current
     val viewModel: MessageViewModel = viewModel(
         factory = MessageViewModelFactory(context.applicationContext as Application)
@@ -66,9 +65,9 @@ fun RecentChat(myModelScreen: MyModelScreen) {
                         .align(Alignment.Start)
                         .padding(start = 20.dp, top = 10.dp))
             })
-        SearchBar(items,myModelScreen)
-        if(!myModelScreen.onSearch)Conversations(getLastMessages(items,myModelScreen),myModelScreen.userClass.userid,myModelScreen)
-        else Conversations(SearchConversations(items,myModelScreen),myModelScreen.userClass.userid,myModelScreen)
+        SearchBar(viewModel,items,myModelScreen)
+        if(!myModelScreen.onSearch)Conversations(viewModel.getLastMessages(items,myModelScreen),myModelScreen.userClass.userid,myModelScreen)
+        else Conversations(viewModel.SearchConversations(items,myModelScreen),myModelScreen.userClass.userid,myModelScreen)
         Button(onClick = {
             myModelScreen.onSearch=false
             ScreenRouter.navigateTo(LetMeKnowScreen.SearchUser)
@@ -84,15 +83,13 @@ fun RecentChat(myModelScreen: MyModelScreen) {
 
 
 @Composable
-fun SearchBar(messages:List<Message>,myModelScreen: MyModelScreen){
-
+fun SearchBar(viewModel: MessageViewModel,messages:List<Message>,myModelScreen: MyModelScreen){
     TextField(value = myModelScreen.txtSrc,
         onValueChange = {
            myModelScreen.txtSrc=it
             if(myModelScreen.onSearch){
-                SearchConversations(messages,myModelScreen)
+                viewModel.SearchConversations(messages,myModelScreen)
             }
-
         },
         textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
         modifier=Modifier
@@ -110,14 +107,11 @@ fun SearchBar(messages:List<Message>,myModelScreen: MyModelScreen){
                         Icon(
                             imageVector = Icons.Default.SearchOff,//https://fonts.google.com/icons
                             contentDescription =  stringResource(R.string.close_search)
-
-
                         )
                     }else{
                         Icon(
                             imageVector = Icons.Default.ManageSearch,//https://fonts.google.com/icons
                             contentDescription =stringResource(R.string.new_search)
-
                         )
                     }
 
@@ -167,9 +161,9 @@ fun MessageBox(message:Message,curUsr:String,myModelScreen: MyModelScreen){
 
         Row{
             IconButton(onClick = {
+                myModelScreen.message=message
                 myModelScreen.chatWith=textUsr
                 ScreenRouter.navigateTo(LetMeKnowScreen.Chat)
-
             }
             ) {
                 Icon(Icons.Default.Message,
@@ -197,31 +191,4 @@ fun MessageBox(message:Message,curUsr:String,myModelScreen: MyModelScreen){
         }
 
     }
-fun getLastMessages(messages: List<Message>,myModelScreen: MyModelScreen):List<Message>{
-    var lastMessages: MutableList<Message> = mutableListOf()  //deve contenere l'ultimo messagio per ogni chat
-    var listUsers:MutableList<String> =mutableListOf(myModelScreen.userClass.userid)// deve cont
-    if(messages!=null && messages!!.isNotEmpty()){
-        for(i in messages!!){
-            if (!(listUsers.contains(i.sender))){
-                //message that user has recived
-                listUsers.add(i.sender)
-                lastMessages.add(i)
-            }
-            else if (i.sender == myModelScreen.userClass.userid && !(listUsers.contains(i.reciver))){
-                //message that user has sended
-                listUsers.add(i.reciver)
-                lastMessages.add(i)
-            }
-        }
-    }
-    return lastMessages
-}
-fun SearchConversations(messages:List<Message>,myModelScreen: MyModelScreen):List<Message>{
-    var searchMessages: MutableList<Message> = mutableListOf()  //deve contenere l'ultimo messagio per ogni chat
-    if(messages!=null && messages!!.isNotEmpty()){
-        for(i in messages!!){
-            if(i.text.contains(myModelScreen.txtSrc))searchMessages.add(i)
-        }
-    }
-    return searchMessages
-}
+

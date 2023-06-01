@@ -156,7 +156,7 @@ fun Signup(myModelScreen: MyModelScreen) {
                modifier=Modifier.align(Alignment.CenterHorizontally),
                onClick = {
                    if(email.value!="" && pswd.value!="" && confirmPswd.value==pswd.value ){
-                       var user : User= User("",pswd.value,email.value,1,1,1)
+                       var user = User("",pswd.value,email.value,1,1,1)
                        showParam.value=!showParam.value
                        myModelScreen.userClass=user
                        viewModel.newUser(user)

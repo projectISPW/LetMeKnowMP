@@ -14,7 +14,10 @@ import java.time.format.DateTimeFormatter
 
 
 import android.os.Build
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.LiveData
+import com.francesco.damata.letmeknowv1.screen.MyModelScreen
+import kotlinx.coroutines.CoroutineScope
 
 class MessageViewModel (application:Application) : AndroidViewModel(application){
     private var repository: RepositoryMsg
@@ -40,6 +43,57 @@ class MessageViewModel (application:Application) : AndroidViewModel(application)
         viewModelScope.launch(Dispatchers.IO) {
             repository.writeMsg(Message(current,sender,reciver,text))
         }
+    }
+
+    fun goLast(coroutineScope: CoroutineScope, listState: LazyListState, messages: List<Message>, model: MyModelScreen){
+        var msg:Message?=null
+        var i : Message
+        var count=0
+        if(messages.isNotEmpty()){
+            i= messages.get(count)
+            while(count<messages.size-1 && msg==null ){
+                if(i.text==model.message.text && i.dateTime==model.message.dateTime){
+                    msg=i
+                }
+                count++
+                i= messages.get(count)
+            }
+        }
+        if(msg==null && messages.isNotEmpty())msg=messages.last()
+        coroutineScope.launch {
+            // Animate scroll to the 10th item
+            if(msg!=null){
+                listState.animateScrollToItem(messages.indexOf(msg))
+            }
+        }
+    }
+    fun getLastMessages(messages: List<Message>,myModelScreen: MyModelScreen):List<Message>{
+        var lastMessages: MutableList<Message> = mutableListOf()  //deve contenere l'ultimo messagio per ogni chat
+        var listUsers:MutableList<String> =mutableListOf(myModelScreen.userClass.userid)// deve cont
+        if(messages!=null && messages!!.isNotEmpty()){
+            for(i in messages!!){
+                if (!(listUsers.contains(i.sender))){
+                    //message that user has recived
+                    listUsers.add(i.sender)
+                    lastMessages.add(i)
+                }
+                else if (i.sender == myModelScreen.userClass.userid && !(listUsers.contains(i.reciver))){
+                    //message that user has sended
+                    listUsers.add(i.reciver)
+                    lastMessages.add(i)
+                }
+            }
+        }
+        return lastMessages
+    }
+    fun SearchConversations(messages:List<Message>,myModelScreen: MyModelScreen):List<Message>{
+        var searchMessages: MutableList<Message> = mutableListOf()  //deve contenere l'ultimo messagio per ogni chat
+        if(messages!=null && messages!!.isNotEmpty()){
+            for(i in messages!!){
+                if(i.text.contains(myModelScreen.txtSrc))searchMessages.add(i)
+            }
+        }
+        return searchMessages
     }
 
 }

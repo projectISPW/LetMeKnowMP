@@ -3,11 +3,24 @@ import android.os.Parcelable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
+import com.francesco.damata.letmeknowv1.db.Message
 import com.francesco.damata.letmeknowv1.db.User
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 @Parcelize
 class MyModelScreen :Parcelable{
+    @IgnoredOnParcel
+    private var _message =mutableStateOf(Message("","","",""))
+    var message:Message
+    get(){
+        return _message.value
+    }
+    set(edit){
+        _message.value=edit
+    }
+
+
+
     @IgnoredOnParcel
 
     //could be cancelled by the using of the only userClass?

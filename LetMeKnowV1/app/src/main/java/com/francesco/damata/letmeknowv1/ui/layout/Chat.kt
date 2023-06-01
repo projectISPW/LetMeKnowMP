@@ -5,7 +5,9 @@ import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -16,6 +18,7 @@ import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,11 +40,14 @@ import com.francesco.damata.letmeknowv1.viewModel.MessageViewModel
 import com.francesco.damata.letmeknowv1.viewModel.MessageViewModelFactory
 import com.francesco.damata.letmeknowv1.viewModel.UserViewModel
 import com.francesco.damata.letmeknowv1.viewModel.UserViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun Chat(myModelScreen: MyModelScreen) {
     val context=LocalContext.current
-
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
     val viewModel: MessageViewModel = viewModel(
         factory = MessageViewModelFactory(context.applicationContext as Application)
     )
@@ -91,8 +97,9 @@ fun Chat(myModelScreen: MyModelScreen) {
             modifier = Modifier.fillMaxWidth()
                 .verticalScroll(rememberScrollState())
         ) {
-            Conversation(items,myModelScreen)
+            Conversation(items,myModelScreen,listState)
         }
+        viewModel.goLast(coroutineScope,listState, items, myModelScreen)
         ChatBar(viewModel,myModelScreen)
     }
 }
@@ -106,15 +113,19 @@ fun width(): Int {
     val configuration = LocalConfiguration.current
     return configuration.screenWidthDp
 }
+
 @Composable
-fun Conversation(messages: List<Message>,myModelScreen: MyModelScreen) {
+fun Conversation(messages: List<Message>,myModelScreen: MyModelScreen,listState: LazyListState) {
     val configuration = LocalConfiguration.current
+
+// Remember a CoroutineScope to be able to launch
     for(i in messages){
         println("\n\n\n\n text message.:"+i.text+"\n\n\n\n")
     }
     when (configuration.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> {
             LazyColumn(
+                state=listState,
                 modifier=Modifier.height(height().dp-100.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
@@ -128,6 +139,7 @@ fun Conversation(messages: List<Message>,myModelScreen: MyModelScreen) {
         // Other wise
         else -> {
             LazyColumn(
+                state=listState,
                 modifier=Modifier.height(height().dp-130.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
@@ -143,9 +155,6 @@ fun Conversation(messages: List<Message>,myModelScreen: MyModelScreen) {
 }
 @Composable
 fun MessageChat(message:Message,myModelScreen: MyModelScreen){
-    var msgExpanded= rememberSaveable() {
-        mutableStateOf(false)
-    }
     if (message.sender==myModelScreen.userClass.userid) {
         Column(
         modifier=Modifier
@@ -161,13 +170,12 @@ fun MessageChat(message:Message,myModelScreen: MyModelScreen){
                     message.text,
                     style = MaterialTheme.typography.body1,
                     fontSize = 24.sp,
-                    maxLines = if (msgExpanded.value) Int.MAX_VALUE else 5,
+                    //maxLines = if (msgExpanded.value) Int.MAX_VALUE else 5,
                     textAlign = TextAlign.End,
                     color = Color.White,
                     modifier = Modifier
                         .background(MaterialTheme.colors.sended)
                         .width(300.dp)
-
                 )
             }
 
@@ -187,7 +195,7 @@ fun MessageChat(message:Message,myModelScreen: MyModelScreen){
                     style=MaterialTheme.typography.body1,
                     color = Color.White,
                     fontSize = 24.sp,
-                    maxLines=if(msgExpanded.value)Int.MAX_VALUE else 5,
+                    //maxLines=if(msgExpanded.value)Int.MAX_VALUE else 5,
                     modifier= Modifier
                         .background(MaterialTheme.colors.recived)
                         .widthIn(100.dp, 300.dp)
