@@ -32,6 +32,7 @@ import com.francesco.damata.letmeknowv1.R
 import com.francesco.damata.letmeknowv1.db.User
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 import com.francesco.damata.letmeknowv1.ui.theme.*
+import com.francesco.damata.letmeknowv1.viewModel.MessageViewModel
 import com.francesco.damata.letmeknowv1.viewModel.MessageViewModelFactory
 import com.francesco.damata.letmeknowv1.viewModel.UserViewModel
 import com.francesco.damata.letmeknowv1.viewModel.UserViewModelFactory

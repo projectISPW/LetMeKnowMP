@@ -21,13 +21,28 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.francesco.damata.letmeknowv1.R
 import com.francesco.damata.letmeknowv1.db.User
+import com.francesco.damata.letmeknowv1.notification.LetMeKnowFirebaseMessagingService
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 import com.francesco.damata.letmeknowv1.ui.theme.myBlue
+import com.francesco.damata.letmeknowv1.viewModel.MessageViewModel
+import com.francesco.damata.letmeknowv1.viewModel.MessageViewModelFactory
 import com.francesco.damata.letmeknowv1.viewModel.UserViewModel
 import com.francesco.damata.letmeknowv1.viewModel.UserViewModelFactory
+import com.google.firebase.messaging.FirebaseMessagingService
 
 @Composable
 fun HomeUsr(myModelScreen: MyModelScreen){
+    val context = LocalContext.current
+    val notificationService = LetMeKnowFirebaseMessagingService()
+    val viewModel: MessageViewModel = viewModel(
+        factory = MessageViewModelFactory(context.applicationContext as Application)
+    )
+    if(viewModel.getChats(myModelScreen.userClass.userid) != null){
+        notificationService.showNotification("com.francesco.damata.letmeknowv1", 0,
+            stringResource(R . string . app_name),
+            "Have New Message "
+        )
+    }
     ProfColumn(myModelScreen)
 }
 
