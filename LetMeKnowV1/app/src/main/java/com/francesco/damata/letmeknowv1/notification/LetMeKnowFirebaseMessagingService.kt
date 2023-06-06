@@ -22,7 +22,7 @@ class LetMeKnowFirebaseMessagingService : FirebaseMessagingService() {
             priority: Int = NotificationCompat.PRIORITY_DEFAULT
         ) {
             val intent = Intent(this, MainActivity::class.java).apply {     //Qui c'è un NUllPOinter xception
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+               // flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
             val pendingIntent: PendingIntent =
                 PendingIntent

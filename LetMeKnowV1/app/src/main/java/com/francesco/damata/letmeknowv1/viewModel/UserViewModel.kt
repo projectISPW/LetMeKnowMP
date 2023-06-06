@@ -1,14 +1,20 @@
 package com.francesco.damata.letmeknowv1.viewModel
 
 import android.app.Application
-import android.text.TextUtils
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import com.francesco.damata.letmeknowv1.db.LetMeKnowDB
 import com.francesco.damata.letmeknowv1.db.RepositoryUsr
 import com.francesco.damata.letmeknowv1.db.User
+import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-//import org.apache.commons.validator.routines.EmailValidator
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
+
 class UserViewModel (application: Application) : AndroidViewModel(application){
     private var repository: RepositoryUsr
     init{
@@ -33,20 +39,29 @@ class UserViewModel (application: Application) : AndroidViewModel(application){
         }
     }
     @Suppress("unused")
-    fun newUser(usr:User){
-        var bool:Boolean
+    fun validateMail(str:String,myModelScreen: MyModelScreen){
+
         viewModelScope.launch(Dispatchers.IO) {
-            /*
-               bool=EmailValidator.getInstance().isValid(usr.email)
-               if(bool) {
-                   repository.newUsr(usr)
-                   println("la tua mail è inserita correttamente ")
+            try {
+                val emailAddr = InternetAddress(str)
+                emailAddr.validate()
+                println("\n\n\n"+repository.getLoginViewModel(str)+ "\n\n\n")
+                if(repository.getLoginViewModel(str)==null){
+                    myModelScreen.emailValidator=true
+                    println("\n\n\n check mail avvenuto correttamente \n\n\n")
+                }else{
+                    myModelScreen.emailValidator=false
+                }
+            } catch (e:AddressException ) {
+                println("\n\n\n check mail avvenuto non correttamente \n\n\n")
+                myModelScreen.emailValidator=false
+            }
+        }
 
-               }else{
-                   println("error on the mail occurred ")
-               }
-
-             */
+    }
+    @Suppress("unused")
+    fun newUser(usr:User){
+        viewModelScope.launch(Dispatchers.IO) {
             repository.newUsr(usr)
         }
     }

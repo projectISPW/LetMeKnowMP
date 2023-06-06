@@ -17,6 +17,10 @@ interface DaoUser{
     @Query("SELECT userid FROM User where email= :email")
     fun getUid(email:String):LiveData<String>
 
+
+    @Query("SELECT userid FROM User where email= :email")
+    fun getUidViewmodel(email:String):String
+
     @Query("SELECT email FROM User")
     fun getEmails():List<String>?
     @Query("SELECT * FROM User WHERE (userid= :id AND password= :password) OR (email= :id AND password= :password)")

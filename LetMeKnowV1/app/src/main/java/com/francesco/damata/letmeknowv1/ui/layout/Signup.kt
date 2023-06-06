@@ -95,6 +95,8 @@ fun Signup(myModelScreen: MyModelScreen) {
         val viewModel: UserViewModel = viewModel(
             factory = UserViewModelFactory(context.applicationContext as Application)
         )
+        var bool:Boolean
+        var user = User("",pswd.value,email.value,1,1,1)
        Column() {
            TextField(value = email.value,
                onValueChange = {
@@ -152,16 +154,21 @@ fun Signup(myModelScreen: MyModelScreen) {
                visualTransformation = if(passwordVisibility.value)VisualTransformation.None
                else PasswordVisualTransformation())
            Spacer(modifier = Modifier.height(16.dp))
+
            Button(
                modifier=Modifier.align(Alignment.CenterHorizontally),
                onClick = {
                    if(email.value!="" && pswd.value!="" && confirmPswd.value==pswd.value ){
-                       var user = User("",pswd.value,email.value,1,1,1)
-                       showParam.value=!showParam.value
-                       myModelScreen.userClass=user
-                       viewModel.newUser(user)
-
-                   }else{
+                       viewModel.validateMail(email.value,myModelScreen)
+                        if(!myModelScreen.emailValidator){
+                            Exceptions.mailExeption(context)
+                            showParam.value=false
+                        }else{
+                            showParam.value=true
+                            myModelScreen.userClass=user
+                            viewModel.newUser(user)
+                        }
+                   }else {
                        showParam.value=false
                    }
                },

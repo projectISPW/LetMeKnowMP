@@ -38,10 +38,10 @@ fun HomeUsr(myModelScreen: MyModelScreen){
         factory = MessageViewModelFactory(context.applicationContext as Application)
     )
     if(viewModel.getChats(myModelScreen.userClass.userid) != null){
-        notificationService.showNotification("com.francesco.damata.letmeknowv1", 0,
+        /*notificationService.showNotification("com.francesco.damata.letmeknowv1", 0,
             stringResource(R . string . app_name),
             "Have New Message "
-        )
+        )*/
     }
     ProfColumn(myModelScreen)
 }

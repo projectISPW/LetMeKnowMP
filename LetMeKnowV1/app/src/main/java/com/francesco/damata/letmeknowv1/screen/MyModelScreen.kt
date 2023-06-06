@@ -18,7 +18,16 @@ class MyModelScreen :Parcelable{
     set(edit){
         _message.value=edit
     }
-
+    @IgnoredOnParcel
+    private var _emailValidator=mutableStateOf(false)
+    var emailValidator:Boolean
+        get(){
+            return _emailValidator.value
+        }
+        set(value){
+            println("changed value in "+value)
+            _emailValidator.value=value
+        }
 
 
     @IgnoredOnParcel

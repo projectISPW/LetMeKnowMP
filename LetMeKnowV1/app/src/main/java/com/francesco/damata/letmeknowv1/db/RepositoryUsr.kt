@@ -13,6 +13,9 @@ class RepositoryUsr(private val usrDao:DaoUser ){
     fun getLogin(email:String):LiveData<String>{
         return usrDao.getUid(email)
     }
+    fun getLoginViewModel(email:String):String{
+        return usrDao.getUidViewmodel(email)
+    }
      fun updateUsr(user: User) {
         usrDao.update(user.userid,user.emotional,user.lively,user.optimistic)
     }
