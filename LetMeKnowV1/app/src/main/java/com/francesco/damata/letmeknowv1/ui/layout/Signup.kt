@@ -72,7 +72,7 @@ fun Signup(myModelScreen: MyModelScreen) {
             color = MaterialTheme.colors.letMeKnowColor
         )
         InputData(myModelScreen,showParam)
-        if(showParam.value)InputTraits(false,myModelScreen)
+        if( myModelScreen.emailValidator)InputTraits(false,myModelScreen)
 
     }
 }
@@ -159,17 +159,9 @@ fun Signup(myModelScreen: MyModelScreen) {
                modifier=Modifier.align(Alignment.CenterHorizontally),
                onClick = {
                    if(email.value!="" && pswd.value!="" && confirmPswd.value==pswd.value ){
-                       viewModel.validateMail(email.value,myModelScreen)
-                        if(!myModelScreen.emailValidator){
-                            Exceptions.mailExeption(context)
-                            showParam.value=false
-                        }else{
-                            showParam.value=true
-                            myModelScreen.userClass=user
-                            viewModel.newUser(user)
-                        }
+                       viewModel.validateMail(context,myModelScreen,user)
                    }else {
-                       showParam.value=false
+                       myModelScreen.emailValidator=false
                    }
                },
                colors = ButtonDefaults.textButtonColors(

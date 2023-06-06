@@ -1,14 +1,14 @@
 package com.francesco.damata.letmeknowv1.viewModel
 
 import android.app.Application
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
+import android.content.Context
 import androidx.lifecycle.*
 import com.francesco.damata.letmeknowv1.db.LetMeKnowDB
 import com.francesco.damata.letmeknowv1.db.RepositoryUsr
 import com.francesco.damata.letmeknowv1.db.User
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
+import com.francesco.damata.letmeknowv1.ui.layout.Exceptions
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.mail.internet.AddressException;
@@ -39,22 +39,29 @@ class UserViewModel (application: Application) : AndroidViewModel(application){
         }
     }
     @Suppress("unused")
-    fun validateMail(str:String,myModelScreen: MyModelScreen){
+    fun validateMail(context: Context,  myModelScreen: MyModelScreen, user: User){
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val emailAddr = InternetAddress(str)
+                val emailAddr = InternetAddress(user.email)
                 emailAddr.validate()
-                println("\n\n\n"+repository.getLoginViewModel(str)+ "\n\n\n")
-                if(repository.getLoginViewModel(str)==null){
+                println("\n\n\n"+repository.getLoginViewModel(user.email)+ "\n\n\n")
+                if(repository.getLoginViewModel(user.email)==null){
+                    myModelScreen.userClass=user
+                    newUser(user)
                     myModelScreen.emailValidator=true
-                    println("\n\n\n check mail avvenuto correttamente \n\n\n")
                 }else{
                     myModelScreen.emailValidator=false
+                    CoroutineScope(Dispatchers.Main).launch {
+                        Exceptions.mailExeption(context)
+                    }
                 }
             } catch (e:AddressException ) {
                 println("\n\n\n check mail avvenuto non correttamente \n\n\n")
                 myModelScreen.emailValidator=false
+                CoroutineScope(Dispatchers.Main).launch {
+                    Exceptions.mailExeption(context)
+                }
             }
         }
 
