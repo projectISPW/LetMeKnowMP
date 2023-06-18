@@ -22,8 +22,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.francesco.damata.letmeknowv1.R
 import com.francesco.damata.letmeknowv1.db.Message
@@ -100,7 +98,7 @@ fun SearchBar(viewModel: MessageViewModel,messages:List<Message>,myModelScreen: 
         trailingIcon={
             IconButton(onClick={
                 myModelScreen.txtSrc=myModelScreen.txtSrc
-                myModelScreen.onSearch=true//non ha importanza il valore corr
+                myModelScreen.onSearch=true
                 }
             ){
                     if(myModelScreen.onSearch){
@@ -149,14 +147,13 @@ fun Conversations(messages: List<Message>,curUsr:String,myModelScreen: MyModelSc
 }
 @Composable
 fun MessageBox(message:Message,curUsr:String,myModelScreen: MyModelScreen){
-        var msgExpanded= rememberSaveable() {
+        val msgExpanded= rememberSaveable {
             mutableStateOf(false)
         }
         var textUsr:String
+        textUsr=message.sender
         if(message.sender==curUsr){
-            textUsr=message.reciver
-        }else{
-            textUsr=message.sender
+            textUsr=message.receiver
         }
 
         Row{

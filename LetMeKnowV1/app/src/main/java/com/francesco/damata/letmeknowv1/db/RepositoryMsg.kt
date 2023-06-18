@@ -3,22 +3,16 @@ package com.francesco.damata.letmeknowv1.db
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+
 
 class RepositoryMsg(private val msgDao:DaoMessage) {
-    fun getChat(sender:String,reciver:String): LiveData<MutableList<Message>> {
-        return msgDao.getChat(sender,reciver)
+    fun getChat(sender:String, receiver:String): LiveData<MutableList<Message>> {
+        return msgDao.getChat(sender,receiver)
     }
     fun getChats(user:String): LiveData<MutableList<Message>>{
         return msgDao.getChats(user)
     }
-    fun update(msg:Message){
-        CoroutineScope(Dispatchers.IO).launch{
-            msgDao.update(msg)
-        }
-    }
+   
 
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun writeMsg(message:Message){

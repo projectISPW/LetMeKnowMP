@@ -40,8 +40,6 @@ import com.francesco.damata.letmeknowv1.viewModel.MessageViewModel
 import com.francesco.damata.letmeknowv1.viewModel.MessageViewModelFactory
 import com.francesco.damata.letmeknowv1.viewModel.UserViewModel
 import com.francesco.damata.letmeknowv1.viewModel.UserViewModelFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @Composable
 fun Chat(myModelScreen: MyModelScreen) {
@@ -69,7 +67,7 @@ fun Chat(myModelScreen: MyModelScreen) {
                             modifier = Modifier.padding(start = 5.dp)
                         )
                     }
-                    var userVisit = userViewModel.getUserVisited(myModelScreen.chatWith).observeAsState().value
+                    val userVisit = userViewModel.getUserVisited(myModelScreen.chatWith).observeAsState().value
                     IconButton({
                         if(userVisit!=null) {
                             myModelScreen.fromChat = true
@@ -108,25 +106,18 @@ fun height(): Int {
     val configuration = LocalConfiguration.current
     return configuration.screenHeightDp
 }
-@Composable
-fun width(): Int {
-    val configuration = LocalConfiguration.current
-    return configuration.screenWidthDp
-}
 
 @Composable
 fun Conversation(messages: List<Message>,myModelScreen: MyModelScreen,listState: LazyListState) {
     val configuration = LocalConfiguration.current
 
 // Remember a CoroutineScope to be able to launch
-    for(i in messages){
-        println("\n\n\n\n text message.:"+i.text+"\n\n\n\n")
-    }
+
     when (configuration.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> {
             LazyColumn(
                 state=listState,
-                modifier=Modifier.height(height().dp-100.dp),
+                modifier=Modifier.height(height().dp-140.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(items=messages){
@@ -195,7 +186,6 @@ fun MessageChat(message:Message,myModelScreen: MyModelScreen){
                     style=MaterialTheme.typography.body1,
                     color = Color.White,
                     fontSize = 24.sp,
-                    //maxLines=if(msgExpanded.value)Int.MAX_VALUE else 5,
                     modifier= Modifier
                         .background(MaterialTheme.colors.recived)
                         .widthIn(100.dp, 300.dp)
@@ -209,7 +199,7 @@ fun MessageChat(message:Message,myModelScreen: MyModelScreen){
 
 @Composable
 fun ChatBar(viewModel: MessageViewModel,myModelScreen:MyModelScreen) {
-    var inputMsg = rememberSaveable() {
+    val inputMsg = rememberSaveable {
         mutableStateOf("")
     }
     TextField(value = inputMsg.value,

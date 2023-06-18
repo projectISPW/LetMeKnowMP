@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import java.util.*
 
 class RepositoryUsr(private val usrDao:DaoUser ){
-    fun getLogin(id:String, pswd:String):LiveData<User>{
-        return usrDao.getLogin(id,pswd)
+    fun getLogin(id:String, passwd:String):LiveData<User>{
+        return usrDao.getLogin(id,passwd)
     }
     fun getVisitUser(uid : String) : LiveData<User>{
         return usrDao.getVisitUser(uid)
@@ -21,18 +21,18 @@ class RepositoryUsr(private val usrDao:DaoUser ){
     }
     suspend fun newUsr(user:User) {
         //assign the id to the usr
-        var random = 0
+        var random : Int
         val min = 1000000
         val max = 9999999
         var check: String? = null
         var equal = true
-        val emails:  List<String>  = usrDao.getEmails() ?: listOf<String>()
+        val emails:  List<String>  = usrDao.getEmails() ?: listOf()
 
         if(!emails.contains(user.email) ){
-            val uidList: List<String> = usrDao.getUids() ?: listOf<String>("0000000")
-            var randomno = Random()
+            val uidList: List<String> = usrDao.getUids() ?: listOf("0000000")
+            val randomGenerator = Random()
             while (equal) {
-                random = randomno.nextInt(max)
+                random = randomGenerator.nextInt(max)
                 equal = false
                 if (random < min - 1) equal = true
                 check = "" + random

@@ -30,35 +30,35 @@ fun InputTraits(locked:Boolean,myModelScreen :MyModelScreen) {
     val humSlider:MutableState<Float>
     val optSlider:MutableState<Float>
     if(myModelScreen.onSearch || myModelScreen.fromChat && locked){
-        empSlider = rememberSaveable() {
+        empSlider = rememberSaveable {
             mutableStateOf(myModelScreen.usrVisit.emotional.toFloat())
         }
-        humSlider = rememberSaveable() {
+        humSlider = rememberSaveable {
             mutableStateOf(myModelScreen.usrVisit.lively.toFloat())
         }
-        optSlider = rememberSaveable() {
+        optSlider = rememberSaveable {
             mutableStateOf(myModelScreen.usrVisit.optimistic.toFloat())
         }
     }
     else{
-        empSlider = rememberSaveable() {
+        empSlider = rememberSaveable {
             mutableStateOf(myModelScreen.userClass.emotional.toFloat())
         }
-        humSlider = rememberSaveable() {
+        humSlider = rememberSaveable{
             mutableStateOf(myModelScreen.userClass.lively.toFloat())
         }
-        optSlider = rememberSaveable() {
+        optSlider = rememberSaveable{
             mutableStateOf(myModelScreen.userClass.optimistic.toFloat())
         }
     }
 
 
-    Column() {
+    Column {
         val context= LocalContext.current
         val viewModel: UserViewModel = viewModel(
             factory = UserViewModelFactory(context.applicationContext as Application)
         )
-        var user=viewModel.getLogin(myModelScreen.userClass.userid,myModelScreen.userClass.password).observeAsState().value
+        val user=viewModel.getLogin(myModelScreen.userClass.userid,myModelScreen.userClass.password).observeAsState().value
         if (user != null) {
             myModelScreen.userClass=user
         }
@@ -85,17 +85,17 @@ fun InputTraits(locked:Boolean,myModelScreen :MyModelScreen) {
     
 }
 @Composable
-fun Traits(wich: String, trait: MutableState<Float>,myModelScreen: MyModelScreen?=null,locked: Boolean){
-    Row() {
+fun Traits(which: String, trait: MutableState<Float>, myModelScreen: MyModelScreen?=null, locked: Boolean){
+    Row {
         val context=LocalContext.current
         Text(
             fontWeight = FontWeight.SemiBold,
             fontSize = 24.sp,
             modifier = Modifier
                 .padding(top = 13.dp, start = 20.dp)
-                .width(180.dp),
+                .width(185.dp),
 
-            text = wich+"  :    "+trait.value.roundToInt().toString())
+            text = which+"  :    "+trait.value.roundToInt().toString())
         if(locked){
             Slider(value = trait.value,
                 onValueChange = {},
@@ -113,10 +113,10 @@ fun Traits(wich: String, trait: MutableState<Float>,myModelScreen: MyModelScreen
                     .padding( start = 40.dp,end=5.dp),
             )
             if(myModelScreen?.userClass!=null){
-                when(wich){
-                    context.getString(R.string.emotional)->myModelScreen!!.userClass.emotional=trait.value.roundToInt()
-                    context.getString(R.string.lively)->myModelScreen!!.userClass.lively=trait.value.roundToInt()
-                    context.getString(R.string.optimistic)->myModelScreen!!.userClass.optimistic=trait.value.roundToInt()
+                when(which){
+                    context.getString(R.string.emotional)->myModelScreen.userClass.emotional=trait.value.roundToInt()
+                    context.getString(R.string.lively)->myModelScreen.userClass.lively=trait.value.roundToInt()
+                    context.getString(R.string.optimistic)->myModelScreen.userClass.optimistic=trait.value.roundToInt()
                 }
             }
         }

@@ -29,11 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.francesco.damata.letmeknowv1.R
-import com.francesco.damata.letmeknowv1.db.User
 import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 import com.francesco.damata.letmeknowv1.ui.theme.*
-import com.francesco.damata.letmeknowv1.viewModel.MessageViewModel
-import com.francesco.damata.letmeknowv1.viewModel.MessageViewModelFactory
 import com.francesco.damata.letmeknowv1.viewModel.UserViewModel
 import com.francesco.damata.letmeknowv1.viewModel.UserViewModelFactory
 
@@ -65,7 +62,7 @@ fun MainLayout(myModelScreen: MyModelScreen) {
             })
         ColUnderTheTop()
         InputUsr(myModelScreen =myModelScreen )
-        signupText()
+        SignupText()
 
     }
 }
@@ -96,7 +93,7 @@ fun ColUnderTheTop(){
     }
 }
 @Composable
-fun signupText(){
+fun SignupText(){
     Text(
         text = stringResource(R.string.SignUpFree),
         fontSize = 24.sp,
@@ -113,13 +110,13 @@ fun signupText(){
 }
 @Composable
 fun InputUsr(myModelScreen: MyModelScreen){
-    val password = rememberSaveable() {
+    val password = rememberSaveable {
         mutableStateOf("")
     }
-    val passwordVisibility = rememberSaveable() {
+    val passwordVisibility = rememberSaveable {
         mutableStateOf(false)
     }
-    var context:Context= LocalContext.current
+    val context:Context= LocalContext.current
     val viewModel: UserViewModel = viewModel(
         factory = UserViewModelFactory(context.applicationContext as Application)
     )
@@ -175,12 +172,18 @@ fun InputUsr(myModelScreen: MyModelScreen){
             else PasswordVisualTransformation()
         )
         Spacer(modifier = Modifier.height(16.dp))
-        var user =viewModel.getLogin( myModelScreen.usr,password.value).observeAsState().value
+
+
+
+
+        val user =viewModel.getLogin( myModelScreen.usr,password.value).observeAsState().value
         Button(onClick = {
             if (user!=null){
                 ScreenRouter.navigateTo(LetMeKnowScreen.HomeUsr)
                 myModelScreen.userClass=user
                 myModelScreen.usr=user.userid
+            }else{
+                Exceptions.credentialsError(context)
             }
         }, colors = ButtonDefaults.textButtonColors(
             backgroundColor = MaterialTheme.colors.button

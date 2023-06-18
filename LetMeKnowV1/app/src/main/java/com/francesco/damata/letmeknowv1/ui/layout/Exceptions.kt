@@ -9,8 +9,18 @@ fun Context.toast(message: CharSequence) =
 
 class Exceptions{
     companion object{
-        fun mailExeption(context:Context){
+        fun mailUsed(context:Context){
+            context.toast("the mail in input is already used or the format is uncorrect")
+        }
+        fun mailUncorrect(context:Context){
+            context.toast("the mail in input is already used or the format is uncorrect")
+        }
+        fun pswdNotEqual(context:Context){
+            context.toast("the mail in input is already used or the format is uncorrect")
+        }
+        fun credentialsError(context:Context){
             context.toast("the mail in input is already used or the format is uncorrect")
         }
     }
+
 }

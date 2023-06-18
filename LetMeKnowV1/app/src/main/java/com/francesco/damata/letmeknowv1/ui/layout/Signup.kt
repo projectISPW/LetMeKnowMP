@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -36,9 +35,6 @@ import com.francesco.damata.letmeknowv1.viewModel.UserViewModelFactory
 
 @Composable
 fun Signup(myModelScreen: MyModelScreen) {
-    val showParam = rememberSaveable() {
-        mutableStateOf(false)
-    }
     Column(
         modifier = Modifier
             //.padding(16.dp)
@@ -71,33 +67,32 @@ fun Signup(myModelScreen: MyModelScreen) {
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.letMeKnowColor
         )
-        InputData(myModelScreen,showParam)
+        InputData(myModelScreen)
         if( myModelScreen.emailValidator)InputTraits(false,myModelScreen)
 
     }
 }
 
     @Composable
-    fun InputData(myModelScreen: MyModelScreen, showParam: MutableState<Boolean>) {
-        val email = rememberSaveable() {
+    fun InputData(myModelScreen: MyModelScreen) {
+        val email = rememberSaveable {
             mutableStateOf("")
         }
-        val pswd = rememberSaveable() {
+        val passwd = rememberSaveable {
             mutableStateOf("")
         }
-        val confirmPswd = rememberSaveable() {
+        val confirmPasswd = rememberSaveable {
             mutableStateOf("")
         }
-        val passwordVisibility = rememberSaveable() {
+        val passwordVisibility = rememberSaveable {
             mutableStateOf(false)
         }
         val context= LocalContext.current
         val viewModel: UserViewModel = viewModel(
             factory = UserViewModelFactory(context.applicationContext as Application)
         )
-        var bool:Boolean
-        var user = User("",pswd.value,email.value,1,1,1)
-       Column() {
+        val user = User("",passwd.value,email.value,1,1,1)
+       Column{
            TextField(value = email.value,
                onValueChange = {
                    email.value=it
@@ -110,9 +105,9 @@ fun Signup(myModelScreen: MyModelScreen) {
                modifier=Modifier.width(300.dp)
            )
            Spacer(modifier = Modifier.height(16.dp))
-           TextField(value = pswd.value,
+           TextField(value = passwd.value,
                onValueChange = {
-                   pswd.value=it
+                   passwd.value=it
                },
                textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
                modifier=Modifier.width(300.dp),
@@ -141,9 +136,9 @@ fun Signup(myModelScreen: MyModelScreen) {
                visualTransformation = if(passwordVisibility.value)VisualTransformation.None
                else PasswordVisualTransformation())
 
-           TextField(value = confirmPswd.value,
+           TextField(value = confirmPasswd.value,
                onValueChange = {
-                   confirmPswd.value=it
+                   confirmPasswd.value=it
                },
                modifier=Modifier.width(300.dp),
                textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
@@ -158,7 +153,7 @@ fun Signup(myModelScreen: MyModelScreen) {
            Button(
                modifier=Modifier.align(Alignment.CenterHorizontally),
                onClick = {
-                   if(email.value!="" && pswd.value!="" && confirmPswd.value==pswd.value ){
+                   if(email.value!="" && passwd.value!="" && confirmPasswd.value==passwd.value ){
                        viewModel.validateMail(context,myModelScreen,user)
                    }else {
                        myModelScreen.emailValidator=false

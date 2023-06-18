@@ -18,7 +18,7 @@ import com.francesco.damata.letmeknowv1.screen.MyModelScreen
 import com.francesco.damata.letmeknowv1.ui.theme.myBlue
 
 @Composable
-fun EditProfile(myModelScreen: MyModelScreen){      //Passo come parametro i tratti attuali del profilo
+fun EditProfile(myModelScreen: MyModelScreen){
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -35,10 +35,10 @@ fun EditProfile(myModelScreen: MyModelScreen){      //Passo come parametro i tra
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
 
-                        contentDescription = stringResource(R.string.backbutton)
+                        contentDescription = stringResource(R.string.back_button)
                     )
                 }
-                Text(stringResource(R.string.edprof), color = Color.White, fontSize = 24.sp)
+                Text(stringResource(R.string.edit_profile), color = Color.White, fontSize = 24.sp)
             })
         Text(text = stringResource(R.string.edit_profile),color = Color.Black,fontSize = 40.sp)
         Text(text = stringResource(R.string.selectTraits), color =  MaterialTheme.colors.myBlue, fontSize = 25.sp)

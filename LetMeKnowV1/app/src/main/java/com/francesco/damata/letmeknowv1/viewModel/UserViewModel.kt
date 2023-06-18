@@ -53,14 +53,13 @@ class UserViewModel (application: Application) : AndroidViewModel(application){
                 }else{
                     myModelScreen.emailValidator=false
                     CoroutineScope(Dispatchers.Main).launch {
-                        Exceptions.mailExeption(context)
+                        Exceptions.mailUsed(context)
                     }
                 }
             } catch (e:AddressException ) {
-                println("\n\n\n check mail avvenuto non correttamente \n\n\n")
                 myModelScreen.emailValidator=false
                 CoroutineScope(Dispatchers.Main).launch {
-                    Exceptions.mailExeption(context)
+                    Exceptions.mailUncorrect(context)
                 }
             }
         }

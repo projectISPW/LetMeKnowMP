@@ -36,7 +36,7 @@ fun SearchUser(myModelScreen: MyModelScreen) {
         TopAppBar(
             {
                 IconButton(onClick = {
-                    ScreenRouter.navigateTo(LetMeKnowScreen.RecentChat)         //Ricambia poi con il login
+                    ScreenRouter.navigateTo(LetMeKnowScreen.RecentChat)
                 }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
@@ -53,7 +53,7 @@ fun SearchUser(myModelScreen: MyModelScreen) {
                 }
                 Spacer(modifier = Modifier.padding(5.dp))
                 Text(
-                    stringResource(R.string.searchUserTopBar),
+                    stringResource(R.string.searchusr),
                     color = Color.White,
                     fontSize = 24.sp
                 )
@@ -66,41 +66,38 @@ fun SearchUser(myModelScreen: MyModelScreen) {
 
 @Composable
 fun SearchSlider(myModelScreen: MyModelScreen){
-    val context= LocalContext.current
-        val empSlider = rememberSaveable() {
+        val empSlider = rememberSaveable{
             mutableStateOf(1f)
         }
-        val humSlider = rememberSaveable() {
+        val humSlider = rememberSaveable {
             mutableStateOf(1f)
         }
-        val optSlider = rememberSaveable() {
+        val optSlider = rememberSaveable {
             mutableStateOf(1f)
         }
 
-        Column() {
+        Column{
             val context= LocalContext.current
-            SearchTraits(context.getString(R.string.emotional),empSlider,myModelScreen)
-            SearchTraits(context.getString(R.string.lively),humSlider,myModelScreen)
-            SearchTraits( context.getString(R.string.optimistic),optSlider,myModelScreen)
+            SearchTraits(context.getString(R.string.emotional),empSlider)
+            SearchTraits(context.getString(R.string.lively),humSlider)
+            SearchTraits( context.getString(R.string.optimistic),optSlider)
             Button(onClick = {
                 val user = User(myModelScreen.userClass.userid,"",myModelScreen.userClass.email,empSlider.value.roundToInt(),humSlider.value.roundToInt(),optSlider.value.roundToInt())
                 ScreenRouter.navigateTo(LetMeKnowScreen.SearchResult)
-                println("\n\n\n before search"+user.toString())
                 myModelScreen.onSearchUsr=user
             },
                 modifier=Modifier.align(Alignment.CenterHorizontally),
                 colors = ButtonDefaults.textButtonColors(
                 backgroundColor = MaterialTheme.colors.button
             )){
-                Text(stringResource(R.string.Confirm),color = Color.White,fontSize = 20.sp)
+                Text(stringResource(R.string.confirm),color = Color.White,fontSize = 20.sp)
             }
         }
     }
 
 @Composable
-fun SearchTraits(wich:String,trait : MutableState<Float>,myModelScreen: MyModelScreen){
-    Row() {
-        val context= LocalContext.current
+fun SearchTraits(which : String, trait : MutableState<Float>){
+    Row {
         Text(
             fontWeight = FontWeight.SemiBold,
             fontSize = 24.sp,
@@ -108,7 +105,7 @@ fun SearchTraits(wich:String,trait : MutableState<Float>,myModelScreen: MyModelS
                 .padding( top = 13.dp,start=20.dp)
                 .width(170.dp),
 
-            text = wich+" :    "+trait.value.roundToInt().toString())
+            text = which+" :    "+trait.value.roundToInt().toString())
         Slider(value = trait.value,
             onValueChange = { trait.value = it },
             valueRange = 1f..5f,

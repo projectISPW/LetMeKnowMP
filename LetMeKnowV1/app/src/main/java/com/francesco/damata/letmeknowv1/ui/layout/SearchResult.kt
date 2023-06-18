@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layoutId
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -58,14 +57,13 @@ fun SearchResult(myModelScreen: MyModelScreen){
                     )
                 }
                 Text(
-                    stringResource(R.string.SearchResult), color = Color.White, fontSize = 24.sp,
+                    stringResource(R.string.searchrst), color = Color.White, fontSize = 24.sp,
                     modifier = Modifier
                         .align(Alignment.Start)
                         .padding(start = 20.dp, top = 10.dp)
                 )
             })
         val searchResult = viewModel.getSearchResult(myModelScreen.onSearchUsr).observeAsState(listOf()).value
-        println("\n\n\n user in search result "+searchResult.toString())
         FoundUser(users = searchResult,myModelScreen)
 
     }
@@ -85,7 +83,7 @@ fun UserPar(user: User,myModelScreen: MyModelScreen) {
        val constraints = ConstraintSet {
         val userC = createRefFor("user")
         val textUser = createRefFor("textUser")
-        val emot = createRefFor("emotional")
+        val emoId = createRefFor("emotional")
         val liv = createRefFor("lively")
         val opt = createRefFor("optimistic")
         val chat=createRefFor("chat")
@@ -98,13 +96,13 @@ fun UserPar(user: User,myModelScreen: MyModelScreen) {
             start.linkTo(userC.end,margin=15.dp)
         }
 
-        constrain(emot) {
+        constrain(emoId) {
             top.linkTo(parent.top, margin = 25.dp)
             start.linkTo(userC.end, margin=25.dp)
         }
         constrain(liv) {
             top.linkTo(parent.top, margin = 25.dp)
-            start.linkTo(emot.end, margin = 8.dp)
+            start.linkTo(emoId.end, margin = 8.dp)
         }
         constrain(opt) {
             top.linkTo(parent.top, margin = 25.dp)
@@ -148,7 +146,7 @@ fun UserPar(user: User,myModelScreen: MyModelScreen) {
             modifier = Modifier.layoutId("emotional")
         ) {
             Text(
-                "Emot",
+                stringResource(R.string.Emot),
                 style = MaterialTheme.typography.subtitle2,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp,
@@ -165,7 +163,7 @@ fun UserPar(user: User,myModelScreen: MyModelScreen) {
             modifier = Modifier.layoutId("lively")
         ) {
             Text(
-                "Liv",
+                stringResource(R.string.lively_restrinct),
                 style = MaterialTheme.typography.subtitle2,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
@@ -182,7 +180,7 @@ fun UserPar(user: User,myModelScreen: MyModelScreen) {
             modifier = Modifier.layoutId("optimistic")
         ) {
             Text(
-                "Opt",
+                stringResource(R.string.optimistic_restrinct),
                 style = MaterialTheme.typography.subtitle2,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
@@ -197,7 +195,7 @@ fun UserPar(user: User,myModelScreen: MyModelScreen) {
         }
         IconButton(onClick = {
             myModelScreen.chatWith=user.userid
-            ScreenRouter.navigateTo(LetMeKnowScreen.Chat)           //Chat con l'id del profilo cliccato
+            ScreenRouter.navigateTo(LetMeKnowScreen.Chat)           //On the screen chat with the user selected
 
         },
             modifier = Modifier.layoutId("chat")) {
@@ -317,7 +315,7 @@ fun UserPar(user: User,myModelScreen: MyModelScreen) {
 //        }
 //        Spacer(modifier = Modifier.width(20.dp))
 //        IconButton(onClick = {
-//            ScreenRouter.navigateTo(LetMeKnowScreen.Chat)           //Chat con l'id del profilo cliccato
+//            ScreenRouter.navigateTo(LetMeKnowScreen.Chat)
 //        }) {
 //            Icon(
 //                Icons.Default.Message,

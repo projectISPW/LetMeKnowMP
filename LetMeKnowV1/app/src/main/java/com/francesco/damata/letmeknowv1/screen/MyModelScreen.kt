@@ -1,8 +1,6 @@
 package com.francesco.damata.letmeknowv1.screen
 import android.os.Parcelable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.graphics.Color
 import com.francesco.damata.letmeknowv1.db.Message
 import com.francesco.damata.letmeknowv1.db.User
 import kotlinx.parcelize.IgnoredOnParcel
@@ -25,7 +23,6 @@ class MyModelScreen :Parcelable{
             return _emailValidator.value
         }
         set(value){
-            println("changed value in "+value)
             _emailValidator.value=value
         }
 
@@ -115,7 +112,7 @@ class MyModelScreen :Parcelable{
     set(value){
         _onSearch.value=value
     }
-
+    @IgnoredOnParcel
     private var _fromChat=mutableStateOf(false)
     var fromChat:Boolean
         get(){

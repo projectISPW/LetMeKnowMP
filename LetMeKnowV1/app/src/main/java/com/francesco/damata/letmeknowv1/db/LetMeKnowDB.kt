@@ -18,12 +18,12 @@ abstract class LetMeKnowDB : RoomDatabase() {
             if(db==null) {
                 db = databaseBuilder(
                     context,
-                    LetMeKnowDB::class.java, "letMeKnowdbv9.db"
-                ).createFromAsset("letMeKnowdbv9.db")
+                    LetMeKnowDB::class.java, "letMeKnowDb_v10.db"
+                ).createFromAsset("letMeKnowDb_v10.db")
                     .build()
             }
 
-            return db as LetMeKnowDB //Oggetto statico tornato dalla singleton
+            return db as LetMeKnowDB //static object returned from the Dao
         }
     }
 }

@@ -77,9 +77,9 @@ class MessageViewModel (application:Application) : AndroidViewModel(application)
                     listUsers.add(i.sender)
                     lastMessages.add(i)
                 }
-                else if (i.sender == myModelScreen.userClass.userid && !(listUsers.contains(i.reciver))){
+                else if (i.sender == myModelScreen.userClass.userid && !(listUsers.contains(i.receiver))){
                     //message that user has sended
-                    listUsers.add(i.reciver)
+                    listUsers.add(i.receiver)
                     lastMessages.add(i)
                 }
             }

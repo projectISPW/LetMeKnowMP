@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Let Me Know</string>
+    <string name="emotional">Emotività</string>
+    <string name="lively">Simpatia</string>
+    <string name="optimistic">Ottimista</string>
+    <string name="recentChat">"Chat recenti "</string>
+    <string name="searchusr">"Ricerca Utente "</string>
+    <string name="profile">"Profilo "</string>
+    <string name="user">"Utente : "</string>
+    <string name="edit_profile">"Modifica Profilo "</string>
+    <string name="selectTraits">"Seleziona i tuoi parametri per il profilo "</string>
+    <string name="confirm">"Conferma "</string>
+    <string name="back_button">"Torna indietro "</string>
+    <string name="confirm_pswd">Ripeti password:</string>
+    <string name="searchrst">"Risultato Ricerca "</string>
+    <string name="searchMsg">"Cerca nei messaggi "</string>
+    <string name="sendMessage">"Invia Messaggio "</string>
+    <string name="contBtnSearch">"Cerca per nuovi utenti "</string>
+    <string name="SignUpFree">"Iscriviti gratuitamente "</string>
+    <string name="SrcByUsr">"Cerca tramite i parametri utente "</string>
+    <string name="visitUser">Visita Utente</string>
+    <string name="close_search">"Fine ricerca "</string>
+    <string name="new_search">"Nuova Ricerca "</string>
+</resources>

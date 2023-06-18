@@ -75,7 +75,7 @@ fun ProfColumn(myModelScreen: MyModelScreen) {
                             contentDescription = stringResource(R.string.user) + myModelScreen.userClass.userid
                         )
                     }
-                    Text(stringResource(R.string.topBarHome), color = Color.White, fontSize = 24.sp)
+                    Text(stringResource(R.string.home), color = Color.White, fontSize = 24.sp)
                 }
 
 
