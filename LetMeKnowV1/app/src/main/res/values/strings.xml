@@ -27,7 +27,7 @@
     <string name="visitUser">Visit User</string>
     <string name="close_search">Close Search</string>
     <string name="new_search">New Search</string>
-    <string name="Emot">emotional_restrinct</string>
+    <string name="emotional_restrinct">Emot</string>
     <string name="lively_restrinct">Liv</string>
     <string name="optimistic_restrinct">Opt</string>
 </resources>

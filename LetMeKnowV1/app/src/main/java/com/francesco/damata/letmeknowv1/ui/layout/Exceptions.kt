@@ -10,16 +10,16 @@ fun Context.toast(message: CharSequence) =
 class Exceptions{
     companion object{
         fun mailUsed(context:Context){
-            context.toast("the mail in input is already used or the format is uncorrect")
+            context.toast("the mail in input is already used")
         }
-        fun mailUncorrect(context:Context){
-            context.toast("the mail in input is already used or the format is uncorrect")
+        fun mailIncorrect(context:Context){
+            context.toast("the format of the mail in input is uncorrected")
         }
-        fun pswdNotEqual(context:Context){
-            context.toast("the mail in input is already used or the format is uncorrect")
+        fun passwdNotEqual(context:Context){
+            context.toast("the password are not equal each other")
         }
         fun credentialsError(context:Context){
-            context.toast("the mail in input is already used or the format is uncorrect")
+            context.toast("uncorrected login ")
         }
     }
 

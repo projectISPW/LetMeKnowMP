@@ -89,7 +89,7 @@ fun UserPar(user: User,myModelScreen: MyModelScreen) {
         val chat=createRefFor("chat")
         constrain(userC) {
             top.linkTo(parent.top,margin=10.dp)
-            start.linkTo(parent.start)
+            start.linkTo(parent.start,margin=10.dp)
         }
         constrain(textUser) {
             top.linkTo(parent.top)
@@ -110,7 +110,7 @@ fun UserPar(user: User,myModelScreen: MyModelScreen) {
         }
         constrain(chat) {
             top.linkTo(parent.top, margin = 10.dp)
-            start.linkTo(opt.end,margin=25.dp)
+            start.linkTo(opt.end)
         }
     }
     ConstraintLayout(constraints,
@@ -146,7 +146,7 @@ fun UserPar(user: User,myModelScreen: MyModelScreen) {
             modifier = Modifier.layoutId("emotional")
         ) {
             Text(
-                stringResource(R.string.Emot),
+                stringResource(R.string.emotional_restrinct),
                 style = MaterialTheme.typography.subtitle2,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp,

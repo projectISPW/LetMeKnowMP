@@ -157,6 +157,7 @@ fun Signup(myModelScreen: MyModelScreen) {
                        viewModel.validateMail(context,myModelScreen,user)
                    }else {
                        myModelScreen.emailValidator=false
+                       if(passwd.value!="" && confirmPasswd.value!=passwd.value )Exceptions.passwdNotEqual(context)
                    }
                },
                colors = ButtonDefaults.textButtonColors(

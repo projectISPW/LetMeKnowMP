@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Let Me Know</string>
-    <string name="emotional">Emotività</string>
+    <string name="emotional">Empatia</string>
     <string name="lively">Simpatia</string>
     <string name="optimistic">Ottimista</string>
     <string name="recentChat">"Chat recenti "</string>
@@ -16,10 +16,13 @@
     <string name="searchrst">"Risultato Ricerca "</string>
     <string name="searchMsg">"Cerca nei messaggi "</string>
     <string name="sendMessage">"Invia Messaggio "</string>
-    <string name="contBtnSearch">"Cerca per nuovi utenti "</string>
+    <string name="contBtnSearch">"Cerca nuovi utenti "</string>
     <string name="SignUpFree">"Iscriviti gratuitamente "</string>
     <string name="SrcByUsr">"Cerca tramite i parametri utente "</string>
     <string name="visitUser">Visita Utente</string>
     <string name="close_search">"Fine ricerca "</string>
     <string name="new_search">"Nuova Ricerca "</string>
+    <string name="lively_restrinct">Simp</string>
+    <string name="optimistic_restrinct">Ottim</string>
+    <string name="emotional_restrinct">Emp</string>
 </resources>

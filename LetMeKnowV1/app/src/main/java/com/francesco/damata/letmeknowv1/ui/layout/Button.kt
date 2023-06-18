@@ -16,6 +16,6 @@ fun Button(where:LetMeKnowScreen, content: String){
         }, colors = ButtonDefaults.textButtonColors(
         backgroundColor = MaterialTheme.colors.button
         )){
-        Text(content,color = Color.White,fontSize = 20.sp)
+        Text(content,color = Color.White,fontSize = 15.sp)
     }
 }
