@@ -19,7 +19,7 @@
     <string name="pswd" translatable="false">Password :</string>
     <string name="email" translatable="false">Email :</string>
     <string name="searchrst">Search Result</string>
-    <string name="searchMsg">Search into messages</string>
+    <string name="searchMsg">Search  messages</string>
     <string name="sendMessage">Send Message</string>
     <string name="contBtnSearch">search for new users</string>
     <string name="SignUpFree">signup for free</string>

@@ -106,13 +106,15 @@ fun height(): Int {
     val configuration = LocalConfiguration.current
     return configuration.screenHeightDp
 }
+@Composable
+fun width(): Int {
+    val configuration = LocalConfiguration.current
+    return configuration.screenWidthDp
+}
 
 @Composable
 fun Conversation(messages: List<Message>,myModelScreen: MyModelScreen,listState: LazyListState) {
     val configuration = LocalConfiguration.current
-
-// Remember a CoroutineScope to be able to launch
-
     when (configuration.orientation) {
         Configuration.ORIENTATION_LANDSCAPE -> {
             LazyColumn(
@@ -127,7 +129,6 @@ fun Conversation(messages: List<Message>,myModelScreen: MyModelScreen,listState:
             }
         }
 
-        // Other wise
         else -> {
             LazyColumn(
                 state=listState,
@@ -160,13 +161,14 @@ fun MessageChat(message:Message,myModelScreen: MyModelScreen){
                 Text(
                     message.text,
                     style = MaterialTheme.typography.body1,
-                    fontSize = 24.sp,
+                    fontSize = 15.sp,
                     //maxLines = if (msgExpanded.value) Int.MAX_VALUE else 5,
                     textAlign = TextAlign.End,
                     color = Color.White,
                     modifier = Modifier
                         .background(MaterialTheme.colors.sended)
-                        .width(300.dp)
+                        .widthIn(100.dp, width().dp-100.dp)
+
                 )
             }
 
@@ -185,10 +187,10 @@ fun MessageChat(message:Message,myModelScreen: MyModelScreen){
                     message.text,
                     style=MaterialTheme.typography.body1,
                     color = Color.White,
-                    fontSize = 24.sp,
+                    fontSize = 15.sp,
                     modifier= Modifier
                         .background(MaterialTheme.colors.recived)
-                        .widthIn(100.dp, 300.dp)
+                        .widthIn(100.dp, width().dp-100.dp)
                 )
             }
         }
@@ -202,13 +204,16 @@ fun ChatBar(viewModel: MessageViewModel,myModelScreen:MyModelScreen) {
     val inputMsg = rememberSaveable {
         mutableStateOf("")
     }
-    TextField(value = inputMsg.value,
+    TextField(
+
+        value = inputMsg.value,
         onValueChange = {
            inputMsg.value=it
         },
 
-        textStyle = LocalTextStyle.current.copy(fontSize = 32.sp),
-        modifier=Modifier.fillMaxWidth(),
+        textStyle = LocalTextStyle.current.copy(fontSize = 20.sp),
+        modifier=Modifier.fillMaxWidth()
+                .heightIn(20.dp,100.dp),
         trailingIcon={
             IconButton(onClick={
                 viewModel.writeMessage(myModelScreen.userClass.userid,myModelScreen.chatWith,inputMsg.value)
