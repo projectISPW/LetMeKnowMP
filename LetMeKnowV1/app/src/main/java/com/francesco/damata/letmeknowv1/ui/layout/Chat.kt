@@ -60,7 +60,7 @@ fun Chat(myModelScreen: MyModelScreen) {
                     IconButton({
                         myModelScreen.onSearch=false
                         ScreenRouter.navigateTo(LetMeKnowScreen.RecentChat)
-                    }, modifier = Modifier.padding(10.dp)) {
+                    }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back_button),
@@ -86,7 +86,7 @@ fun Chat(myModelScreen: MyModelScreen) {
                         fontSize = 18.sp,
                         modifier = Modifier
                             .align(Alignment.Start)
-                            .padding(start = 20.dp, top = 18.dp)
+                            .padding(start = 15.dp, top = 18.dp)
                     )
                 }
             )
@@ -127,7 +127,6 @@ fun Conversation(messages: List<Message>,myModelScreen: MyModelScreen,listState:
                 }
             }
         }
-
         else -> {
             LazyColumn(
                 state=listState,
@@ -158,7 +157,7 @@ fun MessageChat(message:Message,myModelScreen: MyModelScreen){
                 elevation = 1.dp
             ) {
                 Text(
-                    message.text,
+                    message.text + "\n",
                     style = MaterialTheme.typography.body1,
                     fontSize = 15.sp,
                     //maxLines = if (msgExpanded.value) Int.MAX_VALUE else 5,
@@ -183,7 +182,7 @@ fun MessageChat(message:Message,myModelScreen: MyModelScreen){
         ) {
             Surface(shape=MaterialTheme.shapes.medium,elevation =1.dp){
                 Text(
-                    message.text,
+                    message.text + "\n",
                     style=MaterialTheme.typography.body1,
                     color = Color.White,
                     fontSize = 15.sp,

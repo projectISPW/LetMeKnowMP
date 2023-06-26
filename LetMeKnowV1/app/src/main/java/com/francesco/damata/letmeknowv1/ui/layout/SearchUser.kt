@@ -55,11 +55,12 @@ fun SearchUser(myModelScreen: MyModelScreen) {
                 Text(
                     stringResource(R.string.searchusr),
                     color = Color.White,
-                    fontSize = 24.sp
+                    fontSize = 18.sp
                 )
             })
         Text(text = stringResource(R.string.SrcByUsr), color =  MaterialTheme.colors.myBlue, fontSize = 25.sp)
         SearchSlider(myModelScreen)
+        Spacer(modifier = Modifier.height(15.dp))
         myImage(R.drawable.search)
     }
 }
@@ -86,7 +87,8 @@ fun SearchSlider(myModelScreen: MyModelScreen){
                 ScreenRouter.navigateTo(LetMeKnowScreen.SearchResult)
                 myModelScreen.onSearchUsr=user
             },
-                modifier=Modifier.align(Alignment.CenterHorizontally),
+                modifier=Modifier.align(Alignment.CenterHorizontally)
+                    .padding(top= 15.dp),
                 colors = ButtonDefaults.textButtonColors(
                 backgroundColor = MaterialTheme.colors.button
             )){

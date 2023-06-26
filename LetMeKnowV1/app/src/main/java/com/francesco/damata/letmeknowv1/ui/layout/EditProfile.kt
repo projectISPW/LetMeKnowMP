@@ -31,17 +31,21 @@ fun EditProfile(myModelScreen: MyModelScreen){
                 IconButton(onClick = {
                     ScreenRouter.navigateTo(LetMeKnowScreen.HomeUsr)
 
-                }) {
+                },modifier = Modifier.padding(10.dp)) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
 
                         contentDescription = stringResource(R.string.back_button)
                     )
                 }
-                Text(stringResource(R.string.edit_profile), color = Color.White, fontSize = 24.sp)
+                Text(stringResource(R.string.edit_profile), color = Color.White, fontSize = 18.sp,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(start = 14.dp, top = 18.dp))
             })
         Text(text = stringResource(R.string.edit_profile),color = Color.Black,fontSize = 40.sp)
-        Text(text = stringResource(R.string.selectTraits), color =  MaterialTheme.colors.myBlue, fontSize = 25.sp)
+        Text(text = stringResource(R.string.selectTraits), color =  MaterialTheme.colors.myBlue, fontSize = 25.sp,
+        modifier = Modifier.padding(10.dp))
         InputTraits(false,myModelScreen)
         myImage(R.drawable.edit_profile)
     }

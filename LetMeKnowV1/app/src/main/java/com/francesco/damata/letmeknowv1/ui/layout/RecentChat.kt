@@ -98,7 +98,7 @@ fun SearchBar(viewModel: MessageViewModel,messages:List<Message>,myModelScreen: 
         trailingIcon={
             IconButton(onClick={
                 myModelScreen.txtSrc=myModelScreen.txtSrc
-                myModelScreen.onSearch=true
+                myModelScreen.onSearch=!myModelScreen.onSearch
                 }
             ){
                     if(myModelScreen.onSearch){

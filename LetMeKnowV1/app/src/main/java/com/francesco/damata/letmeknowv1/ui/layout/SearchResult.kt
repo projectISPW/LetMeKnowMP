@@ -48,19 +48,19 @@ fun SearchResult(myModelScreen: MyModelScreen){
         TopAppBar(
             {
                 IconButton(onClick = {
-                    ScreenRouter.navigateTo(LetMeKnowScreen.RecentChat)
-
-                }) {
+                    ScreenRouter.navigateTo(LetMeKnowScreen.SearchUser)
+                },
+                modifier = Modifier.padding(10.dp)) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = stringResource(R.string.user)
                     )
                 }
                 Text(
-                    stringResource(R.string.searchrst), color = Color.White, fontSize = 24.sp,
+                    stringResource(R.string.searchrst), color = Color.White, fontSize = 18.sp,
                     modifier = Modifier
                         .align(Alignment.Start)
-                        .padding(start = 20.dp, top = 10.dp)
+                        .padding(start = 20.dp, top = 18.dp)
                 )
             })
         val searchResult = viewModel.getSearchResult(myModelScreen.onSearchUsr).observeAsState(listOf()).value
