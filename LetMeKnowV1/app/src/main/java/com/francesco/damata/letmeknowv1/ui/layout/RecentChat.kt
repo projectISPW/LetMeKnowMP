@@ -52,16 +52,16 @@ fun RecentChat(myModelScreen: MyModelScreen) {
                 IconButton(onClick = {
                     ScreenRouter.navigateTo(LetMeKnowScreen.HomeUsr)
                     myModelScreen.onSearch=false
-                }) {
+                } , modifier = Modifier.padding(10.dp)) {
                     Icon(
                         imageVector = Icons.Default.Home,
                         contentDescription = stringResource(R.string.user)
                     )
                 }
-                Text(stringResource(R.string.recentChat),color = Color.White,fontSize = 24.sp,
+                Text(stringResource(R.string.recentChat),color = Color.White,fontSize = 18.sp,
                     modifier = Modifier
                         .align(Alignment.Start)
-                        .padding(start = 20.dp, top = 10.dp))
+                        .padding(start = 14.dp, top = 18.dp))
             })
         SearchBar(viewModel,items,myModelScreen)
         if(!myModelScreen.onSearch)Conversations(viewModel.getLastMessages(items,myModelScreen),myModelScreen.userClass.userid,myModelScreen)

@@ -49,16 +49,16 @@ fun MainLayout(myModelScreen: MyModelScreen) {
     ) {
         TopAppBar(
             {
-                IconButton({}) {
+                IconButton({}, modifier = Modifier.padding(10.dp)) {
                     Icon(
                         imageVector = Icons.Default.Groups,
                         contentDescription = stringResource(R.string.user)
                     )
                 }
-                Text(stringResource(R.string.login),color = Color.White,fontSize = 24.sp,
+                Text(stringResource(R.string.login),color = Color.White,fontSize = 18.sp,
                     modifier = Modifier
                         .align(Alignment.Start)
-                        .padding(start = 20.dp, top = 10.dp))
+                        .padding(start = 14.dp, top = 18.dp))
             })
         ColUnderTheTop()
         InputUsr(myModelScreen =myModelScreen )
@@ -70,13 +70,13 @@ fun MainLayout(myModelScreen: MyModelScreen) {
 fun ColUnderTheTop(){
     Column(
         modifier = Modifier
-            //.padding(16.dp)
+            .padding(20.dp)
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = stringResource(R.string.app_name),
-            fontSize = 50.sp,
+            fontSize = 40.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.letMeKnowColor
         )

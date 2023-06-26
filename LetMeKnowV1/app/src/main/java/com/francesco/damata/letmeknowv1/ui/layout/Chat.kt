@@ -60,11 +60,10 @@ fun Chat(myModelScreen: MyModelScreen) {
                     IconButton({
                         myModelScreen.onSearch=false
                         ScreenRouter.navigateTo(LetMeKnowScreen.RecentChat)
-                    }) {
+                    }, modifier = Modifier.padding(10.dp)) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back_button),
-                            modifier = Modifier.padding(start = 5.dp)
                         )
                     }
                     val userVisit = userViewModel.getUserVisited(myModelScreen.chatWith).observeAsState().value
@@ -84,10 +83,10 @@ fun Chat(myModelScreen: MyModelScreen) {
                     Text(
                         text = stringResource(R.string.user) + myModelScreen.chatWith,
                         color = Color.White,
-                        fontSize = 24.sp,
+                        fontSize = 18.sp,
                         modifier = Modifier
                             .align(Alignment.Start)
-                            .padding(start = 20.dp, top = 10.dp)
+                            .padding(start = 20.dp, top = 18.dp)
                     )
                 }
             )

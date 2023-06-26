@@ -68,14 +68,17 @@ fun ProfColumn(myModelScreen: MyModelScreen) {
                 if ((!myModelScreen.onSearch && !myModelScreen.fromChat) || myModelScreen.usrVisit.userid==""){
                     IconButton(onClick = {
                         ScreenRouter.navigateTo(LetMeKnowScreen.Login)
-                    }
+                    }, modifier = Modifier.padding(10.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Default.Logout,
-                            contentDescription = stringResource(R.string.user) + myModelScreen.userClass.userid
+                            contentDescription = stringResource(R.string.user) + myModelScreen.userClass.userid,
                         )
                     }
-                    Text(stringResource(R.string.home), color = Color.White, fontSize = 24.sp)
+                    Text(stringResource(R.string.home), color = Color.White, fontSize = 18.sp,
+                    modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(start = 14.dp, top = 18.dp))
                 }
 
 
@@ -85,14 +88,16 @@ fun ProfColumn(myModelScreen: MyModelScreen) {
                         myModelScreen.fromChat=false
                         myModelScreen.onSearch=false
                         myModelScreen.usrVisit= User("","","",1,1,1)
-                    }
+                    }, modifier = Modifier.padding(10.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = stringResource(R.string.user) + myModelScreen.userClass.userid
                         )
                     }
-                    Text(stringResource(R.string.visitUser), color = Color.White, fontSize = 24.sp)
+                    Text(stringResource(R.string.visitUser), color = Color.White, fontSize = 18.sp,modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(start = 20.dp, top = 18.dp))
                 }
 
 
@@ -102,16 +107,16 @@ fun ProfColumn(myModelScreen: MyModelScreen) {
                         myModelScreen.fromChat=false
                         myModelScreen.onSearch=false
                         myModelScreen.usrVisit= User("","","",1,1,1)
-                    }
+                    }, modifier = Modifier.padding(10.dp)
                     ) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = stringResource(R.string.user) + myModelScreen.userClass.userid
                         )
                     }
-                    Text(stringResource(R.string.visitUser), color = Color.White, fontSize = 24.sp)
-
-
+                    Text(stringResource(R.string.visitUser), color = Color.White, fontSize = 18.sp, modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(start = 20.dp, top = 18.dp))
                 }
 
             })
@@ -130,6 +135,7 @@ fun ProfColumn(myModelScreen: MyModelScreen) {
             )         //Al posto degli 00000 ci va $uid
         }
         InputTraits(true, myModelScreen)
+        Spacer(modifier = Modifier.height(10.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
