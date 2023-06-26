@@ -203,14 +203,13 @@ fun ChatBar(viewModel: MessageViewModel,myModelScreen:MyModelScreen) {
         mutableStateOf("")
     }
     TextField(
-
         value = inputMsg.value,
         onValueChange = {
            inputMsg.value=it
         },
 
         textStyle = LocalTextStyle.current.copy(fontSize = 20.sp),
-        modifier=Modifier.fillMaxWidth()
+        modifier=Modifier.fillMaxWidth().fillMaxHeight()
                 .heightIn(20.dp,100.dp),
         trailingIcon={
             IconButton(onClick={

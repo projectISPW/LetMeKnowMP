@@ -44,7 +44,7 @@ fun RecentChat(myModelScreen: MyModelScreen) {
             //.padding(16.dp)
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        //verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
 
         TopAppBar(
@@ -64,8 +64,10 @@ fun RecentChat(myModelScreen: MyModelScreen) {
                         .padding(start = 14.dp, top = 18.dp))
             })
         SearchBar(viewModel,items,myModelScreen)
+        Spacer(modifier = Modifier.padding(10.dp))
         if(!myModelScreen.onSearch)Conversations(viewModel.getLastMessages(items,myModelScreen),myModelScreen.userClass.userid,myModelScreen)
         else Conversations(viewModel.SearchConversations(items,myModelScreen),myModelScreen.userClass.userid,myModelScreen)
+        Spacer(modifier = Modifier.padding(10.dp))
         Button(onClick = {
             myModelScreen.onSearch=false
             ScreenRouter.navigateTo(LetMeKnowScreen.SearchUser)
