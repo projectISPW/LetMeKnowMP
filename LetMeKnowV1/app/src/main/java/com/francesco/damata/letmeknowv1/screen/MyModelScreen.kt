@@ -110,6 +110,9 @@ class MyModelScreen :Parcelable{
         return _onSearch.value
     }
     set(value){
+        if(!value){
+            txtSrc=""
+        }
         _onSearch.value=value
     }
     @IgnoredOnParcel
