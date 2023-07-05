@@ -37,7 +37,6 @@ import com.francesco.damata.letmeknowv1.viewModel.UserViewModelFactory
 
 
 @Composable
-
 fun MainLayout(myModelScreen: MyModelScreen) {
     Column(
         modifier = Modifier
