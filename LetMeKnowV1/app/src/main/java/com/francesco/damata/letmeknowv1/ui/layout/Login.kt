@@ -2,6 +2,7 @@ package com.francesco.damata.letmeknowv1.ui.layout
 
 import android.app.Application
 import android.content.Context
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -99,12 +100,8 @@ fun SignupText(){
         fontSize = 24.sp,
         color = "#377dff".color,
         modifier = Modifier
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onPress = {
-                        ScreenRouter.navigateTo(LetMeKnowScreen.Signup)
-                    }
-                )
+            .clickable {
+                ScreenRouter.navigateTo(LetMeKnowScreen.Signup)
             }
     )
 }
